@@ -1,0 +1,10 @@
+{
+    "name": "AV Effect Options",
+    "version_number": "1.0.0",
+    "website_url": "",
+    "description": "Adds various options regarding items' AV effects.",
+    "dependencies": [
+        "bbepis-BepInExPack-5.3.1",
+        "tristanmcpherson-R2API-2.5.14"
+    ]
+}
