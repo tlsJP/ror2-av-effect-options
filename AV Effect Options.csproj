@@ -33,10 +33,8 @@
     <PackageReference NoWarn="NU1701" Version="*-*" Include="
       BepInEx.BaseLib;
       MMHOOK.RoR2;
-      R2API;
       RiskOfRain2.GameLibs;
       UnityEngine;
-      UnityEngine.Modules;
      " />
     <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json" />
   </ItemGroup>
