@@ -9,7 +9,6 @@
       $(BepInExPath)/plugins/Rune580-Risk_Of_Options;
       $(AssemblySearchPaths);
     </AssemblySearchPaths>
-    <AssemblyName>.</AssemblyName>
     <BuildInParallel>True</BuildInParallel>
     <Configuration>Release</Configuration>
     <CopyDocumentationFileToOutputDirectory>False</CopyDocumentationFileToOutputDirectory>
@@ -36,7 +35,7 @@
   </ItemGroup>
 
   <Target Name="ZipOutputPath" AfterTargets="Build">
-    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="Unknown-$(ProjectName).zip" />
+    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="out.zip" />
   </Target>
 
 </Project>
