@@ -23,6 +23,7 @@
     <GenerateDependencyFile>yiff</GenerateDependencyFile>
     <LangVersion>latest</LangVersion>
     <NoLogo>True</NoLogo>
+    <NoWarn>612</NoWarn>
     <NoWin32Manifest>True</NoWin32Manifest>
     <Optimize>True</Optimize>
     <OutDir>out</OutDir>
@@ -32,7 +33,13 @@
   <ItemGroup>
     <EmbeddedResource Include="icon.png" LogicalName="." />
     <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md;icon.png" />
-    <PackageReference NoWarn="NU1701" Version="*-*" Include="BepInEx.BaseLib;MMHOOK.RoR2;RiskOfRain2.GameLibs;UnityEngine" />
+    <PackageReference NoWarn="NU1701" Version="*-*" Include="
+      BepInEx.BaseLib;
+      MMHOOK.RoR2;
+      RiskOfRain2.GameLibs;
+      UnityEngine;
+      UnityEngine.Modules;
+    " />
     <Reference Include="RiskOfOptions" Private="False" />
   </ItemGroup>
   
