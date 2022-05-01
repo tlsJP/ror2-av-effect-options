@@ -30,13 +30,8 @@
 
   <ItemGroup>
     <Reference Include="RiskOfOptions" Private="False" />
-    <PackageReference NoWarn="NU1701" Version="*-*" Include="
-      BepInEx.BaseLib;
-      MMHOOK.RoR2;
-      RiskOfRain2.GameLibs;
-      UnityEngine;
-     " />
-    <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json" />
+    <PackageReference NoWarn="NU1701" Version="*-*" Include="BepInEx.BaseLib;MMHOOK.RoR2;RiskOfRain2.GameLibs;UnityEngine" />
+    <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md" />
   </ItemGroup>
 
   <Target Name="ZipOutputPath" AfterTargets="Build">
