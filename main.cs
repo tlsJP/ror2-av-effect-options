@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 
 [BepInPlugin("XmdzoIwkDXCTKH64", "AV Effect Options", "1.0.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
-sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
+public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
   private bool ᛢᛪᛔᚸᚽᚹᛃᚬ = false;
   
   [MethodImpl(768)]
