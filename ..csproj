@@ -9,6 +9,7 @@
       $(BepInExPath)/plugins/Rune580-Risk_Of_Options;
       $(AssemblySearchPaths);
     </AssemblySearchPaths>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <BuildInParallel>True</BuildInParallel>
     <Configuration>Release</Configuration>
     <CopyDocumentationFileToOutputDirectory>False</CopyDocumentationFileToOutputDirectory>
@@ -29,10 +30,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="RiskOfOptions" Private="False" />
-    <PackageReference NoWarn="NU1701" Version="*-*" Include="BepInEx.BaseLib;MMHOOK.RoR2;RiskOfRain2.GameLibs;UnityEngine" />
+    <EmbeddedResource Include="icon.png" LogicalName="." />
     <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md;icon.png" />
+    <PackageReference NoWarn="NU1701" Version="*-*" Include="BepInEx.BaseLib;MMHOOK.RoR2;RiskOfRain2.GameLibs;UnityEngine" />
+    <Reference Include="RiskOfOptions" Private="False" />
   </ItemGroup>
+  
+  <Target Name="GenerateIco" BeforeTargets="BeforeBuild" Inputs="icon.png" Outputs="icon.ico">
+    <Exec Command="convert 'icon.png' 'icon.ico'" />
+  </Target>
 
   <Target Name="ZipOutputPath" AfterTargets="Build">
     <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
