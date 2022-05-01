@@ -10,11 +10,10 @@ using UnityEngine.AddressableAssets;
 [BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.0.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
-  private bool ᛢᛪᛔᚸᚽᚹᛃᚬ = false;
+  private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
   [MethodImpl(768)]
   private void Awake() {
-    ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost", "Enable Sticky Bomb", "Enables the Sticky Bomb visuals");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables the Spinel Tonic screen effect");
