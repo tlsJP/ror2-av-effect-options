@@ -18,6 +18,7 @@ public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityP
     ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost", "Enable Sticky Bomb", "Enables the Sticky Bomb visuals");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables the Spinel Tonic screen effect");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables the Brainstalks screen effect. Note: might not re-enable mid-run.");
   }
   
   [MethodImpl(768)]
