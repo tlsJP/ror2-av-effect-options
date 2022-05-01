@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 
 [BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.0.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
-public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
+public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
   [MethodImpl(768)]
@@ -33,6 +33,6 @@ public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityP
   }
   
   [MethodImpl(520)]
-  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> ᚵᛑᛖᚶᚿᚥᛘᛸ) =>
-    ModSettingsManager.AddOption(new CheckBoxOption(ᚵᛑᛖᚶᚿᚥᛘᛸ));
+  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> _) =>
+    ModSettingsManager.AddOption(new CheckBoxOption(_));
 }

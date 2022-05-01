@@ -9,6 +9,7 @@
       $(BepInExPath)/plugins/Rune580-Risk_Of_Options;
       $(AssemblySearchPaths);
     </AssemblySearchPaths>
+    <AssemblyName>.</AssemblyName>
     <BuildInParallel>True</BuildInParallel>
     <Configuration>Release</Configuration>
     <CopyDocumentationFileToOutputDirectory>False</CopyDocumentationFileToOutputDirectory>
@@ -31,7 +32,7 @@
   <ItemGroup>
     <Reference Include="RiskOfOptions" Private="False" />
     <PackageReference NoWarn="NU1701" Version="*-*" Include="BepInEx.BaseLib;MMHOOK.RoR2;RiskOfRain2.GameLibs;UnityEngine" />
-    <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md" />
+    <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md;icon.png" />
   </ItemGroup>
 
   <Target Name="ZipOutputPath" AfterTargets="Build">
