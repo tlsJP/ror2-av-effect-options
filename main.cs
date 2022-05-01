@@ -1,40 +1,38 @@
-[BepInEx.BepInPlugin("XmdzoIwkDXCTKH64", "AV Effect Options", "1.0.0")]
-[BepInEx.BepInDependency("com.rune580.riskofoptions", BepInEx.BepInDependency.DependencyFlags.SoftDependency)]
-public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BepInEx.BaseUnityPlugin {
+using BepInEx;
+using BepInEx.Bootstrap;
+using BepInEx.Configuration;
+using RiskOfOptions;
+using RiskOfOptions.Options;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
-  private static UnityEngine.GameObject StickyBombPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<UnityEngine.GameObject>("RoR2/Base/StickyBomb/StickyBombGhost.prefab").WaitForCompletion();
-  private static UnityEngine.GameObject MoltenPerforatorPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<UnityEngine.GameObject>("RoR2/Base/FireballsOnHit/FireMeatBallGhost.prefab").WaitForCompletion();
-  private static UnityEngine.GameObject SpinelTonicPrefab = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<UnityEngine.GameObject>("RoR2/Base/Tonic/TonicBuffEffect.prefab").WaitForCompletion();
+[BepInPlugin("XmdzoIwkDXCTKH64", "AV Effect Options", "1.0.0")]
+[BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
+public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
+  private bool ᛢᛪᛔᚸᚽᚹᛃᚬ = false;
   
-  private BepInEx.Configuration.ConfigEntry<bool> enableStickyBomb;
-  private BepInEx.Configuration.ConfigEntry<bool> enableMoltenPerforator;
-  private BepInEx.Configuration.ConfigEntry<bool> enableSpinelTonic;
-  
+  [MethodImpl(512)]
   public void Awake() {
-    enableStickyBomb = Config.Bind("Item Effects", "Enable Sticky Bomb", true, "Enables the Sticky Bomb visual");
-		enableMoltenPerforator = Config.Bind("Item Effects", "Enable Molten Perforator", true, "Enables Molten Perforator visuals");
-		enableSpinelTonic = Config.Bind("Item Effects", "Enable Spinel Tonic", true, "Enables the Spinel Tonic screen effect");
-		
-		StickyBombPrefab.SetActive(enableStickyBomb.Value);
-		MoltenPerforatorPrefab.SetActive(enableMoltenPerforator.Value);
-		SpinelTonicPrefab.SetActive(enableSpinelTonic.Value);
-		
-    enableStickyBomb.SettingChanged += (x, _) => 
-      StickyBombPrefab.SetActive(((BepInEx.Configuration.ConfigEntry<bool>) x).Value);
-    enableMoltenPerforator.SettingChanged += (x, _) =>
-      MoltenPerforatorPrefab.SetActive(((BepInEx.Configuration.ConfigEntry<bool>) x).Value);
-    enableSpinelTonic.SettingChanged += (x, _) =>
-      SpinelTonicPrefab.SetActive(((BepInEx.Configuration.ConfigEntry<bool>) x).Value);
-		
-    if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
-      ᚻᛀᛧᚠᚾᛢᚻᛐᛉᚼᛤᛪᚲᛇᛎᛛ();
+    ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost", "Enable Sticky Bomb", "Enables the Sticky Bomb visuals");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables the Spinel Tonic screen effect");
   }
   
-  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-  private void ᚻᛀᛧᚠᚾᛢᚻᛐᛉᚼᛤᛪᚲᛇᛎᛛ() {
-    RiskOfOptions.ModSettingsManager.AddOption(new RiskOfOptions.Options.CheckBoxOption(enableStickyBomb));
-		RiskOfOptions.ModSettingsManager.AddOption(new RiskOfOptions.Options.CheckBoxOption(enableMoltenPerforator));
-		RiskOfOptions.ModSettingsManager.AddOption(new RiskOfOptions.Options.CheckBoxOption(enableSpinelTonic));
+  [MethodImpl(768)]
+  private void ᚭᛣᛮᛨᚶᛟᚷᚴ(string ᚱᛢᛊᚢᚴᛤᛉᚣ, string ᛆᛇᚶᛔᛒᛄᚤᛪ, string ᚡᛧᛞᛍᛏᛀᛕᚵ, string ᚩᛶᛠᚿᚵᚯᚹᛴ = "Item Effects") {
+    var prefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/" + ᚱᛢᛊᚢᚴᛤᛉᚣ + ".prefab").WaitForCompletion();
+    var config = Config.Bind(ᚩᛶᛠᚿᚵᚯᚹᛴ, ᛆᛇᚶᛔᛒᛄᚤᛪ, true, ᚡᛧᛞᛍᛏᛀᛕᚵ);
+    config.SettingChanged += (x, _) =>
+      prefab.SetActive(((ConfigEntry<bool>) x).Value);
+    prefab.SetActive(config.Value);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ)
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(config);
   }
-
+  
+  [MethodImpl(520)]
+  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> ᚵᛑᛖᚶᚿᚥᛘᛸ) {
+    ModSettingsManager.AddOption(new CheckBoxOption(ᚵᛑᛖᚶᚿᚥᛘᛸ));
+  }
 }
