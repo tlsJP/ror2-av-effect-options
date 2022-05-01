@@ -9,11 +9,11 @@ using UnityEngine.AddressableAssets;
 
 [BepInPlugin("XmdzoIwkDXCTKH64", "AV Effect Options", "1.0.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
-public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
+sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityPlugin {  
   private bool ᛢᛪᛔᚸᚽᚹᛃᚬ = false;
   
-  [MethodImpl(512)]
-  public void Awake() {
+  [MethodImpl(768)]
+  private void Awake() {
     ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost", "Enable Sticky Bomb", "Enables the Sticky Bomb visuals");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
@@ -25,6 +25,7 @@ public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityP
   private void ᚭᛣᛮᛨᚶᛟᚷᚴ(string ᚱᛢᛊᚢᚴᛤᛉᚣ, string ᛆᛇᚶᛔᛒᛄᚤᛪ, string ᚡᛧᛞᛍᛏᛀᛕᚵ, string ᚩᛶᛠᚿᚵᚯᚹᛴ = "Item Effects") {
     var prefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/" + ᚱᛢᛊᚢᚴᛤᛉᚣ + ".prefab").WaitForCompletion();
     var config = Config.Bind(ᚩᛶᛠᚿᚵᚯᚹᛴ, ᛆᛇᚶᛔᛒᛄᚤᛪ, true, ᚡᛧᛞᛍᛏᛀᛕᚵ);
+    // todo: should the following class be merged into this one?
     config.SettingChanged += (x, _) =>
       prefab.SetActive(((ConfigEntry<bool>) x).Value);
     prefab.SetActive(config.Value);
@@ -33,7 +34,6 @@ public sealed class ᚠᛯᛇᛁᚢᛮᛶᛁᛋᚴᛪᛩᚣᛉᚠᛉ: BaseUnityP
   }
   
   [MethodImpl(520)]
-  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> ᚵᛑᛖᚶᚿᚥᛘᛸ) {
+  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> ᚵᛑᛖᚶᚿᚥᛘᛸ) =>
     ModSettingsManager.AddOption(new CheckBoxOption(ᚵᛑᛖᚶᚿᚥᛘᛸ));
-  }
 }
