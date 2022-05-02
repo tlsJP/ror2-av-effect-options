@@ -25,7 +25,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ## Configuring
 "Enabling" an effect (default) plays the effect as it does normally. "Disabling" it makes it silent and invisible.
-* Use [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
+* Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
 TODO: include picture here
 * OR: modify the .cfg file manually...
     * You aren't required to run the game before doing this!
@@ -33,16 +33,16 @@ TODO: include picture here
     * Here's the default file to get you started...
     ```
     [Item Effects]
-
+    
     ## Enables the Sticky Bomb visuals
     Enable Sticky Bomb = true
-
+    
     ## Enables the Molten Perforator visuals
     Enable Molten Perforator = true
-
+    
     ## Enables the Spinel Tonic screen effect
     Enable Spinel Tonic = true
-
+    
     ## Enables the Brainstalks screen effect.
     Enable Brainstalks = true
     ```
@@ -58,6 +58,9 @@ TODO: include picture here
     1. Extract the `..dll` file from this mod to BepInEx's `plugins` folder.
 
 ## Compiling
+
+The binary release of this mod is built on some sort of Debian. Any Portable Operating System that supports Mono's msbuild and ImageMagick should be fine.
+
 1. Get all the prerequisite thingies
     * The following from [The Mono Project](https://www.mono-project.com/download/stable).
         * mono-devel
