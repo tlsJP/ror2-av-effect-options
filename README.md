@@ -26,7 +26,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 ## Configuring
 "Enabling" an effect (default) plays the effect as it does normally. "Disabling" it makes it silent and invisible.
 * Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
-TODO: include picture here
+    TODO: include picture here
 * OR: modify the .cfg file manually...
     * You aren't required to run the game before doing this!
     * In BepInEx's config directory, create or modify the file named `.AVFX_Options...cfg`
@@ -59,7 +59,7 @@ TODO: include picture here
 
 ## Compiling
 
-The binary release of this mod is built on some sort of Debian. Any Portable Operating System that supports Mono's msbuild and ImageMagick should be fine.
+The binary release of this mod is built on some sort of Debian but any Portable Operating System that supports all of the prerequisite thingies should be fine.
 
 1. Get all the prerequisite thingies
     * The following from [The Mono Project](https://www.mono-project.com/download/stable).
