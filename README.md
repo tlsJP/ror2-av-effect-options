@@ -14,14 +14,16 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Molten Perferators
 * Spinel Tonic's screen effect
 * Sticky Bombs
+* Will-o'-the-Wisp explosion
 
 ### Future options
 * Literally everything else
-* Will-o'-the-Wisp
 * The Rings
+* Gasoline
 * The generic explosion
 * Teleporter initialisation effect
 * etc.
+* l10n support
 * A new icon?
 
 ## Configuring
@@ -46,6 +48,9 @@ Intended for headed client-side installations. [Should] have no effect on headle
     
     ## Enables the Brainstalks screen effect.
     Enable Brainstalks = true
+    
+    ## Enables the Will o' the Wisp explosion
+    Enable Will-o-the-Wisp = true
     ```
 
 ## Installing
@@ -60,7 +65,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ## Compiling
 
-The binary release of this mod is built on some sort of Debian but any Portable Operating System that supports all of the prerequisite thingies should be fine.
+The binary release of this mod is built on a Debian-like but any Portable Operating System that supports all of the prerequisite thingies should be fine.
 
 1. Get all the prerequisite thingies
     * The following from [The Mono Project](https://www.mono-project.com/download/stable).
@@ -83,7 +88,7 @@ These good people/beings did me a help one way or another, but don't necessarily
 * [ebkr](https://github.com/ebkr) [et alia](https://github.com/ebkr/r2modmanPlus/graphs/contributors) for [r2modman Plus](https://thunderstore.io/package/ebkr/r2modman)
 * The Thunderstore
 * [Rune580](https://github.com/Rune580) for [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options)
-* [Vl4dimyr](https://github.com/Vl4dimyr/CaptainShotgunModes) for their [mod](https://thunderstore.io/package/Vl4dimyr/CaptainShotgunModes) (pictured)
+* [Vl4dimyr](https://github.com/Vl4dimyr) for their [mod](https://thunderstore.io/package/Vl4dimyr/CaptainShotgunModes) (pictured)
 * YOU! For existing today :3
 
 ## Notes
