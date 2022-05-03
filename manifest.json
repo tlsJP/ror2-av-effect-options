@@ -1,9 +1,21 @@
 {
-    "name": "AV_Effect_Options",
-    "version_number": "1.1.0",
-    "website_url": "https://gitlab.com/lexxyfox/ror2-av-effect-options",
-    "description": "Adds various options regarding items' AV effects.",
-    "dependencies": [
-        "bbepis-BepInExPack-5.3.1"
-    ]
+	"author": "Lexxy Fox",
+	"authorName": "Lexxy Fox",
+	"dependencies": [
+		"bbepis-BepInExPack-5.3.1"
+	],
+	"description": "Adds various options regarding items' AV effects.",
+	"displayName": "AV Effect Options",
+	"DisplayName": "AV Effect Options",
+	"enabled": true,
+	"manifestVersion": 2,
+	"name": "AV_Effect_Options",
+	"networkMode": "client",
+	"OptionalDependencies": [
+		"Rune580-Risk_Of_Options-2.4.2"
+	],
+	"packageType": "mod",
+	"version_number": "1.1.0",
+	"websiteUrl": "https://gitlab.com/lexxyfox/ror2-av-effect-options#",
+	"website_url": "https://gitlab.com/lexxyfox/ror2-av-effect-options#"
 }
