@@ -12,15 +12,18 @@ Intended for headed client-side installations. [Should] have no effect on headle
 ### Currently configurable
 * Brainstalks's screen effect
 * Gasoline's explosion
-* Kjaro's Band's tornado
+* Kjaro's Band tornado
 * Molten Perferators
+* Runald's Band explosion
 * Spinel Tonic's screen effect
 * Sticky Bombs
 * Will-o'-the-Wisp explosion
 
 ### Future options
 * Literally everything else
-* The ice ring
+* Singularity Band
+* Voidsent Flame
+* Underwater screen effect
 * Teleporter initialisation effect
 * etc.
 * l10n support
@@ -37,30 +40,37 @@ Intended for headed client-side installations. [Should] have no effect on headle
     ```
     [Item Effects]
     
-    ## Enables Brainstalks' screen effect
+    # Enables Brainstalks' screen effect
     Enable Brainstalks = true
 
-    ## Enables Gasoline's explosion
-    Enable Gasoline = false
+    # Enables Gasoline's explosion
+    Enable Gasoline = true
     
-    ## Enables Kjaro's Band's tornado
+    # Enables Kjaro's Band's tornado
     Enable Kjaros Band = true
 
-    ## Enables the Molten Perforator visuals
+    # Enables the Molten Perforator visuals
     Enable Molten Perforator = true
 
-    ## Enables Spinel Tonic's screen effect
+    # Enables Runald's Band's explosion
+    Enable Runalds Band = true
+
+    # Enables Spinel Tonic's screen effect
     Enable Spinel Tonic = true
 
-    ## Enables Sticky Bomb's visuals
+    # Enables Sticky Bomb's visuals
     Enable Sticky Bomb = true
 
-    ## Enables Will o' the Wisp's explosion
+    # Enables Will o' the Wisp's explosion
     Enable Will-o-the-Wisp = true
     ```
 
 ## Installing
-* Using [ebkr's r2modman Plus](https://thunderstore.io/package/ebkr/r2modman)
+* Using [ebkr's r2modman Plus](https://thunderstore.io/package/ebkr/r2modman) and the Thunderstore
+    1. In r2modman, go to "🌐 Online" and Search for "AV Effect Options"
+    1. Click on "AV Effect Options by Higgs1" → "Download" → "Download with dependencies".
+    1. Call your mom/dad/parental figure/loved one/consumer of worlds
+* OR using [ebkr's r2modman Plus](https://thunderstore.io/package/ebkr/r2modman) (local install)
     1. Obtain a release .zip of this mod.
     1. In r2modman, go to "⚙ Settings" → "Import local mod" (under "Profile") → "Select file"
     1. Browse to and select the .zip file.
