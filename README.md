@@ -27,7 +27,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 ## Configuring
 "Enabling" an effect (default) plays the effect as it does normally. "Disabling" makes it silent and invisible.
 * Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
-    ![Risk of Options](https://gitlab.com/lexxyfox/ror2-av-effect-options/-/wikis/roo.png)
+    ![Risk of Options](https://gitlab.com/lexxyfox/ror2-av-effect-options/wikis/roo.png)
 * OR: modify the .cfg file manually...
     * You aren't required to run the game before doing this!
     * In BepInEx's config directory, create or modify the file named `.AVFX_Options...cfg`
