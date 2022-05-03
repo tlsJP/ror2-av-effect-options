@@ -5,7 +5,7 @@ The goal is to allow players to selectively disable in-game audio-visual effects
 
 Originally intended just my furiend group, I am now advertising it here on the Thunderstore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
 
-Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to poke me or even submit a PR.
+Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to [poke me](https://gitlab.com/lexxyfox/ror2-av-effect-options/issues) or even submit a PR.
 
 Intended for headed client-side installations. [Should] have no effect on headless installations. 
 
@@ -15,8 +15,9 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Kjaro's Band tornado
 * Molten Perferators
 * Runald's Band explosion
+* Shatterspleen explosion
 * Spinel Tonic's screen effect
-* Sticky Bombs
+* Sticky Bomb's drops & explosion
 * Will-o'-the-Wisp explosion
 
 ### Future options
@@ -25,6 +26,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Voidsent Flame
 * Underwater screen effect
 * Teleporter initialisation effect
+* Imp boss effect
 * etc.
 * l10n support
 * A new icon?
@@ -39,13 +41,13 @@ Intended for headed client-side installations. [Should] have no effect on headle
     * Here's the default configuration to get you started...
     ```
     [Item Effects]
-    
+
     # Enables Brainstalks' screen effect
     Enable Brainstalks = true
 
     # Enables Gasoline's explosion
     Enable Gasoline = true
-    
+
     # Enables Kjaro's Band's tornado
     Enable Kjaros Band = true
 
@@ -55,11 +57,17 @@ Intended for headed client-side installations. [Should] have no effect on headle
     # Enables Runald's Band's explosion
     Enable Runalds Band = true
 
+    # Enables Shatterspleen's explosion
+    Enable Shatterspleen = true
+
     # Enables Spinel Tonic's screen effect
     Enable Spinel Tonic = true
 
-    # Enables Sticky Bomb's visuals
-    Enable Sticky Bomb = true
+    # Enables Sticky Bomb's drops
+    Enable Sticky Bomb Drops = true
+
+    # Enables Sticky Bomb's explosion
+    Enable Sticky Bomb Explosion = true
 
     # Enables Will o' the Wisp's explosion
     Enable Will-o-the-Wisp = true
