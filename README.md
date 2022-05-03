@@ -3,7 +3,7 @@ Hewwos!
 ## OwO, wat's dis?
 The goal is to allow players to selectively disable in-game audio-visual effects that aren't strictly necessary to enjoy the game without changing game mechanics or balance. This may assist people who - among others; have photosensitivity, are sensitive to sensory overstimulation, or have limited computing resources. Effects can [usually] be toggled mid-stage.
 
-Originally intended just my furiend group, I am now advertising it here on the ThunderStore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
+Originally intended just my furiend group, I am now advertising it here on the Thunderstore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
 
 Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to poke me or even submit a PR.
 
@@ -81,6 +81,7 @@ These good people/beings did me a help one way or another, but don't necessarily
 * [The Mono Project](https://www.mono-project.com)
 * [The BepInEx developers](https://github.com/BepInEx/BepInEx/graphs/contributors)
 * [ebkr](https://github.com/ebkr) [et alia](https://github.com/ebkr/r2modmanPlus/graphs/contributors) for [r2modman Plus](https://thunderstore.io/package/ebkr/r2modman)
+* The Thunderstore
 * [Rune580](https://github.com/Rune580) for [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options)
 * [Vl4dimyr](https://github.com/Vl4dimyr/CaptainShotgunModes) for their [mod](https://thunderstore.io/package/Vl4dimyr/CaptainShotgunModes) (pictured)
 * YOU! For existing today :3
