@@ -11,6 +11,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ### Currently configurable
 * Brainstalks's screen effect
+* Gasoline's explosion
 * Molten Perferators
 * Spinel Tonic's screen effect
 * Sticky Bombs
@@ -19,7 +20,6 @@ Intended for headed client-side installations. [Should] have no effect on headle
 ### Future options
 * Literally everything else
 * The Rings
-* Gasoline
 * The generic explosion
 * Teleporter initialisation effect
 * etc.
@@ -37,19 +37,22 @@ Intended for headed client-side installations. [Should] have no effect on headle
     ```
     [Item Effects]
     
-    ## Enables the Sticky Bomb visuals
-    Enable Sticky Bomb = true
-    
+    ## Enables Brainstalks' screen effect
+    Enable Brainstalks = true
+
+    ## Enables Gasoline's explosion
+    Enable Gasoline = false
+
     ## Enables the Molten Perforator visuals
     Enable Molten Perforator = true
-    
-    ## Enables the Spinel Tonic screen effect
+
+    ## Enables Spinel Tonic's screen effect
     Enable Spinel Tonic = true
-    
-    ## Enables the Brainstalks screen effect.
-    Enable Brainstalks = true
-    
-    ## Enables the Will o' the Wisp explosion
+
+    ## Enables Sticky Bomb's visuals
+    Enable Sticky Bomb = true
+
+    ## Enables Will o' the Wisp's explosion
     Enable Will-o-the-Wisp = true
     ```
 
