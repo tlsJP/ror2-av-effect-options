@@ -12,6 +12,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 ### Currently configurable
 * Brainstalks's screen effect
 * Gasoline's explosion
+* Kjaro's Band's tornado
 * Molten Perferators
 * Spinel Tonic's screen effect
 * Sticky Bombs
@@ -19,8 +20,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ### Future options
 * Literally everything else
-* The Rings
-* The generic explosion
+* The ice ring
 * Teleporter initialisation effect
 * etc.
 * l10n support
@@ -42,6 +42,9 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
     ## Enables Gasoline's explosion
     Enable Gasoline = false
+    
+    ## Enables Kjaro's Band's tornado
+    Enable Kjaros Band = true
 
     ## Enables the Molten Perforator visuals
     Enable Molten Perforator = true
