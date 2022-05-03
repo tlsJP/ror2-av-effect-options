@@ -10,10 +10,10 @@ Currently only the following effects are configurable, but I'm always looking to
 Intended for headed client-side installations. [Should] have no effect on headless installations. 
 
 ### Currently configurable
-* Sticky Bombs
+* Brainstalks's screen effect
 * Molten Perferators
 * Spinel Tonic's screen effect
-* Brainstalks's screen effect
+* Sticky Bombs
 
 ### Future options
 * Literally everything else
@@ -22,15 +22,16 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * The generic explosion
 * Teleporter initialisation effect
 * etc.
+* A new icon?
 
 ## Configuring
-"Enabling" an effect (default) plays the effect as it does normally. "Disabling" it makes it silent and invisible.
+"Enabling" an effect (default) plays the effect as it does normally. "Disabling" makes it silent and invisible.
 * Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
-    TODO: include picture here
+    ![Risk of Options](https://gitlab.com/lexxyfox/ror2-av-effect-options/-/wikis/roo.png)
 * OR: modify the .cfg file manually...
     * You aren't required to run the game before doing this!
     * In BepInEx's config directory, create or modify the file named `.AVFX_Options...cfg`
-    * Here's the default file to get you started...
+    * Here's the default configuration to get you started...
     ```
     [Item Effects]
     
@@ -71,7 +72,7 @@ The binary release of this mod is built on some sort of Debian but any Portable 
 1. Obtain this mod's source code (using git, or curl, wget, email, etc.)
 1. Compile!
     * TODO: configure path to BepInEx plugins (look at the `BepInExPath` property)
-    * `msbuild -r` inside the root of the source tree
+    * `msbuild -r` inside the root of the source tree. 
 1. Compiled assembly is located at `./out/..dll`, distribution zip is located at `./..zip`
 
 ## Credits
