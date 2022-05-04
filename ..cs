@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.5.0")]
+[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.6.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
@@ -26,6 +26,8 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
   }
   
   [MethodImpl(768)]

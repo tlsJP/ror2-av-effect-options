@@ -18,6 +18,8 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Shatterspleen explosion
 * Spinel Tonic's screen effect
 * Sticky Bomb's drops & explosion
+* Stone Titan's death effect
+* Wandering Vagrant's death explosion
 * Will-o'-the-Wisp explosion
 
 ### Future options
@@ -40,35 +42,31 @@ Intended for headed client-side installations. [Should] have no effect on headle
     * In BepInEx's config directory, create or modify the file named `.AVFX_Options...cfg`
     * Here's the default configuration to get you started...
     ```
-    [Item Effects]
+    [Character Effects]
+    # Enables Stone Titan's on-death explosion
+    Enable Titan Death Effect = false
+    # Enables Wandering Vagrant's on-death explosion
+    Enable Vagrant Death Explosion = true
 
+    [Item Effects]
     # Enables Brainstalks' screen effect
     Enable Brainstalks = true
-
     # Enables Gasoline's explosion
     Enable Gasoline = true
-
     # Enables Kjaro's Band's tornado
     Enable Kjaros Band = true
-
     # Enables the Molten Perforator visuals
     Enable Molten Perforator = true
-
     # Enables Runald's Band's explosion
     Enable Runalds Band = true
-
     # Enables Shatterspleen's explosion
     Enable Shatterspleen = true
-
     # Enables Spinel Tonic's screen effect
     Enable Spinel Tonic = true
-
     # Enables Sticky Bomb's drops
     Enable Sticky Bomb Drops = true
-
     # Enables Sticky Bomb's explosion
     Enable Sticky Bomb Explosion = true
-
     # Enables Will o' the Wisp's explosion
     Enable Will-o-the-Wisp = true
     ```
