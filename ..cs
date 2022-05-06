@@ -10,19 +10,21 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.7.0")]
+[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.8.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
-  private static ConfigEntry<bool> FrostRelicActivationConfig;
+  private static ConfigEntry<bool> FrostRelicSoundConfig;
+  private static ConfigEntry<bool> FrostRelicFOVConfig;
   private static ConfigEntry<bool> FrostRelicParticlesConfig;
   
   [MethodImpl(768)]
   private void Awake() {
     if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚧᛃᛍᛣᛩᚱᚦᛕ();
     
-    FrostRelicActivationConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill", true, "Enables the sound effects and FOV change of Frost Relic's on-kill proc. Does not affect the particle effects (see the Frost Relic Particles option).");
+    FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
+    FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
     FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
     try {
       On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
@@ -30,7 +32,8 @@ public sealed class _: BaseUnityPlugin {
     } catch {}
     
     ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicActivationConfig);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
     if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
     ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX"  , "Enable Gasoline"             , "Enables Gasoline's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ElementalRings/FireTornado"       , "Enable Kjaros Band"          , "Enables Kjaro's Band's tornado");
@@ -44,8 +47,6 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Icicle/DisplayFrostRelicFollower", "Enable Frost Relic Follower", "Enables the little floating snow flake that Frost Relic gives you. Note: toggling will not take effect until next stage. Let me know if you like this setting and I should keep it, thanks.", "Testing");
-    
   }
   
   private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
@@ -57,8 +58,9 @@ public sealed class _: BaseUnityPlugin {
   
   private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-    if (FrostRelicActivationConfig.Value) {
+    if (FrostRelicSoundConfig.Value)
       Util.PlaySound("Play_item_proc_icicle", self.gameObject);
+    if (FrostRelicFOVConfig.Value) {
       var ctp = self.owner.GetComponent<CameraTargetParams>();
       if (ctp)
         typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(

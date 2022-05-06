@@ -50,8 +50,10 @@ Intended for headed client-side installations. [Should] have no effect on headle
     Enable Vagrant Death Explosion = true
 
     [Item Effects]
-    # Enables the sound effects and FOV change of Frost Relic's on-kill proc.
-    Enable Frost Relic On-Kill = false
+    # Enables the temporary FOV change that Frost Relic's on-kill proc gives. 
+    Enable Frost Relic On-Kill FOV = false
+    # Enables the sound effects of Frost Relic's on-kill proc.
+    Enable Frost Relic On-Kill Sound = true
     # Enables the chunk and ring effects of Frost Relic.
     Enable Frost Relic Particles = false
     # Enables Brainstalks' screen effect. 
