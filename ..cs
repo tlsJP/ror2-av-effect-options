@@ -60,11 +60,10 @@ public sealed class _: BaseUnityPlugin {
     if (FrostRelicActivationConfig.Value) {
       Util.PlaySound("Play_item_proc_icicle", self.gameObject);
       var ctp = self.owner.GetComponent<CameraTargetParams>();
-	    if (ctp) {
-		    typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
-		      self, ctp.RequestAimType(CameraTargetParams.AimType.Aura)
-		    );
-		  }
+      if (ctp)
+        typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
+          self, ctp.RequestAimType(CameraTargetParams.AimType.Aura)
+        );
     }
     foreach (ParticleSystem part in self.auraParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area") {
