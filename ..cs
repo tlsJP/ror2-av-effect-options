@@ -74,12 +74,6 @@ public sealed class _: BaseUnityPlugin {
       }
   }
   
-  /*
-  private static RoR2.CameraTargetParams.AimRequest ᚧᚥᚪᛩᚫᛌᛞᛖ(On.RoR2.CameraTargetParams.orig_RequestAimType orig, RoR2.CameraTargetParams.AimType aimType) {
-    
-  }
-  */
-  
   [MethodImpl(768)]
   private void ᚭᛣᛮᛨᚶᛟᚷᚴ(string ᚱᛢᛊᚢᚴᛤᛉᚣ, string ᛆᛇᚶᛔᛒᛄᚤᛪ, string ᚡᛧᛞᛍᛏᛀᛕᚵ, string ᚩᛶᛠᚿᚵᚯᚹᛴ = "Item Effects") {
     try {
