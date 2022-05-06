@@ -52,7 +52,7 @@ public sealed class _: BaseUnityPlugin {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
     foreach (ParticleSystem part in self.procParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area")
-		    part.Play();
+        part.Play();
   }
   
   private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
@@ -68,8 +68,8 @@ public sealed class _: BaseUnityPlugin {
     foreach (ParticleSystem part in self.auraParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area") {
         var main = part.main;
-    		main.loop = true;
-		    part.Play();
+        main.loop = true;
+        part.Play();
       }
   }
   
