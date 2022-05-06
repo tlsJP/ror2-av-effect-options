@@ -15,8 +15,6 @@ using UnityEngine.AddressableAssets;
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
-  //private static Transform FrostRelicAuraParticles = Addressables.LoadAsset<GameObject>("RoR2/Base/Icicle/IcicleAura.prefab").WaitForCompletion().transform.Find("Particles").gameObject.transform;
-  
   private static ConfigEntry<bool> FrostRelicActivationConfig;
   private static ConfigEntry<bool> FrostRelicParticlesConfig;
   
@@ -47,10 +45,6 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
     
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Icicle/DisplayFrostRelicFollower", "Enable Frost Relic Follower", "Enables the little floating snow flake that Frost Relic gives you. Note: toggling will not take effect until next stage. Let me know if you like this setting and I should keep it, thanks.", "Testing");
-    // IcicleAura contains all the goodies/baddies
-    // Children:
-    //   "Area" = good; the sphere that shows the effect's area
-    //   "Chunks", "Ring, Core", "Ring, Outer", "Ring, Proceed", "SpinningSharpChunks" = bad
     
   }
   
