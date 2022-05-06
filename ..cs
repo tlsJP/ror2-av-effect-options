@@ -48,25 +48,25 @@ public sealed class _: BaseUnityPlugin {
     
   }
   
-  private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, RoR2.IcicleAuraController self) {
+  private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-    foreach (UnityEngine.ParticleSystem part in self.procParticles)
+    foreach (ParticleSystem part in self.procParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area")
 		    part.Play();
   }
   
-  private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, RoR2.IcicleAuraController self) {
+  private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
     if (FrostRelicActivationConfig.Value) {
-      RoR2.Util.PlaySound("Play_item_proc_icicle", self.gameObject);
+      Util.PlaySound("Play_item_proc_icicle", self.gameObject);
       var ctp = self.owner.GetComponent<CameraTargetParams>();
 	    if (ctp) {
-		    typeof(RoR2.IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
+		    typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
 		      self, ctp.RequestAimType(CameraTargetParams.AimType.Aura)
 		    );
 		  }
     }
-    foreach (UnityEngine.ParticleSystem part in self.auraParticles)
+    foreach (ParticleSystem part in self.auraParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area") {
         var main = part.main;
     		main.loop = true;
