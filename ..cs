@@ -3,20 +3,37 @@ using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using RiskOfOptions;
 using RiskOfOptions.Options;
+using RoR2;
 using System.IO;
+using System.Reflection;  
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.6.0")]
+[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.7.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
+  //private static Transform FrostRelicAuraParticles = Addressables.LoadAsset<GameObject>("RoR2/Base/Icicle/IcicleAura.prefab").WaitForCompletion().transform.Find("Particles").gameObject.transform;
+  
+  private static ConfigEntry<bool> FrostRelicActivationConfig;
+  private static ConfigEntry<bool> FrostRelicParticlesConfig;
+  
   [MethodImpl(768)]
   private void Awake() {
     if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚧᛃᛍᛣᛩᚱᚦᛕ();
+    
+    FrostRelicActivationConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill", true, "Enables the sound effects and FOV change of Frost Relic's on-kill proc. Does not affect the particle effects (see the Frost Relic Particles option).");
+    FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
+    try {
+      On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
+      On.RoR2.IcicleAuraController.OnIcicleGained += ᛗᛕᛈᚩᚴᚷᚢᛛ;
+    } catch {}
+    
     ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicActivationConfig);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
     ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX"  , "Enable Gasoline"             , "Enables Gasoline's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ElementalRings/FireTornado"       , "Enable Kjaros Band"          , "Enables Kjaro's Band's tornado");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost" , "Enable Molten Perforator"    , "Enables the Molten Perforator visuals");
@@ -28,7 +45,46 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+    
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Icicle/DisplayFrostRelicFollower", "Enable Frost Relic Follower", "Enables the little floating snow flake that Frost Relic gives you. Note: toggling will not take effect until next stage. Let me know if you like this setting and I should keep it, thanks.", "Testing");
+    // IcicleAura contains all the goodies/baddies
+    // Children:
+    //   "Area" = good; the sphere that shows the effect's area
+    //   "Chunks", "Ring, Core", "Ring, Outer", "Ring, Proceed", "SpinningSharpChunks" = bad
+    
   }
+  
+  private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, RoR2.IcicleAuraController self) {
+    // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
+    foreach (UnityEngine.ParticleSystem part in self.procParticles)
+      if (FrostRelicParticlesConfig.Value | part.name == "Area")
+		    part.Play();
+  }
+  
+  private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, RoR2.IcicleAuraController self) {
+    // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
+    if (FrostRelicActivationConfig.Value) {
+      RoR2.Util.PlaySound("Play_item_proc_icicle", self.gameObject);
+      var ctp = self.owner.GetComponent<CameraTargetParams>();
+	    if (ctp) {
+		    typeof(RoR2.IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
+		      self, ctp.RequestAimType(CameraTargetParams.AimType.Aura)
+		    );
+		  }
+    }
+    foreach (UnityEngine.ParticleSystem part in self.auraParticles)
+      if (FrostRelicParticlesConfig.Value | part.name == "Area") {
+        var main = part.main;
+    		main.loop = true;
+		    part.Play();
+      }
+  }
+  
+  /*
+  private static RoR2.CameraTargetParams.AimRequest ᚧᚥᚪᛩᚫᛌᛞᛖ(On.RoR2.CameraTargetParams.orig_RequestAimType orig, RoR2.CameraTargetParams.AimType aimType) {
+    
+  }
+  */
   
   [MethodImpl(768)]
   private void ᚭᛣᛮᛨᚶᛟᚷᚴ(string ᚱᛢᛊᚢᚴᛤᛉᚣ, string ᛆᛇᚶᛔᛒᛄᚤᛪ, string ᚡᛧᛞᛍᛏᛀᛕᚵ, string ᚩᛶᛠᚿᚵᚯᚹᛴ = "Item Effects") {

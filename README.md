@@ -11,6 +11,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ### Currently configurable
 * Brainstalks's screen effect
+* Frost Relic particles and FOV change
 * Gasoline's explosion
 * Kjaro's Band tornado
 * Molten Perferators
@@ -43,13 +44,17 @@ Intended for headed client-side installations. [Should] have no effect on headle
     * Here's the default configuration to get you started...
     ```
     [Character Effects]
-    # Enables Stone Titan's on-death explosion
-    Enable Titan Death Effect = false
-    # Enables Wandering Vagrant's on-death explosion
+    # Enables Stone Titan's on-death explosion.
+    Enable Titan Death Effect = true
+    # Enables Wandering Vagrant's on-death explosion.
     Enable Vagrant Death Explosion = true
 
     [Item Effects]
-    # Enables Brainstalks' screen effect
+    # Enables the sound effects and FOV change of Frost Relic's on-kill proc.
+    Enable Frost Relic On-Kill = false
+    # Enables the chunk and ring effects of Frost Relic.
+    Enable Frost Relic Particles = false
+    # Enables Brainstalks' screen effect. 
     Enable Brainstalks = true
     # Enables Gasoline's explosion
     Enable Gasoline = true
