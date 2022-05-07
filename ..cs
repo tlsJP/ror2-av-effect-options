@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.8.0")]
+[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.9.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
@@ -32,9 +32,11 @@ public sealed class _: BaseUnityPlugin {
     } catch {}
     
     ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+    }
     ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX"  , "Enable Gasoline"             , "Enables Gasoline's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ElementalRings/FireTornado"       , "Enable Kjaros Band"          , "Enables Kjaro's Band's tornado");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost" , "Enable Molten Perforator"    , "Enables the Molten Perforator visuals");
@@ -46,6 +48,12 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+    
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("MissileVoid/MissileVoid", "Enable MissileVoid", "Floofs <3", "YIFFs");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "Floofs <3", "YIFFs");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "Floofs <3", "YIFFs");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "Floofs <3", "YIFFs");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Floofs <3", "YIFFs");
     
   }
   
