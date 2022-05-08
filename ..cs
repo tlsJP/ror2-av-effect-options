@@ -21,8 +21,6 @@ public sealed class _: BaseUnityPlugin {
   
   [MethodImpl(768)]
   private void Awake() {
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚧᛃᛍᛣᛩᚱᚦᛕ();
-    
     FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
     FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
     FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
@@ -32,9 +30,12 @@ public sealed class _: BaseUnityPlugin {
     } catch {}
     
     ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
+      ᚧᛃᛍᛣᛩᚱᚦᛕ();
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
+      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+    }
     ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX"  , "Enable Gasoline"             , "Enables Gasoline's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ElementalRings/FireTornado"       , "Enable Kjaros Band"          , "Enables Kjaro's Band's tornado");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost" , "Enable Molten Perforator"    , "Enables the Molten Perforator visuals");
