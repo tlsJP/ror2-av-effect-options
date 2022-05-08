@@ -4,7 +4,7 @@
 	"dependencies": [
 		"bbepis-BepInExPack-5.3.1"
 	],
-	"description": "Enable or disable various items' AV effects. Works best with RiskOfOptions.",
+	"description": "Adds various options regarding items' AV effects.",
 	"displayName": "AV Effect Options",
 	"DisplayName": "AV Effect Options",
 	"enabled": true,
