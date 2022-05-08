@@ -105,7 +105,7 @@ The binary release of this mod is built on a Debian-like but any Portable Operat
     * [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (either manually or using r2modman)
 1. Obtain this mod's source code (using git, or curl, wget, email, etc.)
 1. Compile!
-    * TODO: adjust path to BepInEx plugins if needed (look at the `BepInExPath` property)
+    * TODO: configure path to BepInEx plugins (look at the `BepInExPath` property)
     * `msbuild -r` inside the root of the source tree. 
 1. Compiled assembly is located at `./out/..dll`, distribution zip is located at `./..zip`
 
