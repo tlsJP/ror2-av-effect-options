@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.8.0")]
+[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.9.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
@@ -19,6 +19,8 @@ public sealed class _: BaseUnityPlugin {
   private static ConfigEntry<bool> FrostRelicSoundConfig;
   private static ConfigEntry<bool> FrostRelicFOVConfig;
   private static ConfigEntry<bool> FrostRelicParticlesConfig;
+  
+  private static FieldInfo IcicleAuraAimRequest;
   
   private static GameObject DeskplantSpores;
   private static GameObject DeskplantSymbols;
@@ -49,6 +51,7 @@ public sealed class _: BaseUnityPlugin {
     }
     
     try {
+      IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance);
       On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
       On.RoR2.IcicleAuraController.OnIcicleGained += ᛗᛕᛈᚩᚴᚷᚢᛛ;
       if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
@@ -95,10 +98,7 @@ public sealed class _: BaseUnityPlugin {
       Util.PlaySound("Play_item_proc_icicle", self.gameObject);
     if (FrostRelicFOVConfig.Value) {
       var ctp = self.owner.GetComponent<CameraTargetParams>();
-      if (ctp)
-        typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(
-          self, ctp.RequestAimType(CameraTargetParams.AimType.Aura)
-        );
+      if (ctp) IcicleAuraAimRequest.SetValue(self, ctp.RequestAimType(CameraTargetParams.AimType.Aura));
     }
     foreach (ParticleSystem part in self.auraParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area") {

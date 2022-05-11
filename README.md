@@ -13,6 +13,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Brainstalks's screen effect
 * Frost Relic particles and FOV change
 * Gasoline's explosion
+* Interstellar Desk Plant's indicator ward particle effects
 * Kjaro's Band tornado
 * Molten Perferators
 * Runald's Band explosion
@@ -46,17 +47,19 @@ Intended for headed client-side installations. [Should] have no effect on headle
     [Character Effects]
     # Enables Stone Titan's on-death explosion.
     Enable Titan Death Effect = true
-    # Enables Wandering Vagrant's on-death explosion.
+    # Enables Wandering Vagrant's on-death explosion. 
     Enable Vagrant Death Explosion = true
 
     [Item Effects]
-    # Enables the temporary FOV change that Frost Relic's on-kill proc gives. 
-    Enable Frost Relic On-Kill FOV = false
-    # Enables the sound effects of Frost Relic's on-kill proc.
-    Enable Frost Relic On-Kill Sound = true
+    # Enables the temporary FOV change that Frost Relic's on-kill proc gives.
+    Enable Frost Relic FOV = false
     # Enables the chunk and ring effects of Frost Relic.
     Enable Frost Relic Particles = false
-    # Enables Brainstalks' screen effect. 
+    # Enables the sound effects of Frost Relic's on-kill proc.
+    Enable Frost Relic Sound = true
+    # Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator.
+    Enable Desk Plant Ward Particles = false
+    # Enables Brainstalks' screen effect.
     Enable Brainstalks = true
     # Enables Gasoline's explosion
     Enable Gasoline = true
