@@ -104,11 +104,18 @@ public sealed class _: BaseUnityPlugin {
       var showseed = selftype.GetProperty("showSeedObject", BindingFlags.NonPublic | BindingFlags.Instance);
       var selfcontroller = selftype.GetField("controller", BindingFlags.NonPublic | BindingFlags.Instance);
       selfcontroller.SetValue(self, controller);
+      System.Console.WriteLine("selftype");
       System.Console.WriteLine(selftype);
+      System.Console.WriteLine("getcomponent");
       System.Console.WriteLine(getcomponent);
+      System.Console.WriteLine("controller");
       System.Console.WriteLine(controller);
+      System.Console.WriteLine("selfcontroller");
       System.Console.WriteLine(selfcontroller);
+      System.Console.WriteLine("showseed");
       System.Console.WriteLine(showseed);
+      System.Console.WriteLine("showseed.GetValue(self)");
+      System.Console.WriteLine((bool)showseed.GetValue(self));
 		  controller.seedObject.SetActive((bool)showseed.GetValue(self));
 		  controller.plantObject.SetActive(false);
 		}
