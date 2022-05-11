@@ -4,8 +4,9 @@ using BepInEx.Configuration;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 using RoR2;
+using System;
 using System.IO;
-using System.Reflection;  
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -18,25 +19,47 @@ public sealed class _: BaseUnityPlugin {
   private static ConfigEntry<bool> FrostRelicSoundConfig;
   private static ConfigEntry<bool> FrostRelicFOVConfig;
   private static ConfigEntry<bool> FrostRelicParticlesConfig;
-  private static ConfigEntry<bool> DeskPlantPlantConfig;
+  
+  private static GameObject DeskplantSpores;
+  private static GameObject DeskplantSymbols;
+  private static GameObject DeskplantMushrooms;
   
   [MethodImpl(768)]
   private void Awake() {
-    FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
-    FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic On-Kill Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
+    FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
     FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
+    FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
+    
+    var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
+    
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚧᛃᛍᛣᛩᚱᚦᛕ();
+    
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+    
+    try {
+      var DeskplantIndicatorTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Plant/DeskplantWard.prefab").WaitForCompletion().transform.Find("Indicator").gameObject.transform;
+      DeskplantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
+      DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
+      DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
+      DeskPlantIndicatorConfig.SettingChanged += ᛁᛖᛑᛞᚤᚾᚹᛊ;
+      ᛁᛖᛑᛞᚤᚾᚹᛊ(DeskPlantIndicatorConfig);
+      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(DeskPlantIndicatorConfig);
+    } catch {
+      Logger.LogError("Could not hook onto Interstellar Desk Plant ward particles.");
+    }
+    
     try {
       On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
       On.RoR2.IcicleAuraController.OnIcicleGained += ᛗᛕᛈᚩᚴᚷᚢᛛ;
-    } catch {}
-    
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
-      ᚧᛃᛍᛣᛩᚱᚦᛕ();
-      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
-      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
-      ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
+        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
+        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
+        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
+      }
+    } catch {
+      Logger.LogError("Could not hook onto Frost Relic particles.");
     }
+    
     ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX"  , "Enable Gasoline"             , "Enables Gasoline's explosion");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("ElementalRings/FireTornado"       , "Enable Kjaros Band"          , "Enables Kjaro's Band's tornado");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost" , "Enable Molten Perforator"    , "Enables the Molten Perforator visuals");
@@ -49,76 +72,14 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/DeskplantWard", "DeskplantWard", "Floofs <3" , "YIFFING");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/DisplayInterstellarDeskPlant", "DisplayInterstellarDeskPlant", "Floofs <3" , "YIFFING");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/InterstellarDeskPlantGroundEffects", "InterstellarDeskPlantGroundEffects", "Floofs <3" , "YIFFING");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/InterstellarDeskPlant", "InterstellarDeskPlant", "Floofs <3" , "YIFFING");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/PickupInterstellarDeskPlant", "PickupInterstellarDeskPlant", "Floofs <3" , "YIFFING");
-    
-    // Note: "InterstellarDeskPlant" disables the AOE circle, the sprouting mushroom effect,
-    //   AND the actual healing (boo); but leaves everything else, such as the plant itself.
-    // WRONG "InterstellarDeskPlant" child "Seed"/"Spores" disables the sprouting mushroom effect.
-    
-    System.Console.WriteLine("BEGIN DESK PLANT DEBUG");
-    
-    DeskPlantPlantConfig = Config.Bind("YIFFING", "Enable Desk Plant Spore Particles", true, "FLOOFS <3");
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(DeskPlantPlantConfig);
-    
-    //var basetype = typeof(RoR2.DeskPlantController).GetNestedTypes(BindingFlags.NonPublic)[0].BaseType;
-    var dpct = typeof(RoR2.DeskPlantController);
-    var basetype = dpct.GetNestedType("DeskPlantBaseState", BindingFlags.NonPublic);
-    System.Console.WriteLine(basetype);
-    var seed = dpct.GetNestedType("SeedState", BindingFlags.NonPublic);
-    System.Console.WriteLine(seed);
-    var sprout = dpct.GetNestedType("SproutState", BindingFlags.NonPublic);
-    System.Console.WriteLine(sprout);
-    var main = dpct.GetNestedType("SproutState", BindingFlags.NonPublic);
-    System.Console.WriteLine(main);
-    var death = dpct.GetNestedType("DeathState", BindingFlags.NonPublic);
-    System.Console.WriteLine(death);
-    System.Console.WriteLine("-----");
-    var plant_a = seed.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
-    var plant_b = sprout.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
-    var plant_c = main.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
-    var plant_d = death.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
-    System.Console.WriteLine(plant_a);
-    System.Console.WriteLine(plant_b);
-    System.Console.WriteLine(plant_c);
-    System.Console.WriteLine(plant_d);
-    
-    try {
-      On.RoR2.DeskPlantController.DeskPlantBaseState.OnEnter += ᛁᛖᛑᛞᚤᚾᚹᛊ;
-    } catch {}
-    
-    System.Console.WriteLine("END DESK PLANT DEBUG");
   }
   
-  private void ᛁᛖᛑᛞᚤᚾᚹᛊ(On.RoR2.DeskPlantController.DeskPlantBaseState.orig_OnEnter orig, EntityStates.BaseState self) {
-    if (DeskPlantPlantConfig.Value) {
-		  orig(self);
-		} else {
-      System.Console.WriteLine("Skipping Desk plant!");
-      var selftype = self.GetType();
-      var getcomponent = selftype.GetMethod("GetComponent", BindingFlags.NonPublic | BindingFlags.Instance, null, new [] {typeof(System.Type)}, null);
-      var controller = (DeskPlantController)getcomponent.Invoke(self, new [] {typeof(DeskPlantController)});
-      var showseed = selftype.GetProperty("showSeedObject", BindingFlags.NonPublic | BindingFlags.Instance);
-      var selfcontroller = selftype.GetField("controller", BindingFlags.NonPublic | BindingFlags.Instance);
-      selfcontroller.SetValue(self, controller);
-      System.Console.WriteLine("selftype");
-      System.Console.WriteLine(selftype);
-      System.Console.WriteLine("getcomponent");
-      System.Console.WriteLine(getcomponent);
-      System.Console.WriteLine("controller");
-      System.Console.WriteLine(controller);
-      System.Console.WriteLine("selfcontroller");
-      System.Console.WriteLine(selfcontroller);
-      System.Console.WriteLine("showseed");
-      System.Console.WriteLine(showseed);
-      System.Console.WriteLine("showseed.GetValue(self)");
-      System.Console.WriteLine((bool)showseed.GetValue(self));
-		  controller.seedObject.SetActive((bool)showseed.GetValue(self));
-		  controller.plantObject.SetActive(false);
-		}
+  [MethodImpl(768)]
+  private void ᛁᛖᛑᛞᚤᚾᚹᛊ(object x, EventArgs _ = null) {
+    var y = ((ConfigEntry<bool>)x).Value;
+    DeskplantSpores.SetActive(y);
+    DeskplantSymbols.SetActive(y);
+    DeskplantMushrooms.SetActive(y);
   }
   
   private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
