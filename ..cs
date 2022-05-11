@@ -18,6 +18,7 @@ public sealed class _: BaseUnityPlugin {
   private static ConfigEntry<bool> FrostRelicSoundConfig;
   private static ConfigEntry<bool> FrostRelicFOVConfig;
   private static ConfigEntry<bool> FrostRelicParticlesConfig;
+  private static ConfigEntry<bool> DeskPlantPlantConfig;
   
   [MethodImpl(768)]
   private void Awake() {
@@ -48,6 +49,69 @@ public sealed class _: BaseUnityPlugin {
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
     
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/DeskplantWard", "DeskplantWard", "Floofs <3" , "YIFFING");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/DisplayInterstellarDeskPlant", "DisplayInterstellarDeskPlant", "Floofs <3" , "YIFFING");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/InterstellarDeskPlantGroundEffects", "InterstellarDeskPlantGroundEffects", "Floofs <3" , "YIFFING");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/InterstellarDeskPlant", "InterstellarDeskPlant", "Floofs <3" , "YIFFING");
+    ᚭᛣᛮᛨᚶᛟᚷᚴ("Plant/PickupInterstellarDeskPlant", "PickupInterstellarDeskPlant", "Floofs <3" , "YIFFING");
+    
+    // Note: "InterstellarDeskPlant" disables the AOE circle, the sprouting mushroom effect,
+    //   AND the actual healing (boo); but leaves everything else, such as the plant itself.
+    // WRONG "InterstellarDeskPlant" child "Seed"/"Spores" disables the sprouting mushroom effect.
+    
+    System.Console.WriteLine("BEGIN DESK PLANT DEBUG");
+    
+    DeskPlantPlantConfig = Config.Bind("YIFFING", "Enable Desk Plant Spore Particles", true, "FLOOFS <3");
+    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(DeskPlantPlantConfig);
+    
+    //var basetype = typeof(RoR2.DeskPlantController).GetNestedTypes(BindingFlags.NonPublic)[0].BaseType;
+    var dpct = typeof(RoR2.DeskPlantController);
+    var basetype = dpct.GetNestedType("DeskPlantBaseState", BindingFlags.NonPublic);
+    System.Console.WriteLine(basetype);
+    var seed = dpct.GetNestedType("SeedState", BindingFlags.NonPublic);
+    System.Console.WriteLine(seed);
+    var sprout = dpct.GetNestedType("SproutState", BindingFlags.NonPublic);
+    System.Console.WriteLine(sprout);
+    var main = dpct.GetNestedType("SproutState", BindingFlags.NonPublic);
+    System.Console.WriteLine(main);
+    var death = dpct.GetNestedType("DeathState", BindingFlags.NonPublic);
+    System.Console.WriteLine(death);
+    System.Console.WriteLine("-----");
+    var plant_a = seed.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
+    var plant_b = sprout.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
+    var plant_c = main.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
+    var plant_d = death.GetProperty("showPlantObject", BindingFlags.NonPublic | BindingFlags.Instance);
+    System.Console.WriteLine(plant_a);
+    System.Console.WriteLine(plant_b);
+    System.Console.WriteLine(plant_c);
+    System.Console.WriteLine(plant_d);
+    
+    try {
+      On.RoR2.DeskPlantController.DeskPlantBaseState.OnEnter += ᛁᛖᛑᛞᚤᚾᚹᛊ;
+    } catch {}
+    
+    System.Console.WriteLine("END DESK PLANT DEBUG");
+  }
+  
+  private void ᛁᛖᛑᛞᚤᚾᚹᛊ(On.RoR2.DeskPlantController.DeskPlantBaseState.orig_OnEnter orig, EntityStates.BaseState self) {
+    if (DeskPlantPlantConfig.Value) {
+		  orig(self);
+		} else {
+      System.Console.WriteLine("Skipping Desk plant!");
+      var selftype = self.GetType();
+      var getcomponent = selftype.GetMethod("GetComponent", BindingFlags.NonPublic | BindingFlags.Instance, null, new [] {typeof(System.Type)}, null);
+      var controller = (DeskPlantController)getcomponent.Invoke(self, new [] {typeof(DeskPlantController)});
+      var showseed = selftype.GetProperty("showSeedObject", BindingFlags.NonPublic | BindingFlags.Instance);
+      var selfcontroller = selftype.GetField("controller", BindingFlags.NonPublic | BindingFlags.Instance);
+      selfcontroller.SetValue(self, controller);
+      System.Console.WriteLine(selftype);
+      System.Console.WriteLine(getcomponent);
+      System.Console.WriteLine(controller);
+      System.Console.WriteLine(selfcontroller);
+      System.Console.WriteLine(showseed);
+		  controller.seedObject.SetActive((bool)showseed.GetValue(self));
+		  controller.plantObject.SetActive(false);
+		}
   }
   
   private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
