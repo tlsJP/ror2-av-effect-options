@@ -98,7 +98,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ## Compiling
 
-The binary release of this mod is built on a Debian-like but any Portable Operating System that supports all of the prerequisite thingies should be fine.
+The binary release of this mod is built on a Debian-like but any [Portable Operating System](https://en.wikipedia.org/wiki/POSIX) that supports all of the prerequisite thingies should be fine.
 
 1. Get all the prerequisite thingies
     * The following from [The Mono Project](https://www.mono-project.com/download/stable).
