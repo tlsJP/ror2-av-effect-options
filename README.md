@@ -1,7 +1,7 @@
 Hewwos!
 
 ## OwO, wat's dis?
-The goal is to allow players to selectively disable in-game audio-visual effects that aren't strictly necessary to enjoy the game without changing game mechanics or balance. This may assist people who - among others; have photosensitivity, are sensitive to sensory overstimulation, or have limited computing resources. Effects can [usually] be toggled mid-stage.
+The goal is to allow players to selectively disable in-game audio-visual effects that aren't strictly necessary to enjoy the game without changing game mechanics or balance. This may assist people who, among others; have photosensitivity, are sensitive to sensory overstimulation, or have limited computing resources. Effects can [usually] be toggled mid-stage.
 
 Originally intended just my furiend group, I am now advertising it here on the Thunderstore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
 
@@ -22,6 +22,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Sticky Bomb's drops & explosion
 * Stone Titan's death effect
 * Wandering Vagrant's death explosion
+* Weeping Fungus' effects
 * Will-o'-the-Wisp explosion
 
 ### Future options
@@ -121,6 +122,7 @@ These good people/beings did me a help one way or another, but don't necessarily
 * The Thunderstore
 * [Rune580](https://github.com/Rune580) for [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options)
 * [Vl4dimyr](https://github.com/Vl4dimyr) for their [mod](https://thunderstore.io/package/Vl4dimyr/CaptainShotgunModes) (pictured)
+* Bon Yok
 * YOU! For existing today :3
 
 ## Notes
