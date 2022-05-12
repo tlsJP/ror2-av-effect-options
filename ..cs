@@ -51,7 +51,7 @@ public sealed class _: BaseUnityPlugin {
     }
     
     try {
-      IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", BindingFlags.NonPublic | BindingFlags.Instance);
+      IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags) 36);
       On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
       On.RoR2.IcicleAuraController.OnIcicleGained += ᛗᛕᛈᚩᚴᚷᚢᛛ;
       if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
