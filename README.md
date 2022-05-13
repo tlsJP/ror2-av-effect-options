@@ -53,6 +53,8 @@ Intended for headed client-side installations. [Should] have no effect on headle
     Enable Vagrant Death Explosion = true
 
     [Item Effects]
+    # Enables Blast Shower's effects.
+    Enable Blast Shower = true
     # Enables the temporary FOV change that Frost Relic's on-kill proc gives.
     Enable Frost Relic FOV = false
     # Enables the chunk and ring effects of Frost Relic.
