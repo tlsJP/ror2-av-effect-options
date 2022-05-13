@@ -10,6 +10,7 @@ Currently only the following effects are configurable, but I'm always looking to
 Intended for headed client-side installations. [Should] have no effect on headless installations. 
 
 ### Currently configurable
+* Blast Shower's effects
 * Brainstalks's screen effect
 * Frost Relic particles and FOV change
 * Gasoline's explosion
