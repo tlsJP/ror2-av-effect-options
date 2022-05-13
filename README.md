@@ -81,6 +81,12 @@ Intended for headed client-side installations. [Should] have no effect on headle
     Enable Sticky Bomb Explosion = true
     # Enables Will o' the Wisp's explosion
     Enable Will-o-the-Wisp = true
+    
+    [SOTV Item Effects]
+    # Enables Weeping Fungus' sound effect. 
+    Enable Weeping Fungus Sound = true
+    # Enables Weeping Fungus' visual particle effects. 
+    Enable Weeping Fungus Visuals = true
     ```
 
 ## Installing
