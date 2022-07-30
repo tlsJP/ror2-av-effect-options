@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.12.0")]
+[BepInPlugin(".AVFX_Options..", "JP's AV Effect Options", "1.12.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
   private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
@@ -63,7 +63,7 @@ public sealed class _: BaseUnityPlugin {
       Logger.LogError("Could not hook onto Blast Shower.");
     }
     
-    doSomething("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+    bindAsset("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
     
     // Interstellar Desk Plant
     try {
@@ -92,7 +92,7 @@ public sealed class _: BaseUnityPlugin {
       Logger.LogError("Could not hook onto Frost Relic.");
     }
     
-    doSomething("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+    bindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
     
     // Kjaro's Band
     try {
@@ -116,7 +116,7 @@ public sealed class _: BaseUnityPlugin {
       Logger.LogError("Could not hook onto Kjaro's Band.");
     }
     
-    doSomething("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+    bindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
     
     // Runald's Band
     try {
@@ -133,11 +133,11 @@ public sealed class _: BaseUnityPlugin {
       Logger.LogError("Could not hook onto Runald's Band.");
     }
     
-    doSomething("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-    doSomething("Tonic/TonicBuffEffect"            , "Enable Spinel Tonic"         , "Enables Spinel Tonic's screen effect");
-    doSomething("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
-    doSomething("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-    doSomething("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
+    bindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+    bindAsset("Tonic/TonicBuffEffect"            , "Enable Spinel Tonic"         , "Enables Spinel Tonic's screen effect");
+    bindAsset("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
+    bindAsset("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
+    bindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
     
     // Weeping Bungus
     try {
@@ -157,9 +157,15 @@ public sealed class _: BaseUnityPlugin {
     } catch {
       Logger.LogError("Could not hook onto Wungus.");
     }
+
+    try{
+        var PlimpVoid
+
+
+    } catch { Logger.LogError("Couldn't get plimp"); }
     
-    doSomething("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
-    doSomething("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+    bindAsset("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+    bindAsset("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
   }
   
   [MethodImpl(768)]
@@ -235,7 +241,7 @@ public sealed class _: BaseUnityPlugin {
   }
   
   [MethodImpl(768)]
-  private void doSomething(string assetPath, string title, string description, string section = "Item Effects") {
+  private void bindAsset(string assetPath, string title, string description, string section = "Item Effects") {
     try {
       var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
       var config = Config.Bind(section, title, true, description);
