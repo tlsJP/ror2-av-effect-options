@@ -17,7 +17,7 @@ using UnityEngine.AddressableAssets;
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
 public sealed class AvOptions : BaseUnityPlugin
 {
-    private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+    private static readonly bool ExistsRiskOfOptions = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
 
     private static ConfigEntry<bool> FrostRelicSoundConfig;
     private static ConfigEntry<bool> FrostRelicFOVConfig;
@@ -56,7 +56,7 @@ public sealed class AvOptions : BaseUnityPlugin
         FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
         FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
 
-        if (riskOfOptionsLoaded) addToRiskOfOptions();
+        if (ExistsRiskOfOptions) AddToRiskOfOptions();
 
         // Blast Shower
         try
@@ -70,15 +70,15 @@ public sealed class AvOptions : BaseUnityPlugin
                 for (var i = 0; i < CleanseTransform.childCount; i++)
                     CleanseTransform.GetChild(i).gameObject.SetActive(false);
             }
-            CleanseVisualConfig.SettingChanged += ᛑᛯᛜᛧᛇᛝᛓᚻ;
-            if (riskOfOptionsLoaded) addOption(CleanseVisualConfig);
+            CleanseVisualConfig.SettingChanged += BlastShowerConfigHandler;
+            if (ExistsRiskOfOptions) AddOption(CleanseVisualConfig);
         }
         catch
         {
             Logger.LogError("Could not hook onto Blast Shower.");
         }
 
-        bindAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+        BindAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
 
         // Interstellar Desk Plant
         try
@@ -88,9 +88,9 @@ public sealed class AvOptions : BaseUnityPlugin
             DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
             DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
             var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
-            idpToggle(DeskPlantIndicatorConfig);
-            DeskPlantIndicatorConfig.SettingChanged += idpToggle;
-            if (riskOfOptionsLoaded) addOption(DeskPlantIndicatorConfig);
+            IdpVisualConfigHandler(DeskPlantIndicatorConfig);
+            DeskPlantIndicatorConfig.SettingChanged += IdpVisualConfigHandler;
+            if (ExistsRiskOfOptions) AddOption(DeskPlantIndicatorConfig);
         }
         catch
         {
@@ -100,13 +100,13 @@ public sealed class AvOptions : BaseUnityPlugin
         try
         {
             IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags)36);
-            On.RoR2.IcicleAuraController.OnIciclesActivated += handleFrelicActivation;
-            On.RoR2.IcicleAuraController.OnIcicleGained += handleFrelicParticles;
-            if (riskOfOptionsLoaded)
+            On.RoR2.IcicleAuraController.OnIciclesActivated += FrelicActivationEventHandler;
+            On.RoR2.IcicleAuraController.OnIcicleGained += FrelicGainedEventHandler;
+            if (ExistsRiskOfOptions)
             {
-                addOption(FrostRelicFOVConfig);
-                addOption(FrostRelicParticlesConfig);
-                addOption(FrostRelicSoundConfig);
+                AddOption(FrostRelicFOVConfig);
+                AddOption(FrostRelicParticlesConfig);
+                AddOption(FrostRelicSoundConfig);
             }
         }
         catch
@@ -114,7 +114,7 @@ public sealed class AvOptions : BaseUnityPlugin
             Logger.LogError("Could not hook onto Frost Relic.");
         }
 
-        bindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+        BindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
 
         // Kjaro's Band
         try
@@ -133,15 +133,15 @@ public sealed class AvOptions : BaseUnityPlugin
             FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
             FireTornadoLight.SetActive(FireTornadoConfig.Value);
             FireTornadoBurst.SetActive(FireTornadoConfig.Value);
-            FireTornadoConfig.SettingChanged += kjVisualToggle;
-            if (riskOfOptionsLoaded) addOption(FireTornadoConfig);
+            FireTornadoConfig.SettingChanged += KjaroVisualConfigHandler;
+            if (ExistsRiskOfOptions) AddOption(FireTornadoConfig);
         }
         catch
         {
             Logger.LogError("Could not hook onto Kjaro's Band.");
         }
 
-        bindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+        BindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
 
         // Runald's Band
         try
@@ -153,19 +153,19 @@ public sealed class AvOptions : BaseUnityPlugin
             var IceRingExplosionTransform = IceRingExplosionPrefab.transform;
             for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
                 IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
-            IceRingExplosionConfig.SettingChanged += ᛔᛋᛡᛆᛅᛛᛞᛘ;
-            if (riskOfOptionsLoaded) addOption(IceRingExplosionConfig);
+            IceRingExplosionConfig.SettingChanged += IceRingExplosionConfigHandler;
+            if (ExistsRiskOfOptions) AddOption(IceRingExplosionConfig);
         }
         catch
         {
             Logger.LogError("Could not hook onto Runald's Band.");
         }
 
-        bindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-        bindAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
-        bindAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
-        bindAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-        bindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
+        BindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+        BindAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
+        BindAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
+        BindAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
+        BindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
 
         // Weeping Bungus
         try
@@ -177,12 +177,12 @@ public sealed class AvOptions : BaseUnityPlugin
             var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
             MushroomVoidAudio.enabled = WungusAudioConfig.Value;
             MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
-            WungusAudioConfig.SettingChanged += wungusAudioToggle;
-            WungusVisualsConfig.SettingChanged += wungusVisualToggle;
-            if (riskOfOptionsLoaded)
+            WungusAudioConfig.SettingChanged += WungusAudioConfigHandler;
+            WungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
+            if (ExistsRiskOfOptions)
             {
-                addOption(WungusAudioConfig);
-                addOption(WungusVisualsConfig);
+                AddOption(WungusAudioConfig);
+                AddOption(WungusVisualsConfig);
             }
         }
         catch
@@ -233,22 +233,22 @@ public sealed class AvOptions : BaseUnityPlugin
         }
         catch { Logger.LogError("Couldn't load plimp"); }
 
-        bindAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
-        bindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+        BindAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+        BindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
 
-        bindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "foo description", "SOTV Item Effects");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "foo description", "SOTV Item Effects");
     }
 
     [MethodImpl(768)]
-    private void ᛑᛯᛜᛧᛇᛝᛓᚻ(object x, EventArgs _)
+    private void BlastShowerConfigHandler(object x, EventArgs _)
     {
         var y = ((ConfigEntry<bool>)x).Value;
         CleanseEffect.effectIndex = (EffectIndex)(y ? 102 : -1);
@@ -257,7 +257,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void ᛔᛋᛡᛆᛅᛛᛞᛘ(object x, EventArgs _)
+    private void IceRingExplosionConfigHandler(object x, EventArgs _)
     {
         var transform = IceRingExplosionPrefab.transform;
         var childCount = transform.childCount;
@@ -274,7 +274,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void kjVisualToggle(object x, EventArgs _)
+    private void KjaroVisualConfigHandler(object x, EventArgs _)
     {
         var y = ((ConfigEntry<bool>)x).Value;
         FireTornadoSmoke.SetActive(y);
@@ -285,7 +285,7 @@ public sealed class AvOptions : BaseUnityPlugin
         FireTornadoBurst.SetActive(y);
     }
 
-    private void plimpAudioToggle(object x, EventArgs _)
+    private void PlimpAudioConfigHandler(object x, EventArgs _)
     {
         var enabled = ((ConfigEntry<bool>)x).Value;
         if (enabled)
@@ -299,15 +299,15 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void wungusAudioToggle(object x, EventArgs _) =>
+    private void WungusAudioConfigHandler(object x, EventArgs _) =>
     MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
 
     [MethodImpl(768)]
-    private void wungusVisualToggle(object x, EventArgs _) =>
+    private void WungusVisualConfigHandler(object x, EventArgs _) =>
       MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
 
     [MethodImpl(768)]
-    private void idpToggle(object x, EventArgs _ = null)
+    private void IdpVisualConfigHandler(object x, EventArgs _ = null)
     {
         var y = ((ConfigEntry<bool>)x).Value;
         DeskplantSpores.SetActive(y);
@@ -315,7 +315,7 @@ public sealed class AvOptions : BaseUnityPlugin
         DeskplantMushrooms.SetActive(y);
     }
 
-    private void handleFrelicParticles(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self)
+    private void FrelicGainedEventHandler(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self)
     {
         // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
         foreach (ParticleSystem part in self.procParticles)
@@ -323,7 +323,7 @@ public sealed class AvOptions : BaseUnityPlugin
                 part.Play();
     }
 
-    private void handleFrelicActivation(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self)
+    private void FrelicActivationEventHandler(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self)
     {
         // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
         if (FrostRelicSoundConfig.Value)
@@ -343,7 +343,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void bindVoidAsset(string assetPath, string title, string description, string section = "Item Effects")
+    private void BindVoidAsset(string assetPath, string title, string description, string section = "Item Effects")
     {
         try
         {
@@ -353,13 +353,13 @@ public sealed class AvOptions : BaseUnityPlugin
             config.SettingChanged += (x, _) =>
               prefab.SetActive(((ConfigEntry<bool>)x).Value);
             prefab.SetActive(config.Value);
-            if (riskOfOptionsLoaded) addOption(config);
+            if (ExistsRiskOfOptions) AddOption(config);
         }
         catch { }
     }
 
     [MethodImpl(768)]
-    private void bindAsset(string assetPath, string title, string description, string section = "Item Effects")
+    private void BindAsset(string assetPath, string title, string description, string section = "Item Effects")
     {
         try
         {
@@ -369,7 +369,7 @@ public sealed class AvOptions : BaseUnityPlugin
             config.SettingChanged += (x, _) =>
               prefab.SetActive(((ConfigEntry<bool>)x).Value);
             prefab.SetActive(config.Value);
-            if (riskOfOptionsLoaded) addOption(config);
+            if (ExistsRiskOfOptions) AddOption(config);
         }
         catch { }
 
@@ -377,11 +377,11 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(520)]
-    private void addOption(ConfigEntry<bool> _) =>
+    private void AddOption(ConfigEntry<bool> _) =>
       ModSettingsManager.AddOption(new CheckBoxOption(_));
 
     [MethodImpl(520)]
-    private void addToRiskOfOptions()
+    private void AddToRiskOfOptions()
     {
         ModSettingsManager.SetModDescription(
           "Enable or disable various item audio/visual effects."
