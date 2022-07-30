@@ -70,7 +70,7 @@ public sealed class AvOptions : BaseUnityPlugin
                 for (var i = 0; i < CleanseTransform.childCount; i++)
                     CleanseTransform.GetChild(i).gameObject.SetActive(false);
             }
-            CleanseVisualConfig.SettingChanged += BlastShowerConfigHandler;
+            CleanseVisualConfig.SettingChanged += BlastShowerConfigEventHandler;
             if (ExistsRiskOfOptions) AddOption(CleanseVisualConfig);
         }
         catch
@@ -133,7 +133,7 @@ public sealed class AvOptions : BaseUnityPlugin
             FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
             FireTornadoLight.SetActive(FireTornadoConfig.Value);
             FireTornadoBurst.SetActive(FireTornadoConfig.Value);
-            FireTornadoConfig.SettingChanged += KjaroVisualConfigHandler;
+            FireTornadoConfig.SettingChanged += KjaroVisualConfigEventHandler;
             if (ExistsRiskOfOptions) AddOption(FireTornadoConfig);
         }
         catch
@@ -153,7 +153,7 @@ public sealed class AvOptions : BaseUnityPlugin
             var IceRingExplosionTransform = IceRingExplosionPrefab.transform;
             for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
                 IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
-            IceRingExplosionConfig.SettingChanged += IceRingExplosionConfigHandler;
+            IceRingExplosionConfig.SettingChanged += IceRingExplosionConfigEventHandler;
             if (ExistsRiskOfOptions) AddOption(IceRingExplosionConfig);
         }
         catch
@@ -177,7 +177,7 @@ public sealed class AvOptions : BaseUnityPlugin
             var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
             MushroomVoidAudio.enabled = WungusAudioConfig.Value;
             MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
-            WungusAudioConfig.SettingChanged += WungusAudioConfigHandler;
+            WungusAudioConfig.SettingChanged += WungusAudioConfigEventHandler;
             WungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
             if (ExistsRiskOfOptions)
             {
@@ -201,7 +201,7 @@ public sealed class AvOptions : BaseUnityPlugin
 
             var PlimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling!");
 
-            PlimpController.startSound = "Play_item_void_critGlasses";
+            PlimpController.startSound = "Stop_item_void_critGlasses";
 
             var lsd = PlimpController.GetComponent<LoopSoundDef>();
             if (lsd != null)
@@ -209,25 +209,22 @@ public sealed class AvOptions : BaseUnityPlugin
                 lsd.startSoundName = null;
             }
 
-            //if (PlimpAudioConfig.Value)
-            //{
+            if (PlimpAudioConfig.Value)
+            {
+                PlimpController.startSound = "Play_item_void_critGlasses";
+                //PlimpController.flightSoundLoop.startSoundName = PlimpFlightSoundSoundName;
+            }
+            else
+            {
+                PlimpController.startSound = null;
+                //PlimpController.flightSoundLoop.startSoundName="";
+            }
 
-            //    PlimpController.startSound = "Play_item_void_critGlasses";
-            //    //PlimpController.flightSoundLoop.startSoundName = PlimpFlightSoundSoundName;
-
-            //}
-            //else
-            //{
-            //    PlimpController.startSound = null;
-            //    //PlimpController.flightSoundLoop.startSoundName="";
-
-            //}
-
-            //PlimpAudioConfig.SettingChanged += plimpAudioToggle;
-            //if (riskOfOptionsLoaded)
-            //{
-            //    addOption(PlimpAudioConfig);
-            //}
+            PlimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
+            if (ExistsRiskOfOptions)
+            {
+                AddOption(PlimpAudioConfig);
+            }
 
 
         }
@@ -237,18 +234,18 @@ public sealed class AvOptions : BaseUnityPlugin
         BindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
 
-        BindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable Plimp", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "foo description", "SOTV Item Effects");
         BindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "foo description", "SOTV Item Effects");
-        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable PlimpBigGhost", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "foo description", "SOTV Item Effects");
+        BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "foo description", "SOTV Item Effects");
     }
 
     [MethodImpl(768)]
-    private void BlastShowerConfigHandler(object x, EventArgs _)
+    private void BlastShowerConfigEventHandler(object x, EventArgs _)
     {
         var y = ((ConfigEntry<bool>)x).Value;
         CleanseEffect.effectIndex = (EffectIndex)(y ? 102 : -1);
@@ -257,7 +254,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void IceRingExplosionConfigHandler(object x, EventArgs _)
+    private void IceRingExplosionConfigEventHandler(object x, EventArgs _)
     {
         var transform = IceRingExplosionPrefab.transform;
         var childCount = transform.childCount;
@@ -274,7 +271,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void KjaroVisualConfigHandler(object x, EventArgs _)
+    private void KjaroVisualConfigEventHandler(object x, EventArgs _)
     {
         var y = ((ConfigEntry<bool>)x).Value;
         FireTornadoSmoke.SetActive(y);
@@ -285,7 +282,7 @@ public sealed class AvOptions : BaseUnityPlugin
         FireTornadoBurst.SetActive(y);
     }
 
-    private void PlimpAudioConfigHandler(object x, EventArgs _)
+    private void PlimpAudioConfigEventHandler(object x, EventArgs _)
     {
         var enabled = ((ConfigEntry<bool>)x).Value;
         if (enabled)
@@ -299,7 +296,7 @@ public sealed class AvOptions : BaseUnityPlugin
     }
 
     [MethodImpl(768)]
-    private void WungusAudioConfigHandler(object x, EventArgs _) =>
+    private void WungusAudioConfigEventHandler(object x, EventArgs _) =>
     MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
 
     [MethodImpl(768)]
