@@ -46,7 +46,7 @@
   </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">
-    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(OutDir)/$(ProjectName).zip" />
+    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
   </Target>
 
 </Project>
