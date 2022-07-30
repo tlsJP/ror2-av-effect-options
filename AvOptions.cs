@@ -14,32 +14,33 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 [BepInPlugin(".AVFX_Options..", "JP's AV Effect Options", "1.12.0")]
-[BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
-public sealed class AvOptions : BaseUnityPlugin {  
-  private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
-  
-  private static ConfigEntry<bool> FrostRelicSoundConfig;
-  private static ConfigEntry<bool> FrostRelicFOVConfig;
-  private static ConfigEntry<bool> FrostRelicParticlesConfig;
-  
-  private static FieldInfo IcicleAuraAimRequest;
-  
-  private static GameObject DeskplantSpores;
-  private static GameObject DeskplantSymbols;
-  private static GameObject DeskplantMushrooms;
-  private static GameObject FireTornadoSmoke;
-  private static GameObject FireTornadoMeshCore;
-  private static GameObject FireTornadoMeshWide;
-  private static GameObject FireTornadoEmbers;
-  private static GameObject FireTornadoLight;
-  private static GameObject FireTornadoBurst;
-  private static GameObject IceRingExplosionPrefab;
-  
-  private static Transform CleanseTransform;
-  private static LoopSoundPlayer MushroomVoidAudio;
-  private static TemporaryVisualEffect MushroomVoidVisual;
-  private static DestroyOnUpdate IceRingExplosionDestructor;
-  private static EffectComponent CleanseEffect;
+[BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
+public sealed class AvOptions : BaseUnityPlugin
+{
+    private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+
+    private static ConfigEntry<bool> FrostRelicSoundConfig;
+    private static ConfigEntry<bool> FrostRelicFOVConfig;
+    private static ConfigEntry<bool> FrostRelicParticlesConfig;
+
+    private static FieldInfo IcicleAuraAimRequest;
+
+    private static GameObject DeskplantSpores;
+    private static GameObject DeskplantSymbols;
+    private static GameObject DeskplantMushrooms;
+    private static GameObject FireTornadoSmoke;
+    private static GameObject FireTornadoMeshCore;
+    private static GameObject FireTornadoMeshWide;
+    private static GameObject FireTornadoEmbers;
+    private static GameObject FireTornadoLight;
+    private static GameObject FireTornadoBurst;
+    private static GameObject IceRingExplosionPrefab;
+
+    private static Transform CleanseTransform;
+    private static LoopSoundPlayer MushroomVoidAudio;
+    private static TemporaryVisualEffect MushroomVoidVisual;
+    private static DestroyOnUpdate IceRingExplosionDestructor;
+    private static EffectComponent CleanseEffect;
 
     //private static LoopSoundPlayer PlimpAudio;
     //private static LoopSoundDef PlimpFlightSoundLoop;
@@ -47,124 +48,146 @@ public sealed class AvOptions : BaseUnityPlugin {
     private static ProjectileController PlimpController;
 
 
-  [MethodImpl(768)]
-  private void Awake() {
-    FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
-    FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
-    FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
-    
-    if (riskOfOptionsLoaded) addToRiskOfOptions();
-    
-    // Blast Shower
-    try {
-      CleanseTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Cleanse/CleanseEffect.prefab").WaitForCompletion().transform;
-      CleanseEffect = CleanseTransform.GetComponent<EffectComponent>();
-      var CleanseVisualConfig = Config.Bind("Item Effects", "Enable Blast Shower", true, "Enables Blast Shower's effects.");
-      if (!CleanseVisualConfig.Value) {
-        CleanseEffect.effectIndex = (EffectIndex) (-1);
-        for (var i = 0; i < CleanseTransform.childCount; i++)
-          CleanseTransform.GetChild(i).gameObject.SetActive(false);
-      }
-      CleanseVisualConfig.SettingChanged += ᛑᛯᛜᛧᛇᛝᛓᚻ;
-      if (riskOfOptionsLoaded) addOption(CleanseVisualConfig);
-    } catch {
-      Logger.LogError("Could not hook onto Blast Shower.");
-    }
-    
-    bindAsset("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
-    
-    // Interstellar Desk Plant
-    try {
-      var DeskplantIndicatorTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Plant/DeskplantWard.prefab").WaitForCompletion().transform.Find("Indicator").gameObject.transform;
-      DeskplantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
-      DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
-      DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
-      var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
-      idpToggle(DeskPlantIndicatorConfig);
-      DeskPlantIndicatorConfig.SettingChanged += idpToggle;
-      if (riskOfOptionsLoaded) addOption(DeskPlantIndicatorConfig);
-    } catch {
-      Logger.LogError("Could not hook onto Interstellar Desk Plant ward.");
-    }
-    
-    try {
-      IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags) 36);
-      On.RoR2.IcicleAuraController.OnIciclesActivated += handleFrelicActivation;
-      On.RoR2.IcicleAuraController.OnIcicleGained += handleFrelicParticles;
-      if (riskOfOptionsLoaded) {
-        addOption(FrostRelicFOVConfig);
-        addOption(FrostRelicParticlesConfig);
-        addOption(FrostRelicSoundConfig);
-      }
-    } catch {
-      Logger.LogError("Could not hook onto Frost Relic.");
-    }
-    
-    bindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
-    
-    // Kjaro's Band
-    try {
-      var FireTornadoGhost = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/FireTornadoGhost.prefab").WaitForCompletion().transform;
-      FireTornadoSmoke = FireTornadoGhost.Find("Smoke").gameObject;
-      FireTornadoMeshCore = FireTornadoGhost.Find("TornadoMeshCore").gameObject;
-      FireTornadoMeshWide = FireTornadoGhost.Find("TornadoMeshCore, Wide").gameObject;
-      FireTornadoEmbers = FireTornadoGhost.Find("Embers").gameObject;
-      FireTornadoLight = FireTornadoGhost.Find("Point Light").gameObject;
-      FireTornadoBurst = FireTornadoGhost.Find("InitialBurst").gameObject;
-      var FireTornadoConfig = Config.Bind("Item Effects", "Enable Kjaros Band", true, "Enables Kjaro's Band's fire tornado.");
-      FireTornadoSmoke.SetActive(FireTornadoConfig.Value);
-      FireTornadoMeshCore.SetActive(FireTornadoConfig.Value);
-      FireTornadoMeshWide.SetActive(FireTornadoConfig.Value);
-      FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
-      FireTornadoLight.SetActive(FireTornadoConfig.Value);
-      FireTornadoBurst.SetActive(FireTornadoConfig.Value);
-      FireTornadoConfig.SettingChanged += kjVisualToggle;
-      if (riskOfOptionsLoaded) addOption(FireTornadoConfig);
-    } catch {
-      Logger.LogError("Could not hook onto Kjaro's Band.");
-    }
-    
-    bindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
-    
-    // Runald's Band
-    try {
-      IceRingExplosionPrefab = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/IceRingExplosion.prefab").WaitForCompletion();
-      var IceRingExplosionConfig = Config.Bind("Item Effects", "Enable Runalds Band", true, "Enables Runald's Band's ice explosion.");
-      if (!IceRingExplosionConfig.Value)
-        IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
-      var IceRingExplosionTransform = IceRingExplosionPrefab.transform;
-      for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
-        IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
-      IceRingExplosionConfig.SettingChanged += ᛔᛋᛡᛆᛅᛛᛞᛘ;
-      if (riskOfOptionsLoaded) addOption(IceRingExplosionConfig);
-    } catch {
-      Logger.LogError("Could not hook onto Runald's Band.");
-    }
-    
-    bindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-    bindAsset("Tonic/TonicBuffEffect"            , "Enable Spinel Tonic"         , "Enables Spinel Tonic's screen effect");
-    bindAsset("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
-    bindAsset("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-    bindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
-    
-    // Weeping Bungus
-    try {
-      var MushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
-      MushroomVoidVisual = MushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
-      MushroomVoidAudio = MushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
-      var WungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
-      var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
-      MushroomVoidAudio.enabled = WungusAudioConfig.Value;
-      MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
-      WungusAudioConfig.SettingChanged += wungusAudioToggle;
-      WungusVisualsConfig.SettingChanged += wungusVisualToggle;
-      if (riskOfOptionsLoaded) {
-        addOption(WungusAudioConfig);
-        addOption(WungusVisualsConfig);
-      }
-    } catch {
-      Logger.LogError("Could not hook onto Wungus.");
-    }
+    [MethodImpl(768)]
+    private void Awake()
+    {
+        FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
+        FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
+        FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
+
+        if (riskOfOptionsLoaded) addToRiskOfOptions();
+
+        // Blast Shower
+        try
+        {
+            CleanseTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Cleanse/CleanseEffect.prefab").WaitForCompletion().transform;
+            CleanseEffect = CleanseTransform.GetComponent<EffectComponent>();
+            var CleanseVisualConfig = Config.Bind("Item Effects", "Enable Blast Shower", true, "Enables Blast Shower's effects.");
+            if (!CleanseVisualConfig.Value)
+            {
+                CleanseEffect.effectIndex = (EffectIndex)(-1);
+                for (var i = 0; i < CleanseTransform.childCount; i++)
+                    CleanseTransform.GetChild(i).gameObject.SetActive(false);
+            }
+            CleanseVisualConfig.SettingChanged += ᛑᛯᛜᛧᛇᛝᛓᚻ;
+            if (riskOfOptionsLoaded) addOption(CleanseVisualConfig);
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Blast Shower.");
+        }
+
+        bindAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+
+        // Interstellar Desk Plant
+        try
+        {
+            var DeskplantIndicatorTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Plant/DeskplantWard.prefab").WaitForCompletion().transform.Find("Indicator").gameObject.transform;
+            DeskplantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
+            DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
+            DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
+            var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
+            idpToggle(DeskPlantIndicatorConfig);
+            DeskPlantIndicatorConfig.SettingChanged += idpToggle;
+            if (riskOfOptionsLoaded) addOption(DeskPlantIndicatorConfig);
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Interstellar Desk Plant ward.");
+        }
+
+        try
+        {
+            IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags)36);
+            On.RoR2.IcicleAuraController.OnIciclesActivated += handleFrelicActivation;
+            On.RoR2.IcicleAuraController.OnIcicleGained += handleFrelicParticles;
+            if (riskOfOptionsLoaded)
+            {
+                addOption(FrostRelicFOVConfig);
+                addOption(FrostRelicParticlesConfig);
+                addOption(FrostRelicSoundConfig);
+            }
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Frost Relic.");
+        }
+
+        bindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+
+        // Kjaro's Band
+        try
+        {
+            var FireTornadoGhost = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/FireTornadoGhost.prefab").WaitForCompletion().transform;
+            FireTornadoSmoke = FireTornadoGhost.Find("Smoke").gameObject;
+            FireTornadoMeshCore = FireTornadoGhost.Find("TornadoMeshCore").gameObject;
+            FireTornadoMeshWide = FireTornadoGhost.Find("TornadoMeshCore, Wide").gameObject;
+            FireTornadoEmbers = FireTornadoGhost.Find("Embers").gameObject;
+            FireTornadoLight = FireTornadoGhost.Find("Point Light").gameObject;
+            FireTornadoBurst = FireTornadoGhost.Find("InitialBurst").gameObject;
+            var FireTornadoConfig = Config.Bind("Item Effects", "Enable Kjaros Band", true, "Enables Kjaro's Band's fire tornado.");
+            FireTornadoSmoke.SetActive(FireTornadoConfig.Value);
+            FireTornadoMeshCore.SetActive(FireTornadoConfig.Value);
+            FireTornadoMeshWide.SetActive(FireTornadoConfig.Value);
+            FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
+            FireTornadoLight.SetActive(FireTornadoConfig.Value);
+            FireTornadoBurst.SetActive(FireTornadoConfig.Value);
+            FireTornadoConfig.SettingChanged += kjVisualToggle;
+            if (riskOfOptionsLoaded) addOption(FireTornadoConfig);
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Kjaro's Band.");
+        }
+
+        bindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+
+        // Runald's Band
+        try
+        {
+            IceRingExplosionPrefab = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/IceRingExplosion.prefab").WaitForCompletion();
+            var IceRingExplosionConfig = Config.Bind("Item Effects", "Enable Runalds Band", true, "Enables Runald's Band's ice explosion.");
+            if (!IceRingExplosionConfig.Value)
+                IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
+            var IceRingExplosionTransform = IceRingExplosionPrefab.transform;
+            for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
+                IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
+            IceRingExplosionConfig.SettingChanged += ᛔᛋᛡᛆᛅᛛᛞᛘ;
+            if (riskOfOptionsLoaded) addOption(IceRingExplosionConfig);
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Runald's Band.");
+        }
+
+        bindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+        bindAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
+        bindAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
+        bindAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
+        bindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
+
+        // Weeping Bungus
+        try
+        {
+            var MushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
+            MushroomVoidVisual = MushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
+            MushroomVoidAudio = MushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
+            var WungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
+            var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
+            MushroomVoidAudio.enabled = WungusAudioConfig.Value;
+            MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
+            WungusAudioConfig.SettingChanged += wungusAudioToggle;
+            WungusVisualsConfig.SettingChanged += wungusVisualToggle;
+            if (riskOfOptionsLoaded)
+            {
+                addOption(WungusAudioConfig);
+                addOption(WungusVisualsConfig);
+            }
+        }
+        catch
+        {
+            Logger.LogError("Could not hook onto Wungus.");
+        }
 
         // Plasma Shrimp
         try
@@ -180,14 +203,14 @@ public sealed class AvOptions : BaseUnityPlugin {
             PlimpController.startSound = null;
 
             var lsd = PlimpController.GetComponent<LoopSoundDef>();
-            if(lsd!=null)
+            if (lsd != null)
             {
                 lsd.startSoundName = null;
             }
 
             //if (PlimpAudioConfig.Value)
             //{
-                
+
             //    PlimpController.startSound = "Play_item_void_critGlasses";
             //    //PlimpController.flightSoundLoop.startSoundName = PlimpFlightSoundSoundName;
 
@@ -196,7 +219,7 @@ public sealed class AvOptions : BaseUnityPlugin {
             //{
             //    PlimpController.startSound = null;
             //    //PlimpController.flightSoundLoop.startSoundName="";
-                
+
             //}
 
             //PlimpAudioConfig.SettingChanged += plimpAudioToggle;
@@ -221,43 +244,49 @@ public sealed class AvOptions : BaseUnityPlugin {
         bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "Floofs <3", "YIFFs");
         bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "Floofs <3", "YIFFs");
         bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "Floofs <3", "YIFFs");
-  }
-  
-  [MethodImpl(768)]
-  private void ᛑᛯᛜᛧᛇᛝᛓᚻ(object x, EventArgs _) {
-    var y = ((ConfigEntry<bool>)x).Value;
-    CleanseEffect.effectIndex = (EffectIndex) (y ? 102 : -1);
-    for (var i = 0; i < CleanseTransform.childCount; i++)
-      CleanseTransform.GetChild(i).gameObject.SetActive(y);
-  }
-  
-  [MethodImpl(768)]
-  private void ᛔᛋᛡᛆᛅᛛᛞᛘ(object x, EventArgs _) {
-    var transform = IceRingExplosionPrefab.transform;
-    var childCount = transform.childCount;
-    var y = ((ConfigEntry<bool>)x).Value;
-    if (y && IceRingExplosionDestructor != null) {
-      UnityEngine.Object.Destroy(IceRingExplosionDestructor);
-      IceRingExplosionDestructor = null;
-    } else
-      IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
-    for (var i = 0; i < childCount; i++)
-      transform.GetChild(i).gameObject.SetActive(y);
-  }
-  
-  [MethodImpl(768)]
-  private void kjVisualToggle(object x, EventArgs _) {
-    var y = ((ConfigEntry<bool>)x).Value;
-    FireTornadoSmoke.SetActive(y);
-    FireTornadoMeshCore.SetActive(y);
-    FireTornadoMeshWide.SetActive(y);
-    FireTornadoEmbers.SetActive(y);
-    FireTornadoLight.SetActive(y);
-    FireTornadoBurst.SetActive(y);
     }
 
-    private void plimpAudioToggle(object x, EventArgs _) { 
-      var enabled = ((ConfigEntry<bool>)x).Value;
+    [MethodImpl(768)]
+    private void ᛑᛯᛜᛧᛇᛝᛓᚻ(object x, EventArgs _)
+    {
+        var y = ((ConfigEntry<bool>)x).Value;
+        CleanseEffect.effectIndex = (EffectIndex)(y ? 102 : -1);
+        for (var i = 0; i < CleanseTransform.childCount; i++)
+            CleanseTransform.GetChild(i).gameObject.SetActive(y);
+    }
+
+    [MethodImpl(768)]
+    private void ᛔᛋᛡᛆᛅᛛᛞᛘ(object x, EventArgs _)
+    {
+        var transform = IceRingExplosionPrefab.transform;
+        var childCount = transform.childCount;
+        var y = ((ConfigEntry<bool>)x).Value;
+        if (y && IceRingExplosionDestructor != null)
+        {
+            UnityEngine.Object.Destroy(IceRingExplosionDestructor);
+            IceRingExplosionDestructor = null;
+        }
+        else
+            IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
+        for (var i = 0; i < childCount; i++)
+            transform.GetChild(i).gameObject.SetActive(y);
+    }
+
+    [MethodImpl(768)]
+    private void kjVisualToggle(object x, EventArgs _)
+    {
+        var y = ((ConfigEntry<bool>)x).Value;
+        FireTornadoSmoke.SetActive(y);
+        FireTornadoMeshCore.SetActive(y);
+        FireTornadoMeshWide.SetActive(y);
+        FireTornadoEmbers.SetActive(y);
+        FireTornadoLight.SetActive(y);
+        FireTornadoBurst.SetActive(y);
+    }
+
+    private void plimpAudioToggle(object x, EventArgs _)
+    {
+        var enabled = ((ConfigEntry<bool>)x).Value;
         if (enabled)
         {
             PlimpController.startSound = "Play_item_void_critGlasses";
@@ -269,43 +298,48 @@ public sealed class AvOptions : BaseUnityPlugin {
     }
 
     [MethodImpl(768)]
-  private void wungusAudioToggle(object x, EventArgs _) =>
+    private void wungusAudioToggle(object x, EventArgs _) =>
     MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
-  
-  [MethodImpl(768)]
-  private void wungusVisualToggle(object x, EventArgs _) =>
-    MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
-  
-  [MethodImpl(768)]
-  private void idpToggle(object x, EventArgs _ = null) {
-    var y = ((ConfigEntry<bool>)x).Value;
-    DeskplantSpores.SetActive(y);
-    DeskplantSymbols.SetActive(y);
-    DeskplantMushrooms.SetActive(y);
-  }
-  
-  private void handleFrelicParticles(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
-    // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-    foreach (ParticleSystem part in self.procParticles)
-      if (FrostRelicParticlesConfig.Value | part.name == "Area")
-        part.Play();
-  }
-  
-  private void handleFrelicActivation(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
-    // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-    if (FrostRelicSoundConfig.Value)
-      Util.PlaySound("Play_item_proc_icicle", self.gameObject);
-    if (FrostRelicFOVConfig.Value) {
-      var ctp = self.owner.GetComponent<CameraTargetParams>();
-      if (ctp) IcicleAuraAimRequest.SetValue(self, ctp.RequestAimType(CameraTargetParams.AimType.Aura));
+
+    [MethodImpl(768)]
+    private void wungusVisualToggle(object x, EventArgs _) =>
+      MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
+
+    [MethodImpl(768)]
+    private void idpToggle(object x, EventArgs _ = null)
+    {
+        var y = ((ConfigEntry<bool>)x).Value;
+        DeskplantSpores.SetActive(y);
+        DeskplantSymbols.SetActive(y);
+        DeskplantMushrooms.SetActive(y);
     }
-    foreach (ParticleSystem part in self.auraParticles)
-      if (FrostRelicParticlesConfig.Value | part.name == "Area") {
-        var main = part.main;
-        main.loop = true;
-        part.Play();
-      }
-  }
+
+    private void handleFrelicParticles(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self)
+    {
+        // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
+        foreach (ParticleSystem part in self.procParticles)
+            if (FrostRelicParticlesConfig.Value | part.name == "Area")
+                part.Play();
+    }
+
+    private void handleFrelicActivation(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self)
+    {
+        // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
+        if (FrostRelicSoundConfig.Value)
+            Util.PlaySound("Play_item_proc_icicle", self.gameObject);
+        if (FrostRelicFOVConfig.Value)
+        {
+            var ctp = self.owner.GetComponent<CameraTargetParams>();
+            if (ctp) IcicleAuraAimRequest.SetValue(self, ctp.RequestAimType(CameraTargetParams.AimType.Aura));
+        }
+        foreach (ParticleSystem part in self.auraParticles)
+            if (FrostRelicParticlesConfig.Value | part.name == "Area")
+            {
+                var main = part.main;
+                main.loop = true;
+                part.Play();
+            }
+    }
 
     [MethodImpl(768)]
     private void bindVoidAsset(string assetPath, string title, string description, string section = "Item Effects")
@@ -324,45 +358,50 @@ public sealed class AvOptions : BaseUnityPlugin {
     }
 
     [MethodImpl(768)]
-  private void bindAsset(string assetPath, string title, string description, string section = "Item Effects") {
-    try {
-      var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
-      var config = Config.Bind(section, title, true, description);
-      // todo: should the following class be merged into this one?
-      config.SettingChanged += (x, _) =>
-        prefab.SetActive(((ConfigEntry<bool>) x).Value);
-      prefab.SetActive(config.Value);
-      if (riskOfOptionsLoaded) addOption(config);
-    } catch {}
+    private void bindAsset(string assetPath, string title, string description, string section = "Item Effects")
+    {
+        try
+        {
+            var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
+            var config = Config.Bind(section, title, true, description);
+            // todo: should the following class be merged into this one?
+            config.SettingChanged += (x, _) =>
+              prefab.SetActive(((ConfigEntry<bool>)x).Value);
+            prefab.SetActive(config.Value);
+            if (riskOfOptionsLoaded) addOption(config);
+        }
+        catch { }
 
-        
+
     }
-  
-  [MethodImpl(520)]
-  private void addOption(ConfigEntry<bool> _) =>
-    ModSettingsManager.AddOption(new CheckBoxOption(_));
-  
-  [MethodImpl(520)]
-  private void addToRiskOfOptions() {
-    ModSettingsManager.SetModDescription(
-      "Enable or disable various item audio/visual effects."
-    );
-    using var stream = GetType().Assembly.GetManifestResourceStream(".");
-    var texture = new Texture2D(0, 0);
-    var imgdata = new byte[stream.Length];
-    stream.Read(imgdata, 0, imgdata.Length);
-    if (ImageConversion.LoadImage(texture, imgdata))
-      ModSettingsManager.SetModIcon(
-        Sprite.Create(
-          texture,
-          new Rect(0, 0, texture.width, texture.height),
-          new Vector2(0, 0)
-        )
-      );
-  }
+
+    [MethodImpl(520)]
+    private void addOption(ConfigEntry<bool> _) =>
+      ModSettingsManager.AddOption(new CheckBoxOption(_));
+
+    [MethodImpl(520)]
+    private void addToRiskOfOptions()
+    {
+        ModSettingsManager.SetModDescription(
+          "Enable or disable various item audio/visual effects."
+        );
+        using var stream = GetType().Assembly.GetManifestResourceStream(".");
+        var texture = new Texture2D(0, 0);
+        var imgdata = new byte[stream.Length];
+        stream.Read(imgdata, 0, imgdata.Length);
+        if (ImageConversion.LoadImage(texture, imgdata))
+            ModSettingsManager.SetModIcon(
+              Sprite.Create(
+                texture,
+                new Rect(0, 0, texture.width, texture.height),
+                new Vector2(0, 0)
+              )
+            );
+    }
 }
 
-public sealed class DestroyOnUpdate : MonoBehaviour {
-  public void Update () =>
-    UnityEngine.Object.Destroy(base.gameObject);
+public sealed class DestroyOnUpdate : MonoBehaviour
+{
+    public void Update() =>
+      UnityEngine.Object.Destroy(base.gameObject);
 }
