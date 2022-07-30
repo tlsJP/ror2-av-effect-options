@@ -1,5 +1,8 @@
 Hewwos!
 
+# Risk Of Rain 2 - AV Effects Options
+This is a pseudo-fork of https://gitlab.com/lexxyfox/ror2-av-effect-options
+
 ## OwO, wat's dis?
 The goal is to allow players to selectively disable in-game audio-visual effects that aren't strictly necessary to enjoy the game without changing game mechanics or balance. This may assist people who, among others; have photosensitivity, are sensitive to sensory overstimulation, or have limited computing resources. Effects can [usually] be toggled mid-stage.
 
@@ -107,20 +110,21 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 ## Compiling
 
-The binary release of this mod is built on a Debian-like but any [Portable Operating System](https://en.wikipedia.org/wiki/POSIX) that supports all of the prerequisite thingies should be fine.
+### Environment
+* VS 2019
+* .NET 2.1
 
-1. Get all the prerequisite thingies
-    * The following from [The Mono Project](https://www.mono-project.com/download/stable).
-        * mono-devel
-        * msbuild
-    * The `convert` command from [ImageMagick](https://imagemagick.org/script/download.php) (`imagemagick` on Debians)
-        * Make sure it's compiled with ico support! (all major distributions do)
-    * [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (either manually or using r2modman)
-1. Obtain this mod's source code (using git, or curl, wget, email, etc.)
-1. Compile!
-    * TODO: configure path to BepInEx plugins (look at the `BepInExPath` property)
-    * `msbuild -r` inside the root of the source tree. 
-1. Compiled assembly is located at `./out/..dll`, distribution zip is located at `./..zip`
+
+### Requirements
+* [BepInEx](https://github.com/BepInEx/BepInEx) Installed in `(Risk Of Rain 2 game folder)` 
+* [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) Installed in `(Risk Of Rain 2 game folder)/BepInEx/plugins`
+
+### Build
+
+1. Open `AvOptions.csproj` in VS
+2. Update entry for `<BepInExPath>` in the above file to match your install location
+3. Press `F6` to build the solution
+
 
 ## Credits 
 These good people/beings did me a help one way or another, but don't necessarily endorse or condone myself or this mod.
