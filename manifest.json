@@ -1,21 +1,21 @@
 {
-	"author": "Lexxy Fox",
-	"authorName": "Lexxy Fox",
+	"author": "JP",
+	"authorName": "JP",
 	"dependencies": [
 		"bbepis-BepInExPack-5.3.1"
 	],
 	"description": "Enable or disable various items' AV effects. Works best with RiskOfOptions.",
-	"displayName": "AV Effect Options",
-	"DisplayName": "AV Effect Options",
+	"displayName": "JP's AV Effect Options",
+	"DisplayName": "JP's AV Effect Options",
 	"enabled": true,
 	"manifestVersion": 2,
-	"name": "AV_Effect_Options",
+	"name": "JPs_AV_Effect_Options",
 	"networkMode": "client",
 	"OptionalDependencies": [
 		"Rune580-Risk_Of_Options-2.4.2"
 	],
 	"packageType": "mod",
 	"version_number": "1.12.0",
-	"websiteUrl": "https://gitlab.com/lexxyfox/ror2-av-effect-options#",
-	"website_url": "https://gitlab.com/lexxyfox/ror2-av-effect-options"
+	"websiteUrl": "https://github.com/tlsJP/ror2-av-effect-options",
+	"website_url": "https://github.com/tlsJP/ror2-av-effect-options"
 }
