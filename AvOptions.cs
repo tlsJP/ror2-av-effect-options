@@ -14,7 +14,7 @@ using UnityEngine.AddressableAssets;
 [BepInPlugin(".AVFX_Options..", "AV Effect Options", "1.12.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
 public sealed class _: BaseUnityPlugin {  
-  private static bool ᛢᛪᛔᚸᚽᚹᛃᚬ = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+  private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
   private static ConfigEntry<bool> FrostRelicSoundConfig;
   private static ConfigEntry<bool> FrostRelicFOVConfig;
@@ -45,7 +45,7 @@ public sealed class _: BaseUnityPlugin {
     FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
     FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
     
-    if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚧᛃᛍᛣᛩᚱᚦᛕ();
+    if (riskOfOptionsLoaded) addToRiskOfOptions();
     
     // Blast Shower
     try {
@@ -58,12 +58,12 @@ public sealed class _: BaseUnityPlugin {
           CleanseTransform.GetChild(i).gameObject.SetActive(false);
       }
       CleanseVisualConfig.SettingChanged += ᛑᛯᛜᛧᛇᛝᛓᚻ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(CleanseVisualConfig);
+      if (riskOfOptionsLoaded) addOption(CleanseVisualConfig);
     } catch {
       Logger.LogError("Could not hook onto Blast Shower.");
     }
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+    doSomething("KillEliteFrenzy/NoCooldownEffect" , "Enable Brainstalks"          , "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
     
     // Interstellar Desk Plant
     try {
@@ -72,27 +72,27 @@ public sealed class _: BaseUnityPlugin {
       DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
       DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
       var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
-      ᛁᛖᛑᛞᚤᚾᚹᛊ(DeskPlantIndicatorConfig);
-      DeskPlantIndicatorConfig.SettingChanged += ᛁᛖᛑᛞᚤᚾᚹᛊ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(DeskPlantIndicatorConfig);
+      idpToggle(DeskPlantIndicatorConfig);
+      DeskPlantIndicatorConfig.SettingChanged += idpToggle;
+      if (riskOfOptionsLoaded) addOption(DeskPlantIndicatorConfig);
     } catch {
       Logger.LogError("Could not hook onto Interstellar Desk Plant ward.");
     }
     
     try {
       IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags) 36);
-      On.RoR2.IcicleAuraController.OnIciclesActivated += ᚫᛈᚸᛡᚩᚺᛩᛮ;
-      On.RoR2.IcicleAuraController.OnIcicleGained += ᛗᛕᛈᚩᚴᚷᚢᛛ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
-        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicFOVConfig);
-        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicParticlesConfig);
-        ᚾᛏᛧᛨᚭᛋᛳᚩ(FrostRelicSoundConfig);
+      On.RoR2.IcicleAuraController.OnIciclesActivated += handleFrelicActivation;
+      On.RoR2.IcicleAuraController.OnIcicleGained += handleFrelicParticles;
+      if (riskOfOptionsLoaded) {
+        addOption(FrostRelicFOVConfig);
+        addOption(FrostRelicParticlesConfig);
+        addOption(FrostRelicSoundConfig);
       }
     } catch {
       Logger.LogError("Could not hook onto Frost Relic.");
     }
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+    doSomething("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
     
     // Kjaro's Band
     try {
@@ -111,12 +111,12 @@ public sealed class _: BaseUnityPlugin {
       FireTornadoLight.SetActive(FireTornadoConfig.Value);
       FireTornadoBurst.SetActive(FireTornadoConfig.Value);
       FireTornadoConfig.SettingChanged += ᛝᛂᚨᛪᛖᛣᚡᚢ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(FireTornadoConfig);
+      if (riskOfOptionsLoaded) addOption(FireTornadoConfig);
     } catch {
       Logger.LogError("Could not hook onto Kjaro's Band.");
     }
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+    doSomething("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
     
     // Runald's Band
     try {
@@ -128,16 +128,16 @@ public sealed class _: BaseUnityPlugin {
       for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
         IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
       IceRingExplosionConfig.SettingChanged += ᛔᛋᛡᛆᛅᛛᛞᛘ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(IceRingExplosionConfig);
+      if (riskOfOptionsLoaded) addOption(IceRingExplosionConfig);
     } catch {
       Logger.LogError("Could not hook onto Runald's Band.");
     }
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Tonic/TonicBuffEffect"            , "Enable Spinel Tonic"         , "Enables Spinel Tonic's screen effect");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
+    doSomething("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+    doSomething("Tonic/TonicBuffEffect"            , "Enable Spinel Tonic"         , "Enables Spinel Tonic's screen effect");
+    doSomething("StickyBomb/StickyBombGhost"       , "Enable Sticky Bomb Drops"    , "Enables Sticky Bomb's drops");
+    doSomething("StickyBomb/BehemothVFX"           , "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
+    doSomething("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp"      , "Enables Will o' the Wisp's explosion");
     
     // Weeping Bungus
     try {
@@ -148,18 +148,18 @@ public sealed class _: BaseUnityPlugin {
       var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
       MushroomVoidAudio.enabled = WungusAudioConfig.Value;
       MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
-      WungusAudioConfig.SettingChanged += ᚥᛤᚨᛕᛅᛯᚲᛚ;
-      WungusVisualsConfig.SettingChanged += ᛝᚯᛠᛕᚪᛯᚼᛨ;
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) {
-        ᚾᛏᛧᛨᚭᛋᛳᚩ(WungusAudioConfig);
-        ᚾᛏᛧᛨᚭᛋᛳᚩ(WungusVisualsConfig);
+      WungusAudioConfig.SettingChanged += wungusAudioToggle;
+      WungusVisualsConfig.SettingChanged += wungusVisualToggle;
+      if (riskOfOptionsLoaded) {
+        addOption(WungusAudioConfig);
+        addOption(WungusVisualsConfig);
       }
     } catch {
       Logger.LogError("Could not hook onto Wungus.");
     }
     
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
-    ᚭᛣᛮᛨᚶᛟᚷᚴ("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+    doSomething("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+    doSomething("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
   }
   
   [MethodImpl(768)]
@@ -196,29 +196,29 @@ public sealed class _: BaseUnityPlugin {
   }
   
   [MethodImpl(768)]
-  private void ᚥᛤᚨᛕᛅᛯᚲᛚ(object x, EventArgs _) =>
+  private void wungusAudioToggle(object x, EventArgs _) =>
     MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
   
   [MethodImpl(768)]
-  private void ᛝᚯᛠᛕᚪᛯᚼᛨ(object x, EventArgs _) =>
+  private void wungusVisualToggle(object x, EventArgs _) =>
     MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
   
   [MethodImpl(768)]
-  private void ᛁᛖᛑᛞᚤᚾᚹᛊ(object x, EventArgs _ = null) {
+  private void idpToggle(object x, EventArgs _ = null) {
     var y = ((ConfigEntry<bool>)x).Value;
     DeskplantSpores.SetActive(y);
     DeskplantSymbols.SetActive(y);
     DeskplantMushrooms.SetActive(y);
   }
   
-  private void ᛗᛕᛈᚩᚴᚷᚢᛛ(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
+  private void handleFrelicParticles(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self) {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
     foreach (ParticleSystem part in self.procParticles)
       if (FrostRelicParticlesConfig.Value | part.name == "Area")
         part.Play();
   }
   
-  private void ᚫᛈᚸᛡᚩᚺᛩᛮ(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
+  private void handleFrelicActivation(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self) {
     // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
     if (FrostRelicSoundConfig.Value)
       Util.PlaySound("Play_item_proc_icicle", self.gameObject);
@@ -235,24 +235,24 @@ public sealed class _: BaseUnityPlugin {
   }
   
   [MethodImpl(768)]
-  private void ᚭᛣᛮᛨᚶᛟᚷᚴ(string ᚱᛢᛊᚢᚴᛤᛉᚣ, string ᛆᛇᚶᛔᛒᛄᚤᛪ, string ᚡᛧᛞᛍᛏᛀᛕᚵ, string ᚩᛶᛠᚿᚵᚯᚹᛴ = "Item Effects") {
+  private void doSomething(string assetPath, string title, string description, string section = "Item Effects") {
     try {
-      var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + ᚱᛢᛊᚢᚴᛤᛉᚣ + ".prefab").WaitForCompletion();
-      var config = Config.Bind(ᚩᛶᛠᚿᚵᚯᚹᛴ, ᛆᛇᚶᛔᛒᛄᚤᛪ, true, ᚡᛧᛞᛍᛏᛀᛕᚵ);
+      var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
+      var config = Config.Bind(section, title, true, description);
       // todo: should the following class be merged into this one?
       config.SettingChanged += (x, _) =>
         prefab.SetActive(((ConfigEntry<bool>) x).Value);
       prefab.SetActive(config.Value);
-      if (ᛢᛪᛔᚸᚽᚹᛃᚬ) ᚾᛏᛧᛨᚭᛋᛳᚩ(config);
+      if (riskOfOptionsLoaded) addOption(config);
     } catch {}
   }
   
   [MethodImpl(520)]
-  private void ᚾᛏᛧᛨᚭᛋᛳᚩ(ConfigEntry<bool> _) =>
+  private void addOption(ConfigEntry<bool> _) =>
     ModSettingsManager.AddOption(new CheckBoxOption(_));
   
   [MethodImpl(520)]
-  private void ᚧᛃᛍᛣᛩᚱᚦᛕ() {
+  private void addToRiskOfOptions() {
     ModSettingsManager.SetModDescription(
       "Enable or disable various item audio/visual effects."
     );
