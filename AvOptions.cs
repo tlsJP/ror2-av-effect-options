@@ -4,6 +4,8 @@ using BepInEx.Configuration;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 using RoR2;
+using RoR2.Projectile;
+using RoR2.Audio;
 using System;
 using System.IO;
 using System.Reflection;
@@ -13,7 +15,7 @@ using UnityEngine.AddressableAssets;
 
 [BepInPlugin(".AVFX_Options..", "JP's AV Effect Options", "1.12.0")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags) 2)]
-public sealed class _: BaseUnityPlugin {  
+public sealed class AvOptions : BaseUnityPlugin {  
   private static bool riskOfOptionsLoaded = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
   
   private static ConfigEntry<bool> FrostRelicSoundConfig;
@@ -39,7 +41,11 @@ public sealed class _: BaseUnityPlugin {
   private static DestroyOnUpdate IceRingExplosionDestructor;
   private static EffectComponent CleanseEffect;
 
-    private static LoopSoundPlayer PlimpAudio;
+    //private static LoopSoundPlayer PlimpAudio;
+    //private static LoopSoundDef PlimpFlightSoundLoop;
+    //private static string PlimpFlightSoundSoundName;
+    private static ProjectileController PlimpController;
+
 
   [MethodImpl(768)]
   private void Awake() {
@@ -161,16 +167,60 @@ public sealed class _: BaseUnityPlugin {
     }
 
         // Plasma Shrimp
-    try {
-      var PlimpPrefab = Addressables.LoadAsset<GameObject>("ROR2/DLC1//MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
-      PlimpAudio = PlimpPrefab.GetComponent<LoopSoundPlayer>();
-      var PlimpSounds = Config.Bind("SOTV Item Effects", "Enable plasma shrimp sounds", true, "Enable plimp noise");
-           
+        try
+        {
+            var PlimpPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidProjectile.prefab").WaitForCompletion();
 
-    } catch { Logger.LogError("Couldn't load plimp"); }
-    
-    bindAsset("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
-    bindAsset("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+            PlimpController = PlimpPrefab.GetComponent<ProjectileController>();
+            //PlimpFlightSoundLoop = PlimpController.flightSoundLoop;
+            //PlimpFlightSoundSoundName = PlimpController.flightSoundLoop.startSoundName;
+
+            var PlimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling!");
+
+            PlimpController.startSound = null;
+
+            var lsd = PlimpController.GetComponent<LoopSoundDef>();
+            if(lsd!=null)
+            {
+                lsd.startSoundName = null;
+            }
+
+            //if (PlimpAudioConfig.Value)
+            //{
+                
+            //    PlimpController.startSound = "Play_item_void_critGlasses";
+            //    //PlimpController.flightSoundLoop.startSoundName = PlimpFlightSoundSoundName;
+
+            //}
+            //else
+            //{
+            //    PlimpController.startSound = null;
+            //    //PlimpController.flightSoundLoop.startSoundName="";
+                
+            //}
+
+            //PlimpAudioConfig.SettingChanged += plimpAudioToggle;
+            //if (riskOfOptionsLoaded)
+            //{
+            //    addOption(PlimpAudioConfig);
+            //}
+
+
+        }
+        catch { Logger.LogError("Couldn't load plimp"); }
+
+        bindAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+        bindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+
+
+        bindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "Floofs <3", "YIFFs");
   }
   
   [MethodImpl(768)]
@@ -204,9 +254,21 @@ public sealed class _: BaseUnityPlugin {
     FireTornadoEmbers.SetActive(y);
     FireTornadoLight.SetActive(y);
     FireTornadoBurst.SetActive(y);
-  }
-  
-  [MethodImpl(768)]
+    }
+
+    private void plimpAudioToggle(object x, EventArgs _) { 
+      var enabled = ((ConfigEntry<bool>)x).Value;
+        if (enabled)
+        {
+            PlimpController.startSound = "Play_item_void_critGlasses";
+        }
+        else
+        {
+            PlimpController.startSound = null;
+        }
+    }
+
+    [MethodImpl(768)]
   private void wungusAudioToggle(object x, EventArgs _) =>
     MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
   
@@ -244,8 +306,24 @@ public sealed class _: BaseUnityPlugin {
         part.Play();
       }
   }
-  
-  [MethodImpl(768)]
+
+    [MethodImpl(768)]
+    private void bindVoidAsset(string assetPath, string title, string description, string section = "Item Effects")
+    {
+        try
+        {
+            var prefab = Addressables.LoadAsset<GameObject>("RoR2/" + assetPath + ".prefab").WaitForCompletion();
+            var config = Config.Bind(section, title, true, description);
+            // todo: should the following class be merged into this one?
+            config.SettingChanged += (x, _) =>
+              prefab.SetActive(((ConfigEntry<bool>)x).Value);
+            prefab.SetActive(config.Value);
+            if (riskOfOptionsLoaded) addOption(config);
+        }
+        catch { }
+    }
+
+    [MethodImpl(768)]
   private void bindAsset(string assetPath, string title, string description, string section = "Item Effects") {
     try {
       var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
@@ -256,7 +334,9 @@ public sealed class _: BaseUnityPlugin {
       prefab.SetActive(config.Value);
       if (riskOfOptionsLoaded) addOption(config);
     } catch {}
-  }
+
+        
+    }
   
   [MethodImpl(520)]
   private void addOption(ConfigEntry<bool> _) =>
