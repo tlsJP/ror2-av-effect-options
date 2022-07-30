@@ -38,7 +38,9 @@ public sealed class _: BaseUnityPlugin {
   private static TemporaryVisualEffect MushroomVoidVisual;
   private static DestroyOnUpdate IceRingExplosionDestructor;
   private static EffectComponent CleanseEffect;
-  
+
+    private static LoopSoundPlayer PlimpAudio;
+
   [MethodImpl(768)]
   private void Awake() {
     FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
@@ -110,7 +112,7 @@ public sealed class _: BaseUnityPlugin {
       FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
       FireTornadoLight.SetActive(FireTornadoConfig.Value);
       FireTornadoBurst.SetActive(FireTornadoConfig.Value);
-      FireTornadoConfig.SettingChanged += ᛝᛂᚨᛪᛖᛣᚡᚢ;
+      FireTornadoConfig.SettingChanged += kjVisualToggle;
       if (riskOfOptionsLoaded) addOption(FireTornadoConfig);
     } catch {
       Logger.LogError("Could not hook onto Kjaro's Band.");
@@ -158,11 +160,14 @@ public sealed class _: BaseUnityPlugin {
       Logger.LogError("Could not hook onto Wungus.");
     }
 
-    try{
-        var PlimpVoid
+        // Plasma Shrimp
+    try {
+      var PlimpPrefab = Addressables.LoadAsset<GameObject>("ROR2/DLC1//MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
+      PlimpAudio = PlimpPrefab.GetComponent<LoopSoundPlayer>();
+      var PlimpSounds = Config.Bind("SOTV Item Effects", "Enable plasma shrimp sounds", true, "Enable plimp noise");
+           
 
-
-    } catch { Logger.LogError("Couldn't get plimp"); }
+    } catch { Logger.LogError("Couldn't load plimp"); }
     
     bindAsset("Titan/TitanDeathEffect"           , "Enable Titan Death Effect"   , "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
     bindAsset("Vagrant/VagrantDeathExplosion"    , "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
@@ -191,7 +196,7 @@ public sealed class _: BaseUnityPlugin {
   }
   
   [MethodImpl(768)]
-  private void ᛝᛂᚨᛪᛖᛣᚡᚢ(object x, EventArgs _) {
+  private void kjVisualToggle(object x, EventArgs _) {
     var y = ((ConfigEntry<bool>)x).Value;
     FireTornadoSmoke.SetActive(y);
     FireTornadoMeshCore.SetActive(y);
