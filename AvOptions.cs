@@ -200,7 +200,7 @@ public sealed class AvOptions : BaseUnityPlugin
 
             var PlimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling!");
 
-            PlimpController.startSound = null;
+            PlimpController.startSound = "Play_item_void_critGlasses";
 
             var lsd = PlimpController.GetComponent<LoopSoundDef>();
             if (lsd != null)
@@ -236,14 +236,14 @@ public sealed class AvOptions : BaseUnityPlugin
         bindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
 
-        bindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "Floofs <3", "YIFFs");
-        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "Floofs <3", "YIFFs");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable MissileVoid", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable MissileVoidGhost", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable MissileVoidOrbEffect", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable MissileVoidProjectile", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable MissileVoidBigGhost", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable MissileVoidBigProjectile", "foo description", "SOTV Item Effects");
+        bindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable MissileVoidMuzzleflash", "foo description", "SOTV Item Effects");
     }
 
     [MethodImpl(768)]
@@ -293,7 +293,7 @@ public sealed class AvOptions : BaseUnityPlugin
         }
         else
         {
-            PlimpController.startSound = null;
+            PlimpController.startSound = "Stop_item_void_critGlasses";
         }
     }
 
