@@ -3,10 +3,10 @@
 
   <PropertyGroup>
     <!--Change this path if required-->
-    <BepInExPath>$(HOME)/.config/r2modmanPlus-local/RiskOfRain2/profiles/Default/BepInEx</BepInExPath>
+    <BepInExPath>C:\steam\steamapps\common\Risk of Rain 2\BepInEx</BepInExPath>
     
     <AssemblySearchPaths>
-      $(BepInExPath)/plugins/Rune580-Risk_Of_Options;
+      $(BepInExPath)/plugins/RiskOfOptions;
       $(AssemblySearchPaths);
     </AssemblySearchPaths>
     <ApplicationIcon>icon.ico</ApplicationIcon>
@@ -46,7 +46,7 @@
   </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">
-    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
+    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(OutDir)/$(ProjectName).zip" />
   </Target>
 
 </Project>
