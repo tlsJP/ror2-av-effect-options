@@ -28,6 +28,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Wandering Vagrant's death explosion
 * Weeping Fungus' effects
 * Will-o'-the-Wisp explosion
+* Plasma Shrimp AV effects
 
 ### Future options
 * Literally everything else
