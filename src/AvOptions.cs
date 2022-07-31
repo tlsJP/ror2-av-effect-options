@@ -170,19 +170,19 @@ namespace com.thejpaproject.avoptions
             // Weeping Bungus
             try
             {
-                var MushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
+                var mushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
 
-                MushroomVoidVisual = MushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
-                var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
-                MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
-                WungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
-                RiskOfOptions.AddOption(WungusVisualsConfig);
+                MushroomVoidVisual = mushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
+                var wungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
+                MushroomVoidVisual.enabled = wungusVisualsConfig.Value;
+                wungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
+                RiskOfOptions.AddOption(wungusVisualsConfig);
 
-                MushroomVoidAudio = MushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
-                var WungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
-                MushroomVoidAudio.enabled = WungusAudioConfig.Value;
-                WungusAudioConfig.SettingChanged += WungusAudioConfigEventHandler;
-                RiskOfOptions.AddOption(WungusAudioConfig);
+                MushroomVoidAudio = mushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
+                var wungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
+                MushroomVoidAudio.enabled = wungusAudioConfig.Value;
+                wungusAudioConfig.SettingChanged += WungusAudioConfigEventHandler;
+                RiskOfOptions.AddOption(wungusAudioConfig);
 
             }
             catch
@@ -193,17 +193,17 @@ namespace com.thejpaproject.avoptions
             // Plasma Shrimp
             try
             {
-                var PlimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");
+                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");
 
-                var PlimpPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidProjectile.prefab").WaitForCompletion();
-                PlimpController = PlimpPrefab.GetComponent<ProjectileController>();
+                var plimpPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidProjectile.prefab").WaitForCompletion();
+                PlimpController = plimpPrefab.GetComponent<ProjectileController>();
 
                 var missileVoidOrbEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
                 MissileVoidOrbEffect = missileVoidOrbEffectPrefab.GetComponent<EffectComponent>();
 
 
 
-                if (PlimpAudioConfig.Value)
+                if (plimpAudioConfig.Value)
                 {
                     PlimpController.startSound = "Play_item_void_critGlasses";
                     MissileVoidOrbEffect.soundName = "Play_item_void_critGlasses";
@@ -214,9 +214,9 @@ namespace com.thejpaproject.avoptions
                     MissileVoidOrbEffect.soundName = "";
                 }
 
-                PlimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
+                plimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
 
-                RiskOfOptions.AddOption(PlimpAudioConfig);
+                RiskOfOptions.AddOption(plimpAudioConfig);
 
 
 
