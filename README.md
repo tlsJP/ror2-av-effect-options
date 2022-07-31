@@ -148,6 +148,10 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2022-07-31 : 1.13.3
+
+* Simplify Plasma Shrimp options to only those that seem to have any real effect
+
 ## 2022-07-31 : 1.13.2
 
 * Comment bindings for VoidMegaCrab
