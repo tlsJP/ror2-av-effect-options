@@ -41,7 +41,6 @@ namespace com.thejpaproject.avoptions
         private static DestroyOnUpdate IceRingExplosionDestructor;
         private static EffectComponent CleanseEffect;
 
-        private static ProjectileController PlimpController;
         private static EffectComponent MissileVoidOrbEffect;
 
 
@@ -180,29 +179,15 @@ namespace com.thejpaproject.avoptions
             // Plasma Shrimp
             try
             {
-                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");
-
-                var plimpPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidProjectile.prefab").WaitForCompletion();
-                PlimpController = plimpPrefab.GetComponent<ProjectileController>();
+                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");               
 
                 var missileVoidOrbEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
                 MissileVoidOrbEffect = missileVoidOrbEffectPrefab.GetComponent<EffectComponent>();
-
-                if (plimpAudioConfig.Value)
-                {
-                    PlimpController.startSound = "Play_item_void_critGlasses";
-                    MissileVoidOrbEffect.soundName = "Play_item_void_critGlasses";
-                }
-                else
-                {
-                    PlimpController.startSound = "";
-                    MissileVoidOrbEffect.soundName = "";
-                }
-
+                MissileVoidOrbEffect.enabled = plimpAudioConfig.Value;
+                MissileVoidOrbEffect.soundName = plimpAudioConfig.Value ? "Play_item_void_critGlasses" : "";
                 plimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
-
-                RiskOfOptions.AddOption(plimpAudioConfig);
-
+                RiskOfOptions.AddOption(plimpAudioConfig);                
+               
             }
             catch { Logger.LogError("Couldn't load plimp"); }
 
@@ -217,13 +202,12 @@ namespace com.thejpaproject.avoptions
             BindBaseAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
             BindBaseAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
             BindBaseAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
-
             
             // Direct Void Bindings
-            BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Pew pew", "SOTV Item Effects");
+            //BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
+            BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable Plasma Shrimp Orbs", "It's the missiles that shoot out", "SOTV Item Effects");
+            //BindVoidAsset("MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects"); 
+            //BindVoidAsset("MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Pew pew", "SOTV Item Effects");
             //BindVoidAsset("VoidMegaCrab/MissileVoidBigGhost", "Enable PlimpBigGhost", "Pew pew", "SOTV Item Effects");
             //BindVoidAsset("VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "Pew pew", "SOTV Item Effects");
             //BindVoidAsset("VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
@@ -267,20 +251,7 @@ namespace com.thejpaproject.avoptions
             FireTornadoBurst.SetActive(y);
         }
 
-        private void PlimpAudioConfigEventHandler(object x, EventArgs _)
-        {
-            var enabled = ((ConfigEntry<bool>)x).Value;
-            if (enabled)
-            {
-                PlimpController.startSound = "Play_item_void_critGlasses";
-                MissileVoidOrbEffect.soundName = "Play_item_void_critGlasses";
-            }
-            else
-            {
-                PlimpController.startSound = "";
-                MissileVoidOrbEffect.soundName = "";
-            }
-        }
+        private void PlimpAudioConfigEventHandler(object x, EventArgs _) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;        
 
         [MethodImpl(768)]
         private void WungusAudioConfigEventHandler(object x, EventArgs _) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
