@@ -28,6 +28,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Wandering Vagrant's death explosion
 * Weeping Fungus' effects
 * Will-o'-the-Wisp explosion
+* Plasma Shrimp AV effects
 
 ### Future options
 * Literally everything else
@@ -141,3 +142,9 @@ These good people/beings did me a help one way or another, but don't necessarily
 ## Notes
 * Xamarin's xbuild is not compatible with this mod, and will not be supported by me. (msbuild > xbuild)
 * This mod is **NOT** guaranteed to come with a virus.
+
+# Change Log
+
+## 2022-01-31 : 1.13.0
+
+* Add Plasma Shrimp AV Options
