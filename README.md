@@ -96,18 +96,21 @@ Intended for headed client-side installations. [Should] have no effect on headle
     ```
 
 ## Installing
-* Using [ebkr's r2modman Plus](https://thunderstore.io/package/ebkr/r2modman) and the Thunderstore
-    1. In r2modman, go to "🌐 Online" and Search for "AV Effect Options"
-    1. Click on "AV Effect Options by Higgs1" → "Download" → "Download with dependencies".
-    1. Call your mom/dad/parental figure/loved one/consumer of worlds
-* OR using [ebkr's r2modman Plus](https://thunderstore.io/package/ebkr/r2modman) (local install)
-    1. Obtain a release .zip of this mod.
-    1. In r2modman, go to "⚙ Settings" → "Import local mod" (under "Profile") → "Select file"
-    1. Browse to and select the .zip file.
-    1. "Import local mod"
-* OR manually...
+
+### Thunderstore
+
+* Visit mod page at [Thunderstore.io](https://thunderstore.io/package/TeamNinjaDSM/JPs_AV_Effect_Options/)
+    1. Click on "Install With Mod Manager" 
+
+* OR manually (download)...
     1. Ensure you have a current version of [BepInExPack](https://thunderstore.io/package/bbepis/BepInExPack) installed and configured.
-    1. Extract the `..dll` file from this mod to BepInEx's `plugins` folder.
+    2. Download .zip from [Thunderstore.io](https://thunderstore.io/package/TeamNinjaDSM/JPs_AV_Effect_Options/)
+    2. Extract the `AVOptions.dll` file from this mod to BepInEx's `plugins` folder.
+
+* OR manually (build)...
+    1. Ensure you have a current version of [BepInExPack](https://thunderstore.io/package/bbepis/BepInExPack) installed and configured.
+    2. Build this project
+    3. Copy the `AVOptions.dll` file from this mod to BepInEx's `plugins` folder.
 
 ## Compiling
 
