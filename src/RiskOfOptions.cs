@@ -11,6 +11,16 @@ namespace com.thejpaproject.avoptions
     {
 
         private static readonly bool ExistsRiskOfOptions = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+        private static RiskOfOptions instance = null;
+
+        public static RiskOfOptions Instance
+        {
+            get {
+                if (instance == null) instance = new();
+                return instance;
+            }
+        }
+
 
         public void AddOption(ConfigEntry<bool> value)
         {
