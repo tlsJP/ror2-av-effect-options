@@ -8,7 +8,7 @@ The goal is to allow players to selectively disable in-game audio-visual effects
 
 Originally intended just my furiend group, I am now advertising it here on the Thunderstore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
 
-Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to [poke me](https://gitlab.com/lexxyfox/ror2-av-effect-options/issues) or even submit a PR.
+Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to [poke me](https://github.com/tlsJP/ror2-av-effect-options/issues) or even submit a PR.
 
 Intended for headed client-side installations. [Should] have no effect on headless installations. 
 
