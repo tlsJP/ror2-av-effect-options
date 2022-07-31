@@ -148,6 +148,11 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2022-01-31 : 1.13.1
+
+* Namespace config file
+* Update Installation instructions
+
 ## 2022-01-31 : 1.13.0
 
 * Add Plasma Shrimp AV Options

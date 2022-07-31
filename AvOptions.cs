@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "1.13.0")]
+[BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "1.13.1")]
 [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
 public sealed class AvOptions : BaseUnityPlugin
 {
