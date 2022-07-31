@@ -20,7 +20,8 @@ namespace com.thejpaproject.avoptions
     [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
     public sealed class AvOptions : BaseUnityPlugin
     {
-        private static readonly bool ExistsRiskOfOptions = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+
+        private static readonly RiskOfOptions RiskOfOptions = new();
 
         private static ConfigEntry<bool> FrostRelicSoundConfig;
         private static ConfigEntry<bool> FrostRelicFOVConfig;
@@ -57,7 +58,6 @@ namespace com.thejpaproject.avoptions
             FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
             FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
 
-            if (ExistsRiskOfOptions) AddToRiskOfOptions();
 
             // Blast Shower
             try
@@ -72,7 +72,7 @@ namespace com.thejpaproject.avoptions
                         CleanseTransform.GetChild(i).gameObject.SetActive(false);
                 }
                 CleanseVisualConfig.SettingChanged += BlastShowerConfigEventHandler;
-                if (ExistsRiskOfOptions) AddOption(CleanseVisualConfig);
+                RiskOfOptions.AddOption(CleanseVisualConfig);
             }
             catch
             {
@@ -91,7 +91,7 @@ namespace com.thejpaproject.avoptions
                 var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
                 IdpVisualConfigHandler(DeskPlantIndicatorConfig);
                 DeskPlantIndicatorConfig.SettingChanged += IdpVisualConfigHandler;
-                if (ExistsRiskOfOptions) AddOption(DeskPlantIndicatorConfig);
+                RiskOfOptions.AddOption(DeskPlantIndicatorConfig);
             }
             catch
             {
@@ -103,12 +103,11 @@ namespace com.thejpaproject.avoptions
                 IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags)36);
                 On.RoR2.IcicleAuraController.OnIciclesActivated += FrelicActivationEventHandler;
                 On.RoR2.IcicleAuraController.OnIcicleGained += FrelicGainedEventHandler;
-                if (ExistsRiskOfOptions)
-                {
-                    AddOption(FrostRelicFOVConfig);
-                    AddOption(FrostRelicParticlesConfig);
-                    AddOption(FrostRelicSoundConfig);
-                }
+
+                RiskOfOptions.AddOption(FrostRelicFOVConfig);
+                RiskOfOptions.AddOption(FrostRelicParticlesConfig);
+                RiskOfOptions.AddOption(FrostRelicSoundConfig);
+
             }
             catch
             {
@@ -135,7 +134,7 @@ namespace com.thejpaproject.avoptions
                 FireTornadoLight.SetActive(FireTornadoConfig.Value);
                 FireTornadoBurst.SetActive(FireTornadoConfig.Value);
                 FireTornadoConfig.SettingChanged += KjaroVisualConfigEventHandler;
-                if (ExistsRiskOfOptions) AddOption(FireTornadoConfig);
+                RiskOfOptions.AddOption(FireTornadoConfig);
             }
             catch
             {
@@ -155,7 +154,7 @@ namespace com.thejpaproject.avoptions
                 for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
                     IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
                 IceRingExplosionConfig.SettingChanged += IceRingExplosionConfigEventHandler;
-                if (ExistsRiskOfOptions) AddOption(IceRingExplosionConfig);
+                RiskOfOptions.AddOption(IceRingExplosionConfig);
             }
             catch
             {
@@ -172,19 +171,19 @@ namespace com.thejpaproject.avoptions
             try
             {
                 var MushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
+
                 MushroomVoidVisual = MushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
+                var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
+                MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
+                WungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
+                RiskOfOptions.AddOption(WungusVisualsConfig);
+
                 MushroomVoidAudio = MushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
                 var WungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
-                var WungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
                 MushroomVoidAudio.enabled = WungusAudioConfig.Value;
-                MushroomVoidVisual.enabled = WungusVisualsConfig.Value;
                 WungusAudioConfig.SettingChanged += WungusAudioConfigEventHandler;
-                WungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
-                if (ExistsRiskOfOptions)
-                {
-                    AddOption(WungusAudioConfig);
-                    AddOption(WungusVisualsConfig);
-                }
+                RiskOfOptions.AddOption(WungusAudioConfig);
+
             }
             catch
             {
@@ -216,10 +215,9 @@ namespace com.thejpaproject.avoptions
                 }
 
                 PlimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
-                if (ExistsRiskOfOptions)
-                {
-                    AddOption(PlimpAudioConfig);
-                }
+
+                RiskOfOptions.AddOption(PlimpAudioConfig);
+
 
 
             }
@@ -347,7 +345,7 @@ namespace com.thejpaproject.avoptions
                 config.SettingChanged += (x, _) =>
                   prefab.SetActive(((ConfigEntry<bool>)x).Value);
                 prefab.SetActive(config.Value);
-                if (ExistsRiskOfOptions) AddOption(config);
+                RiskOfOptions.AddOption(config);
             }
             catch { }
         }
@@ -363,35 +361,11 @@ namespace com.thejpaproject.avoptions
                 config.SettingChanged += (x, _) =>
                   prefab.SetActive(((ConfigEntry<bool>)x).Value);
                 prefab.SetActive(config.Value);
-                if (ExistsRiskOfOptions) AddOption(config);
+                RiskOfOptions.AddOption(config);
             }
             catch { }
 
 
-        }
-
-        [MethodImpl(520)]
-        private void AddOption(ConfigEntry<bool> _) =>
-          ModSettingsManager.AddOption(new CheckBoxOption(_));
-
-        [MethodImpl(520)]
-        private void AddToRiskOfOptions()
-        {
-            ModSettingsManager.SetModDescription(
-              "Enable or disable various item audio/visual effects."
-            );
-            using var stream = GetType().Assembly.GetManifestResourceStream(".");
-            var texture = new Texture2D(0, 0);
-            var imgdata = new byte[stream.Length];
-            stream.Read(imgdata, 0, imgdata.Length);
-            if (ImageConversion.LoadImage(texture, imgdata))
-                ModSettingsManager.SetModIcon(
-                  Sprite.Create(
-                    texture,
-                    new Rect(0, 0, texture.width, texture.height),
-                    new Vector2(0, 0)
-                  )
-                );
         }
     }
 
