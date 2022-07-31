@@ -73,8 +73,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Blast Shower.");
             }
-
-            BindBaseAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+            
 
             // Interstellar Desk Plant
             try
@@ -108,8 +107,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Frost Relic.");
             }
-
-            BindBaseAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+            
 
             // Kjaro's Band
             try
@@ -135,8 +133,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Kjaro's Band.");
             }
-
-            BindBaseAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+            
 
             // Runald's Band
             try
@@ -156,11 +153,6 @@ namespace com.thejpaproject.avoptions
                 Logger.LogError("Could not hook onto Runald's Band.");
             }
 
-            BindBaseAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-            BindBaseAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
-            BindBaseAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
-            BindBaseAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-            BindBaseAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
 
             // Weeping Bungus
             try
@@ -196,8 +188,6 @@ namespace com.thejpaproject.avoptions
                 var missileVoidOrbEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
                 MissileVoidOrbEffect = missileVoidOrbEffectPrefab.GetComponent<EffectComponent>();
 
-
-
                 if (plimpAudioConfig.Value)
                 {
                     PlimpController.startSound = "Play_item_void_critGlasses";
@@ -213,15 +203,23 @@ namespace com.thejpaproject.avoptions
 
                 RiskOfOptions.AddOption(plimpAudioConfig);
 
-
-
             }
             catch { Logger.LogError("Couldn't load plimp"); }
 
+            // Direct Base Bindings
+            BindBaseAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+            BindBaseAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
+            BindBaseAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+            BindBaseAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+            BindBaseAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+            BindBaseAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
+            BindBaseAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
             BindBaseAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+            BindBaseAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
             BindBaseAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
-
+            
+            // Direct Void Bindings
             BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
             BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "Pew pew", "SOTV Item Effects");
             BindVoidAsset("MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects");
@@ -285,12 +283,10 @@ namespace com.thejpaproject.avoptions
         }
 
         [MethodImpl(768)]
-        private void WungusAudioConfigEventHandler(object x, EventArgs _) =>
-        MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
+        private void WungusAudioConfigEventHandler(object x, EventArgs _) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
 
         [MethodImpl(768)]
-        private void WungusVisualConfigHandler(object x, EventArgs _) =>
-          MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
+        private void WungusVisualConfigHandler(object x, EventArgs _) => MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
 
         [MethodImpl(768)]
         private void IdpVisualConfigHandler(object x, EventArgs _ = null)
