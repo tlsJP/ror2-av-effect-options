@@ -1,13 +1,8 @@
 using BepInEx;
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
-using RiskOfOptions;
-using RiskOfOptions.Options;
 using RoR2;
 using RoR2.Projectile;
-using RoR2.Audio;
 using System;
-using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -226,7 +221,7 @@ namespace com.thejpaproject.avoptions
             BindBaseAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
             BindBaseAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
-            
+
             BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
             BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "Pew pew", "SOTV Item Effects");
             BindVoidAsset("MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects");
