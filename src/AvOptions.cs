@@ -79,7 +79,7 @@ namespace com.thejpaproject.avoptions
                 Logger.LogError("Could not hook onto Blast Shower.");
             }
 
-            BindAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
+            BindBaseAsset("KillEliteFrenzy/NoCooldownEffect", "Enable Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
 
             // Interstellar Desk Plant
             try
@@ -114,7 +114,7 @@ namespace com.thejpaproject.avoptions
                 Logger.LogError("Could not hook onto Frost Relic.");
             }
 
-            BindAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
+            BindBaseAsset("IgniteOnKill/IgniteExplosionVFX", "Enable Gasoline", "Enables Gasoline's explosion");
 
             // Kjaro's Band
             try
@@ -141,7 +141,7 @@ namespace com.thejpaproject.avoptions
                 Logger.LogError("Could not hook onto Kjaro's Band.");
             }
 
-            BindAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
+            BindBaseAsset("FireballsOnHit/FireMeatBallGhost", "Enable Molten Perforator", "Enables the Molten Perforator visuals");
 
             // Runald's Band
             try
@@ -161,11 +161,11 @@ namespace com.thejpaproject.avoptions
                 Logger.LogError("Could not hook onto Runald's Band.");
             }
 
-            BindAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
-            BindAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
-            BindAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
-            BindAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
-            BindAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
+            BindBaseAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
+            BindBaseAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
+            BindBaseAsset("StickyBomb/StickyBombGhost", "Enable Sticky Bomb Drops", "Enables Sticky Bomb's drops");
+            BindBaseAsset("StickyBomb/BehemothVFX", "Enable Sticky Bomb Explosion", "Enables Sticky Bomb's explosion");
+            BindBaseAsset("ExplodeOnDeath/WilloWispExplosion", "Enable Will-o-the-Wisp", "Enables Will o' the Wisp's explosion");
 
             // Weeping Bungus
             try
@@ -223,18 +223,17 @@ namespace com.thejpaproject.avoptions
             }
             catch { Logger.LogError("Couldn't load plimp"); }
 
-            BindAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
-            BindAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
+            BindBaseAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
+            BindBaseAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
 
-
-            BindVoidAsset("DLC1/MissileVoid/MissileVoid", "Enable Plimp", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigGhost", "Enable PlimpBigGhost", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "Pew pew", "SOTV Item Effects");
-            BindVoidAsset("DLC1/VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
+            
+            BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
+            BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable PlimpOrbEffect", "Pew pew", "SOTV Item Effects");
+            BindVoidAsset("MissileVoid/MissileVoidProjectile", "Enable PlimpProjectile", "Pew pew", "SOTV Item Effects");
+            BindVoidAsset("MissileVoid/VoidImpactEffect", "Enable VoidImpactEffect", "Pew pew", "SOTV Item Effects");
+            //BindVoidAsset("VoidMegaCrab/MissileVoidBigGhost", "Enable PlimpBigGhost", "Pew pew", "SOTV Item Effects");
+            //BindVoidAsset("VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "Pew pew", "SOTV Item Effects");
+            //BindVoidAsset("VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
         }
 
         [MethodImpl(768)]
@@ -335,43 +334,27 @@ namespace com.thejpaproject.avoptions
         }
 
         [MethodImpl(768)]
-        private void BindVoidAsset(string assetPath, string title, string description, string section = "Item Effects")
+        private void BindVoidAsset(string assetPath, string title, string description, string section = "Item Effects") => BindAsset("DLC1/" + assetPath, title, description, section);
+
+        [MethodImpl(768)]
+        private void BindBaseAsset(string assetPath, string title, string description, string section = "Item Effects") => BindAsset("Base/" + assetPath, title, description, section);
+
+        private void BindAsset(string assetPath, string title, string description, string section = "Item Effects")
         {
             try
             {
                 var prefab = Addressables.LoadAsset<GameObject>("RoR2/" + assetPath + ".prefab").WaitForCompletion();
                 var config = Config.Bind(section, title, true, description);
-                // todo: should the following class be merged into this one?
-                config.SettingChanged += (x, _) =>
-                  prefab.SetActive(((ConfigEntry<bool>)x).Value);
+                config.SettingChanged += (x, _) => prefab.SetActive(((ConfigEntry<bool>)x).Value);
                 prefab.SetActive(config.Value);
                 RiskOfOptions.AddOption(config);
             }
             catch { }
-        }
-
-        [MethodImpl(768)]
-        private void BindAsset(string assetPath, string title, string description, string section = "Item Effects")
-        {
-            try
-            {
-                var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/" + assetPath + ".prefab").WaitForCompletion();
-                var config = Config.Bind(section, title, true, description);
-                // todo: should the following class be merged into this one?
-                config.SettingChanged += (x, _) =>
-                  prefab.SetActive(((ConfigEntry<bool>)x).Value);
-                prefab.SetActive(config.Value);
-                RiskOfOptions.AddOption(config);
-            }
-            catch { }
-
-
         }
     }
 
     public sealed class DestroyOnUpdate : MonoBehaviour
     {
-        public void Update() =>
-          UnityEngine.Object.Destroy(base.gameObject);
+        public void Update() => UnityEngine.Object.Destroy(base.gameObject);
     }
 }
