@@ -46,7 +46,7 @@ Intended for headed client-side installations. [Should] have no effect on headle
     ![Risk of Options](https://gitlab.com/lexxyfox/ror2-av-effect-options/wikis/roo.png)
 * OR: modify the .cfg file manually...
     * You aren't required to run the game before doing this!
-    * In BepInEx's config directory, create or modify the file named `.AVFX_Options...cfg`
+    * In BepInEx's config directory, create or modify the file named `com.thejpaproject.AVFX_Options.cfg`
     * Here's the default configuration to get you started...
     ```
     [Character Effects]
