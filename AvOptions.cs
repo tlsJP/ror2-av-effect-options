@@ -46,8 +46,8 @@ public sealed class AvOptions : BaseUnityPlugin
     private static EffectComponent MissileVoidOrbEffect;
 
 
-
     [MethodImpl(768)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
     private void Awake()
     {
         FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
