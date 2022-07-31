@@ -148,11 +148,16 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
-## 2022-01-31 : 1.13.1
+## 2022-07-31 : 1.13.2
+
+* Comment bindings for VoidMegaCrab
+* Remove invalid attempt to bind to MissileVoid asset
+
+## 2022-07-31 : 1.13.1
 
 * Namespace config file
 * Update Installation instructions
 
-## 2022-01-31 : 1.13.0
+## 2022-07-31 : 1.13.0
 
 * Add Plasma Shrimp AV Options
