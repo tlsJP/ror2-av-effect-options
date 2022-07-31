@@ -42,10 +42,6 @@ public sealed class AvOptions : BaseUnityPlugin
     private static DestroyOnUpdate IceRingExplosionDestructor;
     private static EffectComponent CleanseEffect;
 
-    //private static LoopSoundPlayer PlimpAudio;
-    //private static LoopSoundDef PlimpFlightSoundLoop;
-    //private static string PlimpFlightSoundSoundName;
-
     private static ProjectileController PlimpController;
     private static EffectComponent MissileVoidOrbEffect;
 
