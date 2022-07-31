@@ -14,6 +14,8 @@ namespace com.thejpaproject.avoptions
 
         public PlasmaShrimpConfiguration(ConfigEntry<bool> configEntry) : base(configEntry) { }
 
+        private protected override void HandleEvent(object x, EventArgs args) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
+
         private protected override void SetBehavior()
         {
             var missileVoidOrbEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
@@ -22,6 +24,6 @@ namespace com.thejpaproject.avoptions
             MissileVoidOrbEffect.soundName = ConfigEntry.Value ? "Play_item_void_critGlasses" : "";
         }
 
-        private protected override void HandleEvent(object x, EventArgs args) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
+        
     }
 }

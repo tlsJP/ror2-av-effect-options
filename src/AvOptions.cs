@@ -36,12 +36,13 @@ namespace com.thejpaproject.avoptions
         private static GameObject IceRingExplosionPrefab;
 
         private static Transform CleanseTransform;
-        private static LoopSoundPlayer MushroomVoidAudio;
+        
         private static TemporaryVisualEffect MushroomVoidVisual;
         private static DestroyOnUpdate IceRingExplosionDestructor;
         private static EffectComponent CleanseEffect;
 
-        private static EffectComponent MissileVoidOrbEffect;
+        private WungusAudioConfiguration WungusAudioConfiguration;
+        private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
 
 
         [MethodImpl(768)]
@@ -163,13 +164,9 @@ namespace com.thejpaproject.avoptions
                 MushroomVoidVisual.enabled = wungusVisualsConfig.Value;
                 wungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
                 RiskOfOptions.AddOption(wungusVisualsConfig);
-
-                MushroomVoidAudio = mushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
+               
                 var wungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
-                MushroomVoidAudio.enabled = wungusAudioConfig.Value;
-                wungusAudioConfig.SettingChanged += WungusAudioConfigEventHandler;
-                RiskOfOptions.AddOption(wungusAudioConfig);
-
+                WungusAudioConfiguration = new WungusAudioConfiguration(wungusAudioConfig);
             }
             catch
             {
@@ -179,15 +176,8 @@ namespace com.thejpaproject.avoptions
             // Plasma Shrimp
             try
             {
-                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");               
-
-                var missileVoidOrbEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MissileVoid/MissileVoidOrbEffect.prefab").WaitForCompletion();
-                MissileVoidOrbEffect = missileVoidOrbEffectPrefab.GetComponent<EffectComponent>();
-                MissileVoidOrbEffect.enabled = plimpAudioConfig.Value;
-                MissileVoidOrbEffect.soundName = plimpAudioConfig.Value ? "Play_item_void_critGlasses" : "";
-                plimpAudioConfig.SettingChanged += PlimpAudioConfigEventHandler;
-                RiskOfOptions.AddOption(plimpAudioConfig);                
-               
+                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");
+                PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(plimpAudioConfig);                       
             }
             catch { Logger.LogError("Couldn't load plimp"); }
 
@@ -250,11 +240,6 @@ namespace com.thejpaproject.avoptions
             FireTornadoLight.SetActive(y);
             FireTornadoBurst.SetActive(y);
         }
-
-        private void PlimpAudioConfigEventHandler(object x, EventArgs _) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;        
-
-        [MethodImpl(768)]
-        private void WungusAudioConfigEventHandler(object x, EventArgs _) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
 
         [MethodImpl(768)]
         private void WungusVisualConfigHandler(object x, EventArgs _) => MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
