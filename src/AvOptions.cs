@@ -36,11 +36,11 @@ namespace com.thejpaproject.avoptions
         private static GameObject IceRingExplosionPrefab;
 
         private static Transform CleanseTransform;
-        
-        private static TemporaryVisualEffect MushroomVoidVisual;
+
         private static DestroyOnUpdate IceRingExplosionDestructor;
         private static EffectComponent CleanseEffect;
 
+        private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
         private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
 
@@ -73,7 +73,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Blast Shower.");
             }
-            
+
 
             // Interstellar Desk Plant
             try
@@ -107,7 +107,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Frost Relic.");
             }
-            
+
 
             // Kjaro's Band
             try
@@ -133,7 +133,7 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Kjaro's Band.");
             }
-            
+
 
             // Runald's Band
             try
@@ -154,32 +154,11 @@ namespace com.thejpaproject.avoptions
             }
 
 
-            // Weeping Bungus
-            try
-            {
-                var mushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
+            WungusVisualConfiguration = new WungusVisualConfiguration(Config);
+            WungusAudioConfiguration = new WungusAudioConfiguration(Config);
 
-                MushroomVoidVisual = mushroomVoidEffectPrefab.GetComponent<TemporaryVisualEffect>();
-                var wungusVisualsConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Visuals", true, "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.");
-                MushroomVoidVisual.enabled = wungusVisualsConfig.Value;
-                wungusVisualsConfig.SettingChanged += WungusVisualConfigHandler;
-                RiskOfOptions.AddOption(wungusVisualsConfig);
-               
-                var wungusAudioConfig = Config.Bind("SOTV Item Effects", "Enable Weeping Fungus Sound", true, "Enables Weeping Fungus' sound effect. Take effect immediately.");
-                WungusAudioConfiguration = new WungusAudioConfiguration(wungusAudioConfig);
-            }
-            catch
-            {
-                Logger.LogError("Could not hook onto Wungus.");
-            }
+            PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
 
-            // Plasma Shrimp
-            try
-            {
-                var plimpAudioConfig = Config.Bind("SOTV Item Effects", "Enable Plasma Shrimp Sounds", true, "Sounds like bowling! \nRequires restart to take effect :(");
-                PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(plimpAudioConfig);                       
-            }
-            catch { Logger.LogError("Couldn't load plimp"); }
 
             // Direct Base Bindings
             BindBaseAsset("BleedOnHitAndExplode/BleedOnHitAndExplode_Explosion", "Enable Shatterspleen", "Enables Shatterspleen's explosion");
@@ -192,7 +171,7 @@ namespace com.thejpaproject.avoptions
             BindBaseAsset("Titan/TitanDeathEffect", "Enable Titan Death Effect", "Enables Stone Titan's on-death explosion. Disabling will cause Stone Titans to disappear on death instead of creating a corpse.", "Character Effects");
             BindBaseAsset("Tonic/TonicBuffEffect", "Enable Spinel Tonic", "Enables Spinel Tonic's screen effect");
             BindBaseAsset("Vagrant/VagrantDeathExplosion", "Enable Vagrant Death Explosion", "Enables Wandering Vagrant's on-death explosion. Disabling will cause Wandering Vagrants to disappear on death instead of creating a corpse.", "Character Effects");
-            
+
             // Direct Void Bindings
             //BindVoidAsset("MissileVoid/MissileVoidGhost", "Enable PlimpGhost", "Pew pew", "SOTV Item Effects");
             BindVoidAsset("MissileVoid/MissileVoidOrbEffect", "Enable Plasma Shrimp Orbs", "It's the missiles that shoot out", "SOTV Item Effects");
@@ -240,9 +219,6 @@ namespace com.thejpaproject.avoptions
             FireTornadoLight.SetActive(y);
             FireTornadoBurst.SetActive(y);
         }
-
-        [MethodImpl(768)]
-        private void WungusVisualConfigHandler(object x, EventArgs _) => MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
 
         [MethodImpl(768)]
         private void IdpVisualConfigHandler(object x, EventArgs _ = null)

@@ -9,9 +9,9 @@ namespace com.thejpaproject.avoptions
         private protected ConfigEntry<bool> ConfigEntry;
         private static readonly RiskOfOptions RiskOfOptions = new();
 
-        protected AvConfiguration(ConfigEntry<bool> configEntry)
+        protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
-            this.ConfigEntry = configEntry;
+            ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
             this.SetBehavior();
             ConfigEntry.SettingChanged += HandleEvent;
             RiskOfOptions.AddOption(this.ConfigEntry);
