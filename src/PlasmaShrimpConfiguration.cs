@@ -15,7 +15,10 @@ namespace com.thejpaproject.avoptions
             base(configFile, "SOTV Item Effects", "Enable Plasma Shrimp Sounds", "Sounds like bowling! \nRequires restart to take effect :(", true)
         { }
 
-        private protected override void HandleEvent(object x, EventArgs args) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
+        private protected override void HandleEvent(object x, EventArgs args) {            
+            MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
+            MissileVoidOrbEffect.soundName = ConfigEntry.Value ? "Play_item_void_critGlasses" : "";
+        }
 
         private protected override void SetBehavior()
         {
