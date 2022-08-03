@@ -1,5 +1,6 @@
 using BepInEx;
 using BepInEx.Configuration;
+using com.thejpaproject.avoptions.configurations;
 using RoR2;
 using System;
 using System.Reflection;
@@ -35,7 +36,7 @@ namespace com.thejpaproject.avoptions
         private static GameObject IceRingExplosionPrefab;
 
         private static DestroyOnUpdate IceRingExplosionDestructor;
-       
+
 
         private BlastShowerConfiguration BlastShowerConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
@@ -54,7 +55,7 @@ namespace com.thejpaproject.avoptions
 
             // Blast Shower
             BlastShowerConfiguration = new BlastShowerConfiguration(Config);
-           
+
 
             // Interstellar Desk Plant
             try
@@ -162,7 +163,7 @@ namespace com.thejpaproject.avoptions
             //BindVoidAsset("VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "Pew pew", "SOTV Item Effects");
             //BindVoidAsset("VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
         }
-       
+
         [MethodImpl(768)]
         private void IceRingExplosionConfigEventHandler(object x, EventArgs _)
         {
@@ -171,7 +172,7 @@ namespace com.thejpaproject.avoptions
             var y = ((ConfigEntry<bool>)x).Value;
             if (y && IceRingExplosionDestructor != null)
             {
-                UnityEngine.Object.Destroy(IceRingExplosionDestructor);
+                Destroy(IceRingExplosionDestructor);
                 IceRingExplosionDestructor = null;
             }
             else
@@ -250,6 +251,6 @@ namespace com.thejpaproject.avoptions
 
     public sealed class DestroyOnUpdate : MonoBehaviour
     {
-        public void Update() => UnityEngine.Object.Destroy(base.gameObject);
+        public void Update() => Destroy(gameObject);
     }
 }

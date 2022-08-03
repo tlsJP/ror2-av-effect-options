@@ -2,7 +2,7 @@
 using BepInEx.Configuration;
 using System;
 
-namespace com.thejpaproject.avoptions
+namespace com.thejpaproject.avoptions.configurations
 {
     internal class FrelicSoundConfiguration : AvConfiguration
     {

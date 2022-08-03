@@ -4,7 +4,7 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace com.thejpaproject.avoptions
+namespace com.thejpaproject.avoptions.configurations
 {
     internal class BlastShowerConfiguration : AvConfiguration
     {
@@ -23,7 +23,7 @@ namespace com.thejpaproject.avoptions
 
         private protected override void SetBehavior()
         {
-            
+
             var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/Cleanse/CleanseEffect.prefab").WaitForCompletion();
             CleanseTransform = prefab.transform;
 

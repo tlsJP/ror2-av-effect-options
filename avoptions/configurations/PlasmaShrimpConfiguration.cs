@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace com.thejpaproject.avoptions
+namespace com.thejpaproject.avoptions.configurations
 {
     class PlasmaShrimpConfiguration : AvConfiguration
     {

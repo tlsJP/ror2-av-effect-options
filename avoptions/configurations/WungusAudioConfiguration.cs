@@ -5,11 +5,11 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace com.thejpaproject.avoptions
+namespace com.thejpaproject.avoptions.configurations
 {
     class WungusAudioConfiguration : AvConfiguration
     {
-        private static LoopSoundPlayer MushroomVoidAudio;
+        private LoopSoundPlayer MushroomVoidAudio;
 
         public WungusAudioConfiguration(ConfigFile configFile) :
             base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Sound", "Enables Weeping Fungus' sound effect. Take effect immediately.", true)
