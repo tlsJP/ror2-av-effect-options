@@ -20,9 +20,9 @@
     <Deterministic>True</Deterministic>
     <ErrorReport>none</ErrorReport>
     <Features>strict</Features>
-    <GenerateAssemblyInfo>yiff</GenerateAssemblyInfo>
-    <GenerateDependencyFile>yiff</GenerateDependencyFile>
-    <GenerateTargetFrameworkAttribute>yiff</GenerateTargetFrameworkAttribute>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDependencyFile>true</GenerateDependencyFile>
+    <GenerateTargetFrameworkAttribute>true</GenerateTargetFrameworkAttribute>
     <LangVersion>latest</LangVersion>
     <NoLogo>True</NoLogo>
     <NoWarn>612</NoWarn>
