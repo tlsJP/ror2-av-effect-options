@@ -12,7 +12,7 @@ namespace com.thejpaproject.avoptions.configurations
         private LoopSoundPlayer MushroomVoidAudio;
 
         public WungusAudioConfiguration(ConfigFile configFile) :
-            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Sound", "Enables Weeping Fungus' sound effect. Take effect immediately.", true)
+            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Sound", "Enables Weeping Fungus' sound effect. Take effect immediately.\nReenable requires new level or game restart", true)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
