@@ -1,7 +1,6 @@
 using BepInEx;
 using BepInEx.Configuration;
 using RoR2;
-using RoR2.Projectile;
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -35,11 +34,10 @@ namespace com.thejpaproject.avoptions
         private static GameObject FireTornadoBurst;
         private static GameObject IceRingExplosionPrefab;
 
-        private static Transform CleanseTransform;
-
         private static DestroyOnUpdate IceRingExplosionDestructor;
-        private static EffectComponent CleanseEffect;
+       
 
+        private BlastShowerConfiguration BlastShowerConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
         private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
@@ -55,25 +53,8 @@ namespace com.thejpaproject.avoptions
 
 
             // Blast Shower
-            try
-            {
-                CleanseTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Cleanse/CleanseEffect.prefab").WaitForCompletion().transform;
-                CleanseEffect = CleanseTransform.GetComponent<EffectComponent>();
-                var CleanseVisualConfig = Config.Bind("Item Effects", "Enable Blast Shower", true, "Enables Blast Shower's effects.");
-                if (!CleanseVisualConfig.Value)
-                {
-                    CleanseEffect.effectIndex = (EffectIndex)(-1);
-                    for (var i = 0; i < CleanseTransform.childCount; i++)
-                        CleanseTransform.GetChild(i).gameObject.SetActive(false);
-                }
-                CleanseVisualConfig.SettingChanged += BlastShowerConfigEventHandler;
-                RiskOfOptions.AddOption(CleanseVisualConfig);
-            }
-            catch
-            {
-                Logger.LogError("Could not hook onto Blast Shower.");
-            }
-
+            BlastShowerConfiguration = new BlastShowerConfiguration(Config);
+           
 
             // Interstellar Desk Plant
             try
@@ -181,16 +162,7 @@ namespace com.thejpaproject.avoptions
             //BindVoidAsset("VoidMegaCrab/MissileVoidBigProjectile", "Enable PlimpBigProjectile", "Pew pew", "SOTV Item Effects");
             //BindVoidAsset("VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
         }
-
-        [MethodImpl(768)]
-        private void BlastShowerConfigEventHandler(object x, EventArgs _)
-        {
-            var y = ((ConfigEntry<bool>)x).Value;
-            CleanseEffect.effectIndex = (EffectIndex)(y ? 102 : -1);
-            for (var i = 0; i < CleanseTransform.childCount; i++)
-                CleanseTransform.GetChild(i).gameObject.SetActive(y);
-        }
-
+       
         [MethodImpl(768)]
         private void IceRingExplosionConfigEventHandler(object x, EventArgs _)
         {
