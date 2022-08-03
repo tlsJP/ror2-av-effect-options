@@ -1,6 +1,5 @@
 ﻿using BepInEx.Configuration;
 using System;
-using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -16,7 +15,7 @@ namespace com.thejpaproject.avoptions.configurations
 
         private protected override void HandleEvent(object x, EventArgs args)
         {
-            var y = ConfigEntry.Value;
+            var y = ((ConfigEntry<bool>)x).Value;
             for (var i = 0; i < CleanseTransform.childCount; i++)
                 CleanseTransform.GetChild(i).gameObject.SetActive(y);
         }
