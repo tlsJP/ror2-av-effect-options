@@ -11,12 +11,20 @@ namespace com.thejpaproject.avoptions.configurations
 
         protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
-            ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
-            this.SetBehavior();
-            this.HandleEvent(ConfigEntry,null);
-            ConfigEntry.SettingChanged += HandleEvent;
-            RiskOfOptions.AddOption(this.ConfigEntry);
+            try
+            {
+                ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
+                this.SetBehavior();
+                this.HandleEvent(ConfigEntry, null);
+                ConfigEntry.SettingChanged += HandleEvent;
+                RiskOfOptions.AddOption(this.ConfigEntry);
+            }
+            catch
+            {
+                throw new ConfigurationException(this.GetType().FullName);
+            }
         }
+       
 
         private protected abstract void HandleEvent(object x, EventArgs args);
 

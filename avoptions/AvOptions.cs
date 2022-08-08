@@ -51,11 +51,24 @@ namespace com.thejpaproject.avoptions
             FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
 
 
-            // Blast Shower
-            BlastShowerConfiguration = new BlastShowerConfiguration(Config);
+            try
+            {
+                BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
-            // Interstellar Desk Plant
-            IdpVisualConfiguration = new IdpVisualConfiguration(Config);
+                IdpVisualConfiguration = new IdpVisualConfiguration(Config);
+
+                PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
+
+                WungusVisualConfiguration = new WungusVisualConfiguration(Config);
+                WungusAudioConfiguration = new WungusAudioConfiguration(Config);
+
+                
+            } 
+            catch( ConfigurationException e)
+            {
+                Logger.LogError(String.Format("Failed to register configuration for {0}",e.Message));
+            }
+            
 
             try
             {
@@ -117,12 +130,6 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Runald's Band.");
             }
-
-
-            WungusVisualConfiguration = new WungusVisualConfiguration(Config);
-            WungusAudioConfiguration = new WungusAudioConfiguration(Config);
-
-            PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
 
 
             // Direct Base Bindings
