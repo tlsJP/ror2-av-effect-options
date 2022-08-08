@@ -9,9 +9,16 @@ namespace com.thejpaproject.avoptions.configurations
     internal class WungusVisualConfiguration : AvConfiguration
     {
         private TemporaryVisualEffect MushroomVoidVisual;
+        private static readonly String DESCRIPTION = 
+@"Enables Weeping Fungus' visual particle effects. 
+This includes the floating plus symbols, the floating spore particles, and the void star particle effects. 
+Does not affect the generic green healing pulsing effect. 
+
+Disable: Effective immediately
+Enable: Effective on next level";
 
         public WungusVisualConfiguration(ConfigFile configFile) :
-            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Visuals", "Enables Weeping Fungus' visual particle effects. This includes the floating plus symbols, the floating spore particles, and the void star particle effects. Does not affect the generic green healing pulsing effect. Note: re-enabling may not take effect until next stage.", true)
+            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Visuals", DESCRIPTION)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => MushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;
