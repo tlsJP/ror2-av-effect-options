@@ -9,7 +9,7 @@ namespace com.thejpaproject.avoptions.configurations
         private protected ConfigEntry<bool> ConfigEntry;
         private static readonly RiskOfOptions RiskOfOptions = new();
 
-        protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
+        private protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
             try
             {
