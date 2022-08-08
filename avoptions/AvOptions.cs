@@ -18,11 +18,6 @@ namespace com.thejpaproject.avoptions
 
         private static readonly RiskOfOptions RiskOfOptions = new();
 
-        private static ConfigEntry<bool> FrostRelicSoundConfig;
-        private static ConfigEntry<bool> FrostRelicFOVConfig;
-        private static ConfigEntry<bool> FrostRelicParticlesConfig;
-
-        private static FieldInfo IcicleAuraAimRequest;
 
         private static GameObject FireTornadoSmoke;
         private static GameObject FireTornadoMeshCore;
@@ -36,6 +31,7 @@ namespace com.thejpaproject.avoptions
 
 
         private BlastShowerConfiguration BlastShowerConfiguration;
+        private FrelicAvConfiguration FrelicBaseConfiguration;
         private IdpVisualConfiguration IdpVisualConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
@@ -46,15 +42,13 @@ namespace com.thejpaproject.avoptions
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
         private void Awake()
         {
-            FrostRelicFOVConfig = Config.Bind("Item Effects", "Enable Frost Relic FOV", true, "Enables the temporary FOV change that Frost Relic's on-kill proc gives. Does not affect the particle effects (see the Frost Relic Particles option).");
-            FrostRelicParticlesConfig = Config.Bind("Item Effects", "Enable Frost Relic Particles", true, "Enables the chunk and ring effects of Frost Relic. Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item.");
-            FrostRelicSoundConfig = Config.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.");
 
 
             try
             {
                 BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
+                FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
                 IdpVisualConfiguration = new IdpVisualConfiguration(Config);
 
                 PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
@@ -62,28 +56,11 @@ namespace com.thejpaproject.avoptions
                 WungusVisualConfiguration = new WungusVisualConfiguration(Config);
                 WungusAudioConfiguration = new WungusAudioConfiguration(Config);
 
-                
-            } 
-            catch( ConfigurationException e)
-            {
-                Logger.LogError(String.Format("Failed to register configuration for {0}",e.Message));
-            }
-            
-
-            try
-            {
-                IcicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", (BindingFlags)36);
-                On.RoR2.IcicleAuraController.OnIciclesActivated += FrelicActivationEventHandler;
-                On.RoR2.IcicleAuraController.OnIcicleGained += FrelicGainedEventHandler;
-
-                RiskOfOptions.AddOption(FrostRelicFOVConfig);
-                RiskOfOptions.AddOption(FrostRelicParticlesConfig);
-                RiskOfOptions.AddOption(FrostRelicSoundConfig);
 
             }
-            catch
+            catch (ConfigurationException e)
             {
-                Logger.LogError("Could not hook onto Frost Relic.");
+                Logger.LogError(String.Format("Failed to register configuration for {0}", e.Message));
             }
 
 
@@ -183,32 +160,6 @@ namespace com.thejpaproject.avoptions
             FireTornadoBurst.SetActive(y);
         }
 
-        private void FrelicGainedEventHandler(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self)
-        {
-            // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-            foreach (ParticleSystem part in self.procParticles)
-                if (FrostRelicParticlesConfig.Value | part.name == "Area")
-                    part.Play();
-        }
-
-        private void FrelicActivationEventHandler(On.RoR2.IcicleAuraController.orig_OnIciclesActivated orig, IcicleAuraController self)
-        {
-            // WARN: the following code is probably illegal in your jurisdiction! Arrr matey!
-            if (FrostRelicSoundConfig.Value)
-                Util.PlaySound("Play_item_proc_icicle", self.gameObject);
-            if (FrostRelicFOVConfig.Value)
-            {
-                var ctp = self.owner.GetComponent<CameraTargetParams>();
-                if (ctp) IcicleAuraAimRequest.SetValue(self, ctp.RequestAimType(CameraTargetParams.AimType.Aura));
-            }
-            foreach (ParticleSystem part in self.auraParticles)
-                if (FrostRelicParticlesConfig.Value | part.name == "Area")
-                {
-                    var main = part.main;
-                    main.loop = true;
-                    part.Play();
-                }
-        }
 
         [MethodImpl(768)]
         private void BindVoidAsset(string assetPath, string title, string description, string section = "Item Effects") => BindAsset("DLC1/" + assetPath, title, description, section);
