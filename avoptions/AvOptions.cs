@@ -24,9 +24,6 @@ namespace com.thejpaproject.avoptions
 
         private static FieldInfo IcicleAuraAimRequest;
 
-        private static GameObject DeskplantSpores;
-        private static GameObject DeskplantSymbols;
-        private static GameObject DeskplantMushrooms;
         private static GameObject FireTornadoSmoke;
         private static GameObject FireTornadoMeshCore;
         private static GameObject FireTornadoMeshWide;
@@ -39,6 +36,7 @@ namespace com.thejpaproject.avoptions
 
 
         private BlastShowerConfiguration BlastShowerConfiguration;
+        private IdpVisualConfiguration IdpVisualConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
         private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
@@ -56,23 +54,8 @@ namespace com.thejpaproject.avoptions
             // Blast Shower
             BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
-
             // Interstellar Desk Plant
-            try
-            {
-                var DeskplantIndicatorTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Plant/DeskplantWard.prefab").WaitForCompletion().transform.Find("Indicator").gameObject.transform;
-                DeskplantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
-                DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
-                DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
-                var DeskPlantIndicatorConfig = Config.Bind("Item Effects", "Enable Desk Plant Ward Particles", true, "Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.");
-                IdpVisualConfigHandler(DeskPlantIndicatorConfig);
-                DeskPlantIndicatorConfig.SettingChanged += IdpVisualConfigHandler;
-                RiskOfOptions.AddOption(DeskPlantIndicatorConfig);
-            }
-            catch
-            {
-                Logger.LogError("Could not hook onto Interstellar Desk Plant ward.");
-            }
+            IdpVisualConfiguration = new IdpVisualConfiguration(Config);
 
             try
             {
@@ -191,15 +174,6 @@ namespace com.thejpaproject.avoptions
             FireTornadoEmbers.SetActive(y);
             FireTornadoLight.SetActive(y);
             FireTornadoBurst.SetActive(y);
-        }
-
-        [MethodImpl(768)]
-        private void IdpVisualConfigHandler(object x, EventArgs _ = null)
-        {
-            var y = ((ConfigEntry<bool>)x).Value;
-            DeskplantSpores.SetActive(y);
-            DeskplantSymbols.SetActive(y);
-            DeskplantMushrooms.SetActive(y);
         }
 
         private void FrelicGainedEventHandler(On.RoR2.IcicleAuraController.orig_OnIcicleGained orig, IcicleAuraController self)

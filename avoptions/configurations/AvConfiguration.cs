@@ -13,6 +13,7 @@ namespace com.thejpaproject.avoptions.configurations
         {
             ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
             this.SetBehavior();
+            this.HandleEvent(ConfigEntry,null);
             ConfigEntry.SettingChanged += HandleEvent;
             RiskOfOptions.AddOption(this.ConfigEntry);
         }
