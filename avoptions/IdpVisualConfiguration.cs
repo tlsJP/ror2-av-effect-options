@@ -15,7 +15,7 @@ namespace com.thejpaproject.avoptions.configurations
 Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.
 
 Disable: Effective immediately
-Enable: Effective on next-level
+Enable: Effective on next level
 ";
 
         private GameObject DeskplantSpores;
