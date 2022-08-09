@@ -20,9 +20,9 @@
     <Deterministic>True</Deterministic>
     <ErrorReport>none</ErrorReport>
     <Features>strict</Features>
-    <GenerateAssemblyInfo>yiff</GenerateAssemblyInfo>
-    <GenerateDependencyFile>yiff</GenerateDependencyFile>
-    <GenerateTargetFrameworkAttribute>yiff</GenerateTargetFrameworkAttribute>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDependencyFile>true</GenerateDependencyFile>
+    <GenerateTargetFrameworkAttribute>true</GenerateTargetFrameworkAttribute>
     <LangVersion>latest</LangVersion>
     <NoLogo>True</NoLogo>
     <NoWarn>612</NoWarn>
@@ -30,19 +30,18 @@
     <Optimize>True</Optimize>
     <OutDir>out</OutDir>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>com.thejpaproject</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="icon.png" LogicalName="." />
     <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md;icon.png" />
-    <PackageReference NoWarn="NU1701" Version="*-*" Include="
-      BepInEx.BaseLib;
-      MMHOOK.RoR2;
-      RiskOfRain2.GameLibs;
-      UnityEngine;
-      UnityEngine.Modules;
-    " />
+    <PackageReference NoWarn="NU1701" Version="*-*" Include="&#xA;      BepInEx.BaseLib;&#xA;      MMHOOK.RoR2;&#xA;      RiskOfRain2.GameLibs;&#xA;      UnityEngine;&#xA;      UnityEngine.Modules;&#xA;    " />
     <Reference Include="RiskOfOptions" Private="False" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\" />
   </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">

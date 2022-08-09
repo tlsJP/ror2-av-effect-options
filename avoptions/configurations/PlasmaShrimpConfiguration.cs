@@ -5,14 +5,20 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace com.thejpaproject.avoptions
+namespace com.thejpaproject.avoptions.configurations
 {
     class PlasmaShrimpConfiguration : AvConfiguration
     {
-
         private static EffectComponent MissileVoidOrbEffect;
 
-        public PlasmaShrimpConfiguration(ConfigEntry<bool> configEntry) : base(configEntry) { }
+        public PlasmaShrimpConfiguration(ConfigFile configFile) :
+            base(configFile, "SOTV Item Effects", "Enable Plasma Shrimp Sounds", "Sounds like bowling! \nRequires restart to take effect :(", true)
+        { }
+
+        private protected override void HandleEvent(object x, EventArgs args) {            
+            MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
+            MissileVoidOrbEffect.soundName = ConfigEntry.Value ? "Play_item_void_critGlasses" : "";
+        }
 
         private protected override void SetBehavior()
         {
@@ -21,7 +27,5 @@ namespace com.thejpaproject.avoptions
             MissileVoidOrbEffect.enabled = ConfigEntry.Value;
             MissileVoidOrbEffect.soundName = ConfigEntry.Value ? "Play_item_void_critGlasses" : "";
         }
-
-        private protected override void HandleEvent(object x, EventArgs args) => MissileVoidOrbEffect.enabled = ((ConfigEntry<bool>)x).Value;
     }
 }
