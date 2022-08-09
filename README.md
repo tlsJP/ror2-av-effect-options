@@ -137,6 +137,11 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2022-08-09 : 1.13.5
+* Runalds properly moved to separate configuration class
+* Add UNLICENSE
+* Repay technical debt (code cleanup / conventions)
+
 ## 2022-08-09 : 1.13.4
 
 * Create abstractions for configuration options
