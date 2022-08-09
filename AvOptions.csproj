@@ -39,10 +39,6 @@
     <PackageReference NoWarn="NU1701" Version="*-*" Include="&#xA;      BepInEx.BaseLib;&#xA;      MMHOOK.RoR2;&#xA;      RiskOfRain2.GameLibs;&#xA;      UnityEngine;&#xA;      UnityEngine.Modules;&#xA;    " />
     <Reference Include="RiskOfOptions" Private="False" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="src\" />
-  </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">
     <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
