@@ -1,4 +1,3 @@
-Hewwos!
 
 # Risk Of Rain 2 - AV Effects Options
 This is a pseudo-fork of https://gitlab.com/lexxyfox/ror2-av-effect-options
