@@ -95,7 +95,7 @@ namespace com.thejpaproject.avoptions
             }
             catch (Exception e)
             {
-                Logger.LogError(String.Format("Failed to bind asset... \r {0}", e.StackTrace));
+                Logger.LogError(String.Format("Failed to bind asset '{0}' \r {1}", assetPath, e.StackTrace));
             }
         }
     }
