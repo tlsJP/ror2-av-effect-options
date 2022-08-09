@@ -26,7 +26,6 @@ namespace com.thejpaproject.avoptions.configurations
             for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
-                logger.LogDebug(String.Format("{0}.SetActive({1})", child.name, enabled));
                 child.gameObject.SetActive(enabled);
             }
         }
