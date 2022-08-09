@@ -1,5 +1,6 @@
 ﻿
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using System;
 
 namespace com.thejpaproject.avoptions.configurations
@@ -8,6 +9,7 @@ namespace com.thejpaproject.avoptions.configurations
     {
         private protected ConfigEntry<bool> ConfigEntry;
         private static readonly RiskOfOptions RiskOfOptions = new();
+        private ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("AvConfiguration");
 
         private protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
@@ -18,6 +20,7 @@ namespace com.thejpaproject.avoptions.configurations
                 this.HandleEvent(ConfigEntry, null);
                 ConfigEntry.SettingChanged += HandleEvent;
                 RiskOfOptions.AddOption(this.ConfigEntry);
+                logger.LogDebug(String.Format("Configuration registered for {0}",this.GetType().Name));
             }
             catch
             {
