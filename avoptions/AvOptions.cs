@@ -1,4 +1,5 @@
 using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using com.thejpaproject.avoptions.configurations;
 using System;
@@ -13,8 +14,9 @@ namespace com.thejpaproject.avoptions
     [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
     public sealed class AvOptions : BaseUnityPlugin
     {
+        private static bool rooFound = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
 
-        private static readonly RiskOfOptions RiskOfOptions = new();
+        private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance(rooFound);
         private static GameObject IceRingExplosionPrefab;
 
         private static DestroyOnUpdate IceRingExplosionDestructor;

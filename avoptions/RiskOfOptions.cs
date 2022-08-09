@@ -1,5 +1,4 @@
 ﻿
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using RiskOfOptions;
 using RiskOfOptions.Options;
@@ -10,28 +9,39 @@ namespace com.thejpaproject.avoptions
     public class RiskOfOptions
     {
 
-        private static readonly bool ExistsRiskOfOptions = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
         private static RiskOfOptions instance = null;
+        private static bool enabled;
+
+        public void AddOption(ConfigEntry<bool> value)
+        {
+            if (enabled) ModSettingsManager.AddOption(new CheckBoxOption(value));
+        }
+
+        private RiskOfOptions() { }
 
         public static RiskOfOptions Instance
         {
             get
             {
-                if (instance == null) instance = new();
+                if (instance == null) throw new System.Exception("Instance not yet created");
                 return instance;
             }
         }
 
-
-        public void AddOption(ConfigEntry<bool> value)
+        public static RiskOfOptions GetInstance(bool enabled)
         {
-            if (ExistsRiskOfOptions) ModSettingsManager.AddOption(new CheckBoxOption(value));
+            if (instance == null)
+            {
+                instance = new RiskOfOptions(enabled);
+            }
+            return instance;
         }
 
-        public RiskOfOptions()
+        private RiskOfOptions(bool enabled)
         {
-            if (ExistsRiskOfOptions)
+            if (enabled)
             {
+                RiskOfOptions.enabled = enabled;
                 ModSettingsManager.SetModDescription("Enable or disable various item audio/visual effects.");
                 using var stream = GetType().Assembly.GetManifestResourceStream(".");
                 var texture = new Texture2D(0, 0);

@@ -7,7 +7,7 @@ namespace com.thejpaproject.avoptions.configurations
 {
     internal class FrelicAvConfiguration
     {
-        private readonly RiskOfOptions riskOfOptions = new();
+        private readonly RiskOfOptions riskOfOptions = RiskOfOptions.Instance;
 
         private readonly ConfigEntry<bool> soundEnabled;
         private readonly ConfigEntry<bool> fovEnabled;
