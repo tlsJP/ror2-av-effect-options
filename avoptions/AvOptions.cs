@@ -10,7 +10,7 @@ using UnityEngine.AddressableAssets;
 
 namespace com.thejpaproject.avoptions
 {
-    [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "1.13.3")]
+    [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "1.13.4")]
     [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
     public sealed class AvOptions : BaseUnityPlugin
     {
