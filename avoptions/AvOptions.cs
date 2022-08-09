@@ -14,9 +14,9 @@ namespace com.thejpaproject.avoptions
     [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
     public sealed class AvOptions : BaseUnityPlugin
     {
-        private static bool rooFound = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+        
 
-        private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance(rooFound);
+        private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance();
         private static GameObject IceRingExplosionPrefab;
 
         private static DestroyOnUpdate IceRingExplosionDestructor;
@@ -39,7 +39,7 @@ namespace com.thejpaproject.avoptions
 
             try
             {
-                BlastShowerConfiguration = new BlastShowerConfiguration(Config);
+                //BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
                 FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
                 IdpVisualConfiguration = new IdpVisualConfiguration(Config);
@@ -54,7 +54,7 @@ namespace com.thejpaproject.avoptions
             }
             catch (ConfigurationException e)
             {
-                Logger.LogError(String.Format("Failed to register configuration for {0}", e.Message));
+                Logger.LogError(String.Format("Failed to register configuration for {0}\n{1}", e.Message,e.StackTrace));
             }
 
             // Runald's Band

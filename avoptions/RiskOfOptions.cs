@@ -1,5 +1,7 @@
 ﻿
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 using UnityEngine;
@@ -8,16 +10,20 @@ namespace com.thejpaproject.avoptions
 {
     public class RiskOfOptions
     {
-
+        private protected static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.RiskOfOptions");
         private static RiskOfOptions instance = null;
-        private static bool enabled;
+        private static Object _mut = new();
+        private static bool enabled = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
 
         public void AddOption(ConfigEntry<bool> value)
         {
-            if (enabled) ModSettingsManager.AddOption(new CheckBoxOption(value));
+            if (enabled) Add(value);
         }
 
-        private RiskOfOptions() { }
+        private void Add(ConfigEntry<bool> value)
+        {
+            ModSettingsManager.AddOption(new CheckBoxOption(value));
+        }
 
         public static RiskOfOptions Instance
         {
@@ -28,34 +34,46 @@ namespace com.thejpaproject.avoptions
             }
         }
 
-        public static RiskOfOptions GetInstance(bool enabled)
+        public static RiskOfOptions GetInstance()
         {
             if (instance == null)
             {
-                instance = new RiskOfOptions(enabled);
+
+                lock (_mut)
+                {
+                    if (instance == null)
+                    {
+                        logger.LogDebug("Creating instance with options enabled=" + enabled);
+                        instance = new RiskOfOptions();
+                    }
+                }
+
             }
             return instance;
         }
 
-        private RiskOfOptions(bool enabled)
+        private void Configure()
         {
-            if (enabled)
-            {
-                RiskOfOptions.enabled = enabled;
-                ModSettingsManager.SetModDescription("Enable or disable various item audio/visual effects.");
-                using var stream = GetType().Assembly.GetManifestResourceStream(".");
-                var texture = new Texture2D(0, 0);
-                var imgdata = new byte[stream.Length];
-                stream.Read(imgdata, 0, imgdata.Length);
-                if (ImageConversion.LoadImage(texture, imgdata))
-                    ModSettingsManager.SetModIcon(
-                      Sprite.Create(
-                        texture,
-                        new Rect(0, 0, texture.width, texture.height),
-                        new Vector2(0, 0)
-                      )
-                    );
-            }
+            ModSettingsManager.SetModDescription("Enable or disable various item audio/visual effects.");
+            using var stream = GetType().Assembly.GetManifestResourceStream(".");
+            var texture = new Texture2D(0, 0);
+            var imgdata = new byte[stream.Length];
+            stream.Read(imgdata, 0, imgdata.Length);
+            if (ImageConversion.LoadImage(texture, imgdata))
+                ModSettingsManager.SetModIcon(
+                  Sprite.Create(
+                    texture,
+                    new Rect(0, 0, texture.width, texture.height),
+                    new Vector2(0, 0)
+                  )
+                );
+        }
+
+        private RiskOfOptions()
+        {
+
+            if (RiskOfOptions.enabled) Configure();
+            logger.LogDebug("RiskOfOptions integration enabled=" + enabled);
         }
     }
 }
