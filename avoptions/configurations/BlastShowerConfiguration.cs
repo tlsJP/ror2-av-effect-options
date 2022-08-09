@@ -1,7 +1,7 @@
 ﻿using BepInEx.Configuration;
+using RoR2;
 using System;
 using UnityEngine;
-using RoR2;
 using UnityEngine.AddressableAssets;
 
 namespace com.thejpaproject.avoptions.configurations

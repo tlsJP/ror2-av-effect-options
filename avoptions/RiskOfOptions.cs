@@ -12,8 +12,8 @@ namespace com.thejpaproject.avoptions
     {
         private protected static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.RiskOfOptions");
         private static RiskOfOptions instance = null;
-        private static Object _mut = new();
-        private static bool enabled = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+        private static readonly Object _mut = new();
+        private static readonly bool enabled = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
 
         public void AddOption(ConfigEntry<bool> value)
         {
