@@ -7,34 +7,34 @@ namespace com.thejpaproject.avoptions.configurations
 {
     abstract class AvConfiguration
     {
-        private protected ConfigEntry<bool> ConfigEntry;
-        private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.Instance;
-        private protected ManualLogSource logger;
-        private protected String name;
+        private protected ConfigEntry<bool> _configEntry;
+        private static readonly RiskOfOptions s_riskOfOptions = RiskOfOptions.Instance;
+        private protected ManualLogSource _logger;
+        private protected String _name;
 
         private protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
-            name = "c.t.a.c." + GetType().Name;
-            logger = BepInEx.Logging.Logger.CreateLogSource(name);
+            _name = $"c.t.a.c.{GetType().Name}";
+            _logger = BepInEx.Logging.Logger.CreateLogSource(_name);
             try
             {
-                ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
-                SetBehavior();                
-                HandleEvent(ConfigEntry, null);
-                ConfigEntry.SettingChanged += HandleEvent;
-                RiskOfOptions.AddOption(ConfigEntry);
-                logger.LogDebug("Configuration completed.");
+                _configEntry = configFile.Bind(category, key, defaultSetting, description);
+                SetBehavior();
+                HandleEvent(_configEntry, null);
+                _configEntry.SettingChanged += HandleEvent;
+                s_riskOfOptions.AddOption(_configEntry);
+                _logger.LogDebug("Configuration completed.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new ConfigurationException(name, ex);
+                throw new ConfigurationException(_name, ex);
             }
         }
-       
+
 
         private protected abstract void HandleEvent(object x, EventArgs args);
 
-        private protected abstract void SetBehavior();      
+        private protected abstract void SetBehavior();
 
     }
 

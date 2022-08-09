@@ -11,8 +11,8 @@ namespace com.thejpaproject.avoptions.configurations
     internal class RunaldsVisualConfiguration : AvConfiguration
     {
 
-        private static EffectComponent effectComponent;
-        private static Transform transform;
+        private static EffectComponent s_effectComponent;
+        private static Transform s_transform;
 
         public RunaldsVisualConfiguration(ConfigFile configFile) :
             base(configFile, "Item Effects", "Enable Runalds Band", "Enables Runald's Band's ice explosion.\n\nEffective immediately")
@@ -21,11 +21,11 @@ namespace com.thejpaproject.avoptions.configurations
         private protected override void HandleEvent(object x, EventArgs args)
         {
             var enabled = ((ConfigEntry<bool>)x).Value;
-            effectComponent.enabled = enabled;
+            s_effectComponent.enabled = enabled;
 
-            for (var i = 0; i < transform.childCount; i++)
+            for (var i = 0; i < s_transform.childCount; i++)
             {
-                var child = transform.GetChild(i);
+                var child = s_transform.GetChild(i);
                 child.gameObject.SetActive(enabled);
             }
         }
@@ -33,9 +33,9 @@ namespace com.thejpaproject.avoptions.configurations
         private protected override void SetBehavior()
         {
             var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/IceRingExplosion.prefab").WaitForCompletion();
-            transform = prefab.transform;
-            effectComponent = prefab.GetComponent<EffectComponent>();
-            effectComponent.enabled = ConfigEntry.Value;
+            s_transform = prefab.transform;
+            s_effectComponent = prefab.GetComponent<EffectComponent>();
+            s_effectComponent.enabled = _configEntry.Value;
         }
 
     }

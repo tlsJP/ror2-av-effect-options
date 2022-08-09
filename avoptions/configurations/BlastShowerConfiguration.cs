@@ -8,39 +8,39 @@ namespace com.thejpaproject.avoptions.configurations
 {
     internal class BlastShowerConfiguration : AvConfiguration
     {
-        private static Transform CleanseTransform;
-        private static EffectComponent effect;
+        private static Transform s_cleanseTransform;
+        private static EffectComponent s_effectComponent;
 
-        private static readonly String DESCRIPTION =
+        private const String Description =
 @"Enables Blast Shower's effects.
 
 Toggle: Effective immediately
 ";
 
         public BlastShowerConfiguration(ConfigFile configFile) :
-            base(configFile, "Item Effects", "Enable Blast Shower", DESCRIPTION)
+            base(configFile, "Item Effects", "Enable Blast Shower", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)
         {
 
             var enabled = ((ConfigEntry<bool>)x).Value;
-            logger.LogDebug("Cleanse effects enabled=" + enabled);
+            _logger.LogDebug($"Cleanse effects enabled={enabled}");
 
-            effect.enabled = enabled;
-            logger.LogDebug("Index set to : " + effect.effectIndex);
+            s_effectComponent.enabled = enabled;
+            _logger.LogDebug($"Index set to : {s_effectComponent.effectIndex}");
 
-            for (var i = 0; i < CleanseTransform.childCount; i++)
-                CleanseTransform.GetChild(i).gameObject.SetActive(enabled);
+            for (var i = 0; i < s_cleanseTransform.childCount; i++)
+                s_cleanseTransform.GetChild(i).gameObject.SetActive(enabled);
 
         }
 
         private protected override void SetBehavior()
         {
             var prefab = Addressables.LoadAsset<GameObject>("RoR2/Base/Cleanse/CleanseEffect.prefab").WaitForCompletion();
-            CleanseTransform = prefab.transform;
-            effect = prefab.GetComponent<EffectComponent>();
-            effect.enabled = ConfigEntry.Value;
+            s_cleanseTransform = prefab.transform;
+            s_effectComponent = prefab.GetComponent<EffectComponent>();
+            s_effectComponent.enabled = _configEntry.Value;
         }
     }
 }

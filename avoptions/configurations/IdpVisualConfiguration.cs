@@ -7,7 +7,7 @@ namespace com.thejpaproject.avoptions.configurations
 {
     internal class IdpVisualConfiguration : AvConfiguration
     {
-        private static readonly String DESCRIPTION =
+        private const String Description =
 @"Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator. 
 Does not affect the particle effects of the Desk Plant seed, or the perimeter sphere of the ward.
 
@@ -15,20 +15,20 @@ Disable: Effective immediately
 Enable: Effective on next level
 ";
 
-        private GameObject DeskplantSpores;
-        private GameObject DeskplantSymbols;
-        private GameObject DeskplantMushrooms;
+        private GameObject _deskPlantSpores;
+        private GameObject _deskPlantSymbols;
+        private GameObject _deskPlantMushrooms;
 
         public IdpVisualConfiguration(ConfigFile configFile) :
-            base(configFile, "Item Effects", "Enable Desk Plant Ward Particles", DESCRIPTION)
+            base(configFile, "Item Effects", "Enable Desk Plant Ward Particles", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args = null)
         {
             var enabled = ((ConfigEntry<bool>)x).Value;
-            DeskplantSpores.SetActive(enabled);
-            DeskplantSymbols.SetActive(enabled);
-            DeskplantMushrooms.SetActive(enabled);
+            _deskPlantSpores.SetActive(enabled);
+            _deskPlantSymbols.SetActive(enabled);
+            _deskPlantMushrooms.SetActive(enabled);
         }
 
         private protected override void SetBehavior()
@@ -36,9 +36,9 @@ Enable: Effective on next level
             var DeskplantIndicatorTransform = Addressables.LoadAsset<GameObject>("RoR2/Base/Plant/DeskplantWard.prefab")
                 .WaitForCompletion().transform
                 .Find("Indicator").gameObject.transform;
-            DeskplantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
-            DeskplantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
-            DeskplantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
+            _deskPlantSpores = DeskplantIndicatorTransform.Find("Spores").gameObject;
+            _deskPlantSymbols = DeskplantIndicatorTransform.Find("HealingSymbols").gameObject;
+            _deskPlantMushrooms = DeskplantIndicatorTransform.Find("MushroomMeshes").gameObject;
 
         }
     }

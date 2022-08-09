@@ -11,14 +11,14 @@ namespace com.thejpaproject.avoptions.configurations
     {
         private LoopSoundPlayer MushroomVoidAudio;
 
-        private static readonly String DESCRIPTION =
+        private const String Description =
 @"Enables Weeping Fungus sound effects. 
 
 Disable: Effective immediately
 Enable: Effective on next level";
 
         public WungusAudioConfiguration(ConfigFile configFile) :
-            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Sound", DESCRIPTION)
+            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Sound", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;
@@ -27,7 +27,7 @@ Enable: Effective on next level";
         {
             var mushroomVoidEffectPrefab = Addressables.LoadAsset<GameObject>("RoR2/DLC1/MushroomVoid/MushroomVoidEffect.prefab").WaitForCompletion();
             MushroomVoidAudio = mushroomVoidEffectPrefab.GetComponent<LoopSoundPlayer>();
-            MushroomVoidAudio.enabled = ConfigEntry.Value;
+            MushroomVoidAudio.enabled = _configEntry.Value;
         }
 
     }

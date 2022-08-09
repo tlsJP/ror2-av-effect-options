@@ -10,14 +10,14 @@ namespace com.thejpaproject.avoptions
 {
     public class RiskOfOptions
     {
-        private protected static ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.RiskOfOptions");
-        private static RiskOfOptions instance = null;
-        private static readonly Object _mut = new();
-        private static readonly bool enabled = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
+        private protected static ManualLogSource s_logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.RiskOfOptions");
+        private static RiskOfOptions s_instance = null;
+        private static readonly Object s_mut = new();
+        private static readonly bool s_enabled = Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
 
         public void AddOption(ConfigEntry<bool> value)
         {
-            if (enabled) Add(value);
+            if (s_enabled) Add(value);
         }
 
         private void Add(ConfigEntry<bool> value)
@@ -29,27 +29,27 @@ namespace com.thejpaproject.avoptions
         {
             get
             {
-                if (instance == null) throw new System.Exception("Instance not yet created");
-                return instance;
+                if (s_instance == null) throw new System.Exception("Instance not yet created");
+                return s_instance;
             }
         }
 
         public static RiskOfOptions GetInstance()
         {
-            if (instance == null)
+            if (s_instance == null)
             {
 
-                lock (_mut)
+                lock (s_mut)
                 {
-                    if (instance == null)
+                    if (s_instance == null)
                     {
-                        logger.LogDebug("Creating instance with options enabled=" + enabled);
-                        instance = new RiskOfOptions();
+                        s_logger.LogDebug("Creating instance with options enabled=" + s_enabled);
+                        s_instance = new RiskOfOptions();
                     }
                 }
 
             }
-            return instance;
+            return s_instance;
         }
 
         private void Configure()
@@ -72,8 +72,8 @@ namespace com.thejpaproject.avoptions
         private RiskOfOptions()
         {
 
-            if (RiskOfOptions.enabled) Configure();
-            logger.LogDebug("RiskOfOptions integration enabled=" + enabled);
+            if (RiskOfOptions.s_enabled) Configure();
+            s_logger.LogDebug($"RiskOfOptions integration enabled={s_enabled}");
         }
     }
 }

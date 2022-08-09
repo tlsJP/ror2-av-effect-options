@@ -14,19 +14,16 @@ namespace com.thejpaproject.avoptions
     public sealed class AvOptions : BaseUnityPlugin
     {
 
-
         private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance();
 
-
-        private BlastShowerConfiguration BlastShowerConfiguration;
-        private FrelicAvConfiguration FrelicBaseConfiguration;
-        private IdpVisualConfiguration IdpVisualConfiguration;
-        private KjaroVisualConfiguration KjaroVisualConfiguration;
-        private RunaldsVisualConfiguration RunaldsVisualConfiguration;
-        private WungusVisualConfiguration WungusVisualConfiguration;
-        private WungusAudioConfiguration WungusAudioConfiguration;
-        private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
-
+        private BlastShowerConfiguration _blastShowerConfiguration;
+        private FrelicAvConfiguration _frelicAvConfiguration;
+        private IdpVisualConfiguration _idpVisualConfiguration;
+        private KjaroVisualConfiguration _kjaroVisualConfiguration;
+        private RunaldsVisualConfiguration _runaldsVisualConfiguration;
+        private WungusVisualConfiguration _wungusVisualConfiguration;
+        private WungusAudioConfiguration _wungusAudioConfiguration;
+        private PlasmaShrimpConfiguration _plasmaShrimpConfiguration;
 
         [MethodImpl(768)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
@@ -35,22 +32,22 @@ namespace com.thejpaproject.avoptions
 
             try
             {
-                BlastShowerConfiguration = new BlastShowerConfiguration(Config);
+                _blastShowerConfiguration = new BlastShowerConfiguration(Config);
 
-                FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
-                IdpVisualConfiguration = new IdpVisualConfiguration(Config);
-                KjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
+                _frelicAvConfiguration = new FrelicAvConfiguration(Config);
+                _idpVisualConfiguration = new IdpVisualConfiguration(Config);
+                _kjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
 
-                PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
-                RunaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
+                _plasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
+                _runaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
 
-                WungusVisualConfiguration = new WungusVisualConfiguration(Config);
-                WungusAudioConfiguration = new WungusAudioConfiguration(Config);
+                _wungusVisualConfiguration = new WungusVisualConfiguration(Config);
+                _wungusAudioConfiguration = new WungusAudioConfiguration(Config);
 
             }
             catch (ConfigurationException e)
             {
-                Logger.LogError(String.Format("Failed to register configuration for {0}\n{1}", e.Message, e.StackTrace));
+                Logger.LogError($"Failed to register configuration for {e.Message}\r{e.StackTrace}");
             }
 
 
@@ -95,7 +92,7 @@ namespace com.thejpaproject.avoptions
             }
             catch (Exception e)
             {
-                Logger.LogError(String.Format("Failed to bind asset '{0}' \r {1}", assetPath, e.StackTrace));
+                Logger.LogError($"Failed to bind asset '{assetPath}' \r {e.StackTrace}");
             }
         }
     }
