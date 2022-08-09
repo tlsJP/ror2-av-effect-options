@@ -39,7 +39,7 @@ namespace com.thejpaproject.avoptions
 
             try
             {
-                //BlastShowerConfiguration = new BlastShowerConfiguration(Config);
+                BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
                 FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
                 IdpVisualConfiguration = new IdpVisualConfiguration(Config);
