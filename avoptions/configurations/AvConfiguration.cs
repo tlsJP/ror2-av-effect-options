@@ -9,29 +9,32 @@ namespace com.thejpaproject.avoptions.configurations
     {
         private protected ConfigEntry<bool> ConfigEntry;
         private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.Instance;
-        private protected ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.c.AvConfiguration");
+        private protected ManualLogSource logger;
+        private protected String name;
 
         private protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
+            name = "c.t.a.c." + GetType().Name;
+            logger = BepInEx.Logging.Logger.CreateLogSource(name);
             try
             {
                 ConfigEntry = configFile.Bind(category, key, defaultSetting, description);
-                this.SetBehavior();                
-                this.HandleEvent(ConfigEntry, null);
+                SetBehavior();                
+                HandleEvent(ConfigEntry, null);
                 ConfigEntry.SettingChanged += HandleEvent;
-                RiskOfOptions.AddOption(this.ConfigEntry);
-                logger.LogDebug(String.Format("Configuration registered for {0}",this.GetType().Name));
+                RiskOfOptions.AddOption(ConfigEntry);
+                logger.LogDebug("Configuration completed.");
             }
             catch(Exception ex)
             {
-                throw new ConfigurationException(this.GetType().Name, ex);
+                throw new ConfigurationException(name, ex);
             }
         }
        
 
         private protected abstract void HandleEvent(object x, EventArgs args);
 
-        private protected abstract void SetBehavior();
+        private protected abstract void SetBehavior();      
 
     }
 
