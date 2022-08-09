@@ -15,7 +15,8 @@ namespace com.thejpaproject.avoptions
 
         public static RiskOfOptions Instance
         {
-            get {
+            get
+            {
                 if (instance == null) instance = new();
                 return instance;
             }
@@ -29,21 +30,22 @@ namespace com.thejpaproject.avoptions
 
         public RiskOfOptions()
         {
-            ModSettingsManager.SetModDescription(
-              "Enable or disable various item audio/visual effects."
-            );
-            using var stream = GetType().Assembly.GetManifestResourceStream(".");
-            var texture = new Texture2D(0, 0);
-            var imgdata = new byte[stream.Length];
-            stream.Read(imgdata, 0, imgdata.Length);
-            if (ImageConversion.LoadImage(texture, imgdata))
-                ModSettingsManager.SetModIcon(
-                  Sprite.Create(
-                    texture,
-                    new Rect(0, 0, texture.width, texture.height),
-                    new Vector2(0, 0)
-                  )
-                );
+            if (ExistsRiskOfOptions)
+            {
+                ModSettingsManager.SetModDescription("Enable or disable various item audio/visual effects.");
+                using var stream = GetType().Assembly.GetManifestResourceStream(".");
+                var texture = new Texture2D(0, 0);
+                var imgdata = new byte[stream.Length];
+                stream.Read(imgdata, 0, imgdata.Length);
+                if (ImageConversion.LoadImage(texture, imgdata))
+                    ModSettingsManager.SetModIcon(
+                      Sprite.Create(
+                        texture,
+                        new Rect(0, 0, texture.width, texture.height),
+                        new Vector2(0, 0)
+                      )
+                    );
+            }
         }
     }
 }
