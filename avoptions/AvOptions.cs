@@ -1,9 +1,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using com.thejpaproject.avoptions.configurations;
-using RoR2;
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -17,14 +15,7 @@ namespace com.thejpaproject.avoptions
     {
 
         private static readonly RiskOfOptions RiskOfOptions = new();
-
-
-        private static GameObject FireTornadoSmoke;
-        private static GameObject FireTornadoMeshCore;
-        private static GameObject FireTornadoMeshWide;
-        private static GameObject FireTornadoEmbers;
-        private static GameObject FireTornadoLight;
-        private static GameObject FireTornadoBurst;
+        
         private static GameObject IceRingExplosionPrefab;
 
         private static DestroyOnUpdate IceRingExplosionDestructor;
@@ -33,6 +24,7 @@ namespace com.thejpaproject.avoptions
         private BlastShowerConfiguration BlastShowerConfiguration;
         private FrelicAvConfiguration FrelicBaseConfiguration;
         private IdpVisualConfiguration IdpVisualConfiguration;
+        private KjaroVisualConfiguration KjaroVisualConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
         private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
@@ -43,19 +35,18 @@ namespace com.thejpaproject.avoptions
         private void Awake()
         {
 
-
             try
             {
                 BlastShowerConfiguration = new BlastShowerConfiguration(Config);
 
                 FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
                 IdpVisualConfiguration = new IdpVisualConfiguration(Config);
+                KjaroVisualConfiguration = new KjaroVisualConfiguration(Config); 
 
                 PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
 
                 WungusVisualConfiguration = new WungusVisualConfiguration(Config);
                 WungusAudioConfiguration = new WungusAudioConfiguration(Config);
-
 
             }
             catch (ConfigurationException e)
@@ -64,30 +55,6 @@ namespace com.thejpaproject.avoptions
             }
 
 
-            // Kjaro's Band
-            try
-            {
-                var FireTornadoGhost = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/FireTornadoGhost.prefab").WaitForCompletion().transform;
-                FireTornadoSmoke = FireTornadoGhost.Find("Smoke").gameObject;
-                FireTornadoMeshCore = FireTornadoGhost.Find("TornadoMeshCore").gameObject;
-                FireTornadoMeshWide = FireTornadoGhost.Find("TornadoMeshCore, Wide").gameObject;
-                FireTornadoEmbers = FireTornadoGhost.Find("Embers").gameObject;
-                FireTornadoLight = FireTornadoGhost.Find("Point Light").gameObject;
-                FireTornadoBurst = FireTornadoGhost.Find("InitialBurst").gameObject;
-                var FireTornadoConfig = Config.Bind("Item Effects", "Enable Kjaros Band", true, "Enables Kjaro's Band's fire tornado.");
-                FireTornadoSmoke.SetActive(FireTornadoConfig.Value);
-                FireTornadoMeshCore.SetActive(FireTornadoConfig.Value);
-                FireTornadoMeshWide.SetActive(FireTornadoConfig.Value);
-                FireTornadoEmbers.SetActive(FireTornadoConfig.Value);
-                FireTornadoLight.SetActive(FireTornadoConfig.Value);
-                FireTornadoBurst.SetActive(FireTornadoConfig.Value);
-                FireTornadoConfig.SettingChanged += KjaroVisualConfigEventHandler;
-                RiskOfOptions.AddOption(FireTornadoConfig);
-            }
-            catch
-            {
-                Logger.LogError("Could not hook onto Kjaro's Band.");
-            }
 
 
             // Runald's Band
@@ -148,17 +115,6 @@ namespace com.thejpaproject.avoptions
                 transform.GetChild(i).gameObject.SetActive(y);
         }
 
-        [MethodImpl(768)]
-        private void KjaroVisualConfigEventHandler(object x, EventArgs _)
-        {
-            var y = ((ConfigEntry<bool>)x).Value;
-            FireTornadoSmoke.SetActive(y);
-            FireTornadoMeshCore.SetActive(y);
-            FireTornadoMeshWide.SetActive(y);
-            FireTornadoEmbers.SetActive(y);
-            FireTornadoLight.SetActive(y);
-            FireTornadoBurst.SetActive(y);
-        }
 
 
         [MethodImpl(768)]
