@@ -1,14 +1,11 @@
-Hewwos!
 
 # Risk Of Rain 2 - AV Effects Options
 This is a pseudo-fork of https://gitlab.com/lexxyfox/ror2-av-effect-options
 
-## OwO, wat's dis?
+## About
 The goal is to allow players to selectively disable in-game audio-visual effects that aren't strictly necessary to enjoy the game without changing game mechanics or balance. This may assist people who, among others; have photosensitivity, are sensitive to sensory overstimulation, or have limited computing resources. Effects can [usually] be toggled mid-stage.
 
-Originally intended just my furiend group, I am now advertising it here on the Thunderstore because I believe everyone should be able to have some fun. If you don't like it/me being here, just remove it!
-
-Currently only the following effects are configurable, but I'm always looking to add more options. If you know the asset address of an effect, or how to disable something else annoying then please feel free to [poke me](https://github.com/tlsJP/ror2-av-effect-options/issues) or even submit a PR.
+If you know the asset address of an effect, or how to disable something else annoying then please feel free to [open an issue](https://github.com/tlsJP/ror2-av-effect-options/issues) or even submit a PR.
 
 Intended for headed client-side installations. [Should] have no effect on headless installations. 
 
@@ -30,16 +27,6 @@ Intended for headed client-side installations. [Should] have no effect on headle
 * Will-o'-the-Wisp explosion
 * Plasma Shrimp AV effects
 
-### Future options
-* Literally everything else
-* Singularity Band
-* Voidsent Flame
-* Underwater screen effect
-* Teleporter initialisation effect
-* Imp boss effect
-* etc.
-* l10n support
-* A new icon?
 
 ## Configuring
 "Enabling" an effect (default) plays the effect as it does normally. "Disabling" makes it silent and invisible.
@@ -140,11 +127,13 @@ These good people/beings did me a help one way or another, but don't necessarily
 * [Rune580](https://github.com/Rune580) for [Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options)
 * [Vl4dimyr](https://github.com/Vl4dimyr) for their [mod](https://thunderstore.io/package/Vl4dimyr/CaptainShotgunModes) (pictured)
 * Bon Yok
+* [RoR2 Modding Wiki](https://github.com/risk-of-thunder/R2Wiki)
 * YOU! For existing today :3
 
 ## Notes
 * Xamarin's xbuild is not compatible with this mod, and will not be supported by me. (msbuild > xbuild)
 * This mod is **NOT** guaranteed to come with a virus.
+* I'm not a .NET/C# developer, so there's a good argument to be made that I have no idea what I'm doing
 
 # Change Log
 
