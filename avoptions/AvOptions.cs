@@ -1,5 +1,4 @@
 using BepInEx;
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using com.thejpaproject.avoptions.configurations;
 using System;
@@ -14,12 +13,9 @@ namespace com.thejpaproject.avoptions
     [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
     public sealed class AvOptions : BaseUnityPlugin
     {
-        
+
 
         private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance();
-        private static GameObject IceRingExplosionPrefab;
-
-        private static DestroyOnUpdate IceRingExplosionDestructor;
 
 
         private BlastShowerConfiguration BlastShowerConfiguration;
@@ -46,7 +42,7 @@ namespace com.thejpaproject.avoptions
                 KjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
 
                 PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
-                //RunaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
+                RunaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
 
                 WungusVisualConfiguration = new WungusVisualConfiguration(Config);
                 WungusAudioConfiguration = new WungusAudioConfiguration(Config);
@@ -54,28 +50,8 @@ namespace com.thejpaproject.avoptions
             }
             catch (ConfigurationException e)
             {
-                Logger.LogError(String.Format("Failed to register configuration for {0}\n{1}", e.Message,e.StackTrace));
+                Logger.LogError(String.Format("Failed to register configuration for {0}\n{1}", e.Message, e.StackTrace));
             }
-
-            // Runald's Band
-            try
-            {
-                IceRingExplosionPrefab = Addressables.LoadAsset<GameObject>("RoR2/Base/ElementalRings/IceRingExplosion.prefab").WaitForCompletion();
-                var IceRingExplosionConfig = Config.Bind("Item Effects", "Enable Runalds Band", true, "Enables Runald's Band's ice explosion.");
-                if (!IceRingExplosionConfig.Value)
-                    IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
-                var IceRingExplosionTransform = IceRingExplosionPrefab.transform;
-                for (var i = 0; i < IceRingExplosionTransform.childCount; i++)
-                    IceRingExplosionTransform.GetChild(i).gameObject.SetActive(IceRingExplosionConfig.Value);
-                IceRingExplosionConfig.SettingChanged += IceRingExplosionConfigEventHandler;
-                RiskOfOptions.AddOption(IceRingExplosionConfig);
-            }
-            catch
-            {
-                Logger.LogError("Could not hook onto Runald's Band.");
-            }
-
-
 
 
             // Direct Base Bindings
@@ -100,24 +76,6 @@ namespace com.thejpaproject.avoptions
             //BindVoidAsset("VoidMegaCrab/MissileVoidMuzzleflash", "Enable PlimpMuzzleflash", "Pew pew", "SOTV Item Effects");
         }
 
-        [MethodImpl(768)]
-        private void IceRingExplosionConfigEventHandler(object x, EventArgs _)
-        {
-            var transform = IceRingExplosionPrefab.transform;
-            var childCount = transform.childCount;
-            var y = ((ConfigEntry<bool>)x).Value;
-            if (y && IceRingExplosionDestructor != null)
-            {
-                Destroy(IceRingExplosionDestructor);
-                IceRingExplosionDestructor = null;
-            }
-            else
-                IceRingExplosionDestructor = IceRingExplosionPrefab.AddComponent<DestroyOnUpdate>();
-            for (var i = 0; i < childCount; i++)
-                transform.GetChild(i).gameObject.SetActive(y);
-        }
-
-
 
         [MethodImpl(768)]
         private void BindVoidAsset(string assetPath, string title, string description, string section = "Item Effects") => BindAsset("DLC1/" + assetPath, title, description, section);
@@ -137,10 +95,5 @@ namespace com.thejpaproject.avoptions
             }
             catch { }
         }
-    }
-
-    public sealed class DestroyOnUpdate : MonoBehaviour
-    {
-        public void Update() => Destroy(gameObject);
     }
 }
