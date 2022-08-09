@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using BepInEx.Logging;
 using RoR2;
 using System.Reflection;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace com.thejpaproject.avoptions.configurations
     internal class FrelicAvConfiguration
     {
         private readonly RiskOfOptions riskOfOptions = RiskOfOptions.Instance;
+        private protected ManualLogSource logger;
 
         private readonly ConfigEntry<bool> soundEnabled;
         private readonly ConfigEntry<bool> fovEnabled;
@@ -17,6 +19,8 @@ namespace com.thejpaproject.avoptions.configurations
 
         internal FrelicAvConfiguration(ConfigFile configFile)
         {
+            logger = BepInEx.Logging.Logger.CreateLogSource("c.t.a.c." + GetType().Name);
+
             var fovDesc = "Enables the temporary FOV change that Frost Relic's on-kill proc gives. " +
                 "Does not affect the particle effects (see the Frost Relic Particles option)." +
                 "\n\nEffective immediately";
@@ -38,6 +42,8 @@ namespace com.thejpaproject.avoptions.configurations
             riskOfOptions.AddOption(fovEnabled);
             riskOfOptions.AddOption(particlesEnabled);
             riskOfOptions.AddOption(soundEnabled);
+
+            logger.LogDebug("Configuration completed.");
         }
 
         private void FrelicActivationEventHandler(On.RoR2.IcicleAuraController.orig_OnIciclesActivated _, IcicleAuraController self)
