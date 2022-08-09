@@ -93,7 +93,9 @@ namespace com.thejpaproject.avoptions
                 prefab.SetActive(config.Value);
                 RiskOfOptions.AddOption(config);
             }
-            catch { }
+            catch (Exception e){
+                Logger.LogError(String.Format("Failed to bind asset... \r {0}", e.StackTrace));
+            }
         }
     }
 }
