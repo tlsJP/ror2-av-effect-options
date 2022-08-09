@@ -15,7 +15,6 @@ namespace com.thejpaproject.avoptions
     {
 
         private static readonly RiskOfOptions RiskOfOptions = new();
-        
         private static GameObject IceRingExplosionPrefab;
 
         private static DestroyOnUpdate IceRingExplosionDestructor;
@@ -25,6 +24,7 @@ namespace com.thejpaproject.avoptions
         private FrelicAvConfiguration FrelicBaseConfiguration;
         private IdpVisualConfiguration IdpVisualConfiguration;
         private KjaroVisualConfiguration KjaroVisualConfiguration;
+        private RunaldsVisualConfiguration RunaldsVisualConfiguration;
         private WungusVisualConfiguration WungusVisualConfiguration;
         private WungusAudioConfiguration WungusAudioConfiguration;
         private PlasmaShrimpConfiguration PlasmaShrimpConfiguration;
@@ -41,9 +41,10 @@ namespace com.thejpaproject.avoptions
 
                 FrelicBaseConfiguration = new FrelicAvConfiguration(Config);
                 IdpVisualConfiguration = new IdpVisualConfiguration(Config);
-                KjaroVisualConfiguration = new KjaroVisualConfiguration(Config); 
+                KjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
 
                 PlasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
+                //RunaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
 
                 WungusVisualConfiguration = new WungusVisualConfiguration(Config);
                 WungusAudioConfiguration = new WungusAudioConfiguration(Config);
@@ -53,9 +54,6 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError(String.Format("Failed to register configuration for {0}", e.Message));
             }
-
-
-
 
             // Runald's Band
             try
@@ -74,6 +72,8 @@ namespace com.thejpaproject.avoptions
             {
                 Logger.LogError("Could not hook onto Runald's Band.");
             }
+
+
 
 
             // Direct Base Bindings

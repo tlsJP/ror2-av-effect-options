@@ -9,7 +9,7 @@ namespace com.thejpaproject.avoptions.configurations
     {
         private protected ConfigEntry<bool> ConfigEntry;
         private static readonly RiskOfOptions RiskOfOptions = new();
-        private ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("AvConfiguration");
+        private protected ManualLogSource logger = BepInEx.Logging.Logger.CreateLogSource("AvConfiguration");
 
         private protected AvConfiguration(ConfigFile configFile, string category, string key, string description, bool defaultSetting = true)
         {
