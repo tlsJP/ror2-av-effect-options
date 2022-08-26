@@ -12,7 +12,7 @@ namespace com.thejpaproject.avoptions.configurations
         private SprintEffectController _sprintEffectController;
 
         public ViendAudioConfiguration(ConfigFile configFile) : 
-            base(configFile, "SOTV Item Effects", "Enable Viend Sprint/Jump SFX", "Enable run/jump sound effects\nRequires new level/run to take effect", true)
+            base(configFile, "Character Effects", "Enable Viend Sprint/Jump SFX", "Enable run/jump sound effects\nRequires new level/run to take effect", true)
         {}
 
         private protected override void HandleEvent(object x, EventArgs args)
