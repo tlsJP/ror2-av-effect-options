@@ -24,6 +24,7 @@ namespace com.thejpaproject.avoptions
         private WungusVisualConfiguration _wungusVisualConfiguration;
         private WungusAudioConfiguration _wungusAudioConfiguration;
         private PlasmaShrimpConfiguration _plasmaShrimpConfiguration;
+        private ViendAudioConfiguration _viendAudioConfiguration;
 
         [MethodImpl(768)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
@@ -43,6 +44,8 @@ namespace com.thejpaproject.avoptions
 
                 _wungusVisualConfiguration = new WungusVisualConfiguration(Config);
                 _wungusAudioConfiguration = new WungusAudioConfiguration(Config);
+
+                _viendAudioConfiguration = new ViendAudioConfiguration(Config);
 
             }
             catch (ConfigurationException e)
