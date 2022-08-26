@@ -117,6 +117,12 @@ Intended for headed client-side installations. [Should] have no effect on headle
 3. Press `F6` to build the solution
 
 
+### Versioning
+Update the following files:
+* `./README.md`
+* `./avoptions/AvOptions.cs`
+* `./manifest.json`
+
 ## Credits 
 These good people/beings did me a help one way or another, but don't necessarily endorse or condone myself or this mod.
 * Hopoo Games
@@ -136,6 +142,9 @@ These good people/beings did me a help one way or another, but don't necessarily
 * I'm not a .NET/C# developer, so there's a good argument to be made that I have no idea what I'm doing
 
 # Change Log
+
+## 2022-08-25 : 1.13.6
+* Void Fiend sprint/jump sfx toggle added
 
 ## 2022-08-09 : 1.13.5
 * Runalds properly moved to separate configuration class
