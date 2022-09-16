@@ -29,8 +29,9 @@
     <NoWin32Manifest>True</NoWin32Manifest>
     <Optimize>True</Optimize>
     <OutDir>out</OutDir>
+	<PreserveCompilationContext>false</PreserveCompilationContext>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>com.thejpaproject</RootNamespace>
+    <RootNamespace>com.thejpaproject</RootNamespace>	
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,7 +42,7 @@
   </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">
-    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
+    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip"  />
   </Target>
 
 </Project>
