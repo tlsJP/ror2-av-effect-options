@@ -8,7 +8,11 @@ namespace com.thejpaproject.avoptions.configurations
 
     static class Category
     {
-        public static readonly String ITEM_EFFECTS = "Item Effects";
+
+        public static readonly String BASE_VFX = "VFX";
+        public static readonly String BASE_SFX = "SFX";
+        public static readonly String VOID_VFX = "SOTV VFX";
+        public static readonly String VOID_SFX="SOTV SFX";
 
     }
 

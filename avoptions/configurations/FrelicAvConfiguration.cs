@@ -24,14 +24,14 @@ namespace com.thejpaproject.avoptions.configurations
             var fovDesc = "Enables the temporary FOV change that Frost Relic's on-kill proc gives. " +
                 "Does not affect the particle effects (see the Frost Relic Particles option)." +
                 "\n\nEffective immediately";
-            _fovEnabled = configFile.Bind("Item Effects", "Enable Frost Relic FOV", true, fovDesc);
+            _fovEnabled = configFile.Bind(Category.BASE_VFX, "Enable Frost Relic FOV", true, fovDesc);
 
             var particleDesc = "Enables the chunk and ring effects of Frost Relic. " +
                 "Does not affect the spherical area effect that indicates the item's area of effect, or the floating ice crystal that follows characters with the Frost Relic item." +
                 "\n\nEffective immediately";
-            _particlesEnabled = configFile.Bind("Item Effects", "Enable Frost Relic Particles", true, particleDesc);
+            _particlesEnabled = configFile.Bind(Category.BASE_VFX, "Enable Frost Relic Particles", true, particleDesc);
 
-            _soundEnabled = configFile.Bind("Item Effects", "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.\n\nEffective immediately");
+            _soundEnabled = configFile.Bind(Category.BASE_SFX, "Enable Frost Relic Sound", true, "Enables the sound effects of Frost Relic's on-kill proc.\n\nEffective immediately");
 
             var bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance;
             _icicleAuraAimRequest = typeof(IcicleAuraController).GetField("aimRequest", bindingFlags);

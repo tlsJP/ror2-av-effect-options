@@ -15,7 +15,7 @@ namespace com.thejpaproject.avoptions.configurations
         private static Transform s_transform;
 
         public RunaldsVisualConfiguration(ConfigFile configFile) :
-            base(configFile, "Item Effects", "Enable Runalds Band", "Enables Runald's Band's ice explosion.\n\nEffective immediately")
+            base(configFile, Category.BASE_VFX, "Enable Runalds Band", "Enables Runald's Band's ice explosion.\n\nEffective immediately")
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)

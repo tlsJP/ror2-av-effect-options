@@ -12,7 +12,7 @@ namespace com.thejpaproject.avoptions.configurations
         private static EffectComponent s_effectComponent;
 
         public PlasmaShrimpConfiguration(ConfigFile configFile) :
-            base(configFile, "SOTV Item Effects", "Enable Plasma Shrimp Sounds", "Sounds like bowling! \nRequires restart to take effect :(", true)
+            base(configFile, Category.VOID_SFX, "Enable Plasma Shrimp Sounds", "Sounds like bowling! \nRequires restart to take effect :(", true)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)

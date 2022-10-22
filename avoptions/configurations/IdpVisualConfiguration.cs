@@ -20,7 +20,7 @@ Enable: Effective on next level
         private GameObject _deskPlantMushrooms;
 
         public IdpVisualConfiguration(ConfigFile configFile) :
-            base(configFile, "Item Effects", "Enable Desk Plant Ward Particles", Description)
+            base(configFile, Category.BASE_VFX, "Enable Desk Plant Ward Particles", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args = null)

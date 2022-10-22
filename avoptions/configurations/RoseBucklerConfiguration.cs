@@ -15,7 +15,7 @@ namespace com.thejpaproject.avoptions.configurations
 
 
         public RoseBucklerConfiguration(ConfigFile configFile) :
-            base(configFile, Category.ITEM_EFFECTS, "Enable Rose Buckler SFX", "Buckler noise when you start sprinting")
+            base(configFile, Category.BASE_SFX, "Enable Rose Buckler SFX", "Buckler noise when you start sprinting")
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)

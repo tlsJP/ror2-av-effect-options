@@ -18,7 +18,7 @@ Disable: Effective immediately
 Enable: Effective on next level";
 
         public WungusVisualConfiguration(ConfigFile configFile) :
-            base(configFile, "SOTV Item Effects", "Enable Weeping Fungus Visuals", Description)
+            base(configFile, Category.VOID_VFX, "Enable Weeping Fungus Visuals", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => _mushroomVoidVisual.enabled = ((ConfigEntry<bool>)x).Value;

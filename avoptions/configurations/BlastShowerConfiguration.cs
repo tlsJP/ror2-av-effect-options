@@ -18,7 +18,7 @@ Toggle: Effective immediately
 ";
 
         public BlastShowerConfiguration(ConfigFile configFile) :
-            base(configFile, "Item Effects", "Enable Blast Shower", Description)
+            base(configFile, Category.BASE_VFX, "Enable Blast Shower", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)

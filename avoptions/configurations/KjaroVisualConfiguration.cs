@@ -15,7 +15,7 @@ namespace com.thejpaproject.avoptions.configurations
         private static GameObject s_initialBurst;
 
         public KjaroVisualConfiguration(ConfigFile configFile) :
-        base(configFile, "Item Effects", "Enable Kjaros Band", "Enables Kjaro's Band's fire tornado.\n\nEffective immediately")
+        base(configFile, Category.BASE_VFX, "Enable Kjaros Band", "Enables Kjaro's Band's fire tornado.\n\nEffective immediately")
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => ToggleEffects(((ConfigEntry<bool>)x).Value);
