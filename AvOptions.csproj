@@ -3,12 +3,12 @@
 
   <PropertyGroup>
     <!--Change this path if required-->
-    <BepInExPath>C:\steam\steamapps\common\Risk of Rain 2\BepInEx</BepInExPath>
+    <BepInExPath>C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\BepInEx</BepInExPath>
     
     <AssemblySearchPaths>
-      $(BepInExPath)/plugins/RiskOfOptions;
-      $(AssemblySearchPaths);
-    </AssemblySearchPaths>
+		$(BepInExPath)/plugins/Rune580-Risk_Of_Options;
+		$(AssemblySearchPaths);
+	</AssemblySearchPaths>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <BuildInParallel>True</BuildInParallel>
     <Configuration>Release</Configuration>

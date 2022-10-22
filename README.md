@@ -114,7 +114,8 @@ Intended for headed client-side installations. [Should] have no effect on headle
 
 1. Open `AvOptions.csproj` in VS
 2. Update entry for `<BepInExPath>` in the above file to match your install location
-3. Press `F6` to build the solution
+3. Ensure `<AssemblySearchPaths>` contains proper path for Risk Of Options
+4. Press `F6` to build the solution
 
 
 ### Versioning
