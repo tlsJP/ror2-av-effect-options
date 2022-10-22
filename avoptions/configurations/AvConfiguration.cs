@@ -5,6 +5,13 @@ using System;
 
 namespace com.thejpaproject.avoptions.configurations
 {
+
+    static class Category
+    {
+        public static readonly String ITEM_EFFECTS = "Item Effects";
+
+    }
+
     abstract class AvConfiguration
     {
         private protected ConfigEntry<bool> _configEntry;
@@ -27,6 +34,7 @@ namespace com.thejpaproject.avoptions.configurations
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex);
                 throw new ConfigurationException(_name, ex);
             }
         }
