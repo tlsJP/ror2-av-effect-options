@@ -44,7 +44,6 @@ namespace com.thejpaproject.avoptions.configurations
             }
         }
 
-
         private protected abstract void HandleEvent(object x, EventArgs args);
 
         private protected abstract void SetBehavior();

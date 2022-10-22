@@ -1,11 +1,6 @@
 using BepInEx;
-using BepInEx.Configuration;
 using com.thejpaproject.avoptions.configurations;
-using System;
 using System.Runtime.CompilerServices;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-
 
 namespace com.thejpaproject.avoptions
 {
@@ -14,7 +9,6 @@ namespace com.thejpaproject.avoptions
     public sealed class AvOptions : BaseUnityPlugin
     {
 
-        private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance();
         private PrefabConfigurer _prefabConfigurer;
 
         private BlastShowerConfiguration _blastShowerConfiguration;
