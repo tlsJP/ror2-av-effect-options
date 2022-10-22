@@ -41,7 +41,11 @@
   </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build">
-    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
+    <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />	
+  </Target>
+
+  <Target Name="DeployLocal" AfterTargets="Build">
+    <Copy SourceFiles="out\AvOptions.dll;out\manifest.json;out\README.md;out\icon.png" DestinationFolder="$(BepInExPath)\plugins\TeamNinjaDSM-JPs_AV_Effect_Options"/>	  
   </Target>
 
 </Project>
