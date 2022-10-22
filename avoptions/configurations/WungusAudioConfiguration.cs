@@ -18,7 +18,7 @@ Disable: Effective immediately
 Enable: Effective on next level";
 
         public WungusAudioConfiguration(ConfigFile configFile) :
-            base(configFile, Category.VOID_SFX, "Enable Weeping Fungus Sound", Description)
+            base(configFile, Category.VOID_SFX, "Weeping Fungus Sound", Description)
         { }
 
         private protected override void HandleEvent(object x, EventArgs args) => MushroomVoidAudio.enabled = ((ConfigEntry<bool>)x).Value;

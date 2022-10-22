@@ -14,7 +14,7 @@ namespace com.thejpaproject.avoptions.configurations
         private static TrailRenderer s_trailRenderer;
 
         public FireworkTailConfiguration(ConfigFile configFile) :
-            base(configFile, Category.BASE_VFX, "Enable Fireworks Tails", "Fireworks normally have tails")
+            base(configFile, Category.BASE_VFX, "Fireworks Tails", "Fireworks normally have tails")
         { }
 
         private protected override void HandleEvent(object x, EventArgs args)
