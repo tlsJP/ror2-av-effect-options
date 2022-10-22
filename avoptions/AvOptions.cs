@@ -17,6 +17,7 @@ namespace com.thejpaproject.avoptions
         private static readonly RiskOfOptions RiskOfOptions = RiskOfOptions.GetInstance();
 
         private BlastShowerConfiguration _blastShowerConfiguration;
+        private FireworkTailConfiguration _fireworkTailConfiguration;
         private FrelicAvConfiguration _frelicAvConfiguration;
         private IdpVisualConfiguration _idpVisualConfiguration;
         private KjaroVisualConfiguration _kjaroVisualConfiguration;
@@ -35,6 +36,7 @@ namespace com.thejpaproject.avoptions
             {
                 _blastShowerConfiguration = new BlastShowerConfiguration(Config);
 
+                _fireworkTailConfiguration = new FireworkTailConfiguration(Config);
                 _frelicAvConfiguration = new FrelicAvConfiguration(Config);
                 _idpVisualConfiguration = new IdpVisualConfiguration(Config);
                 _kjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
@@ -50,6 +52,7 @@ namespace com.thejpaproject.avoptions
             }
             catch (ConfigurationException e)
             {
+                Logger.LogError(e);
                 Logger.LogError($"Failed to register configuration for {e.Message}\r{e.StackTrace}");
             }
 
