@@ -144,6 +144,9 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2022-08-25 : 1.13.7
+* Added toggle for firework tails
+
 ## 2022-08-25 : 1.13.6
 * Void Fiend sprint/jump sfx toggle added
 
