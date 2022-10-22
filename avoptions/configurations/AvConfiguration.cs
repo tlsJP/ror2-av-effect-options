@@ -12,7 +12,8 @@ namespace com.thejpaproject.avoptions.configurations
         public static readonly String BASE_VFX = "VFX";
         public static readonly String BASE_SFX = "SFX";
         public static readonly String VOID_VFX = "SOTV VFX";
-        public static readonly String VOID_SFX="SOTV SFX";
+        public static readonly String VOID_SFX = "SOTV SFX";
+        public static readonly String UNIT_EFFECTS = "Unit FX";
 
     }
 
