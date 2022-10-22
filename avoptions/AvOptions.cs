@@ -21,11 +21,12 @@ namespace com.thejpaproject.avoptions
         private FrelicAvConfiguration _frelicAvConfiguration;
         private IdpVisualConfiguration _idpVisualConfiguration;
         private KjaroVisualConfiguration _kjaroVisualConfiguration;
-        private RunaldsVisualConfiguration _runaldsVisualConfiguration;
+        private PlasmaShrimpConfiguration _plasmaShrimpConfiguration;
+        private RoseBucklerConfiguration _roseBucklerConfiguration;
+        private RunaldsVisualConfiguration _runaldsVisualConfiguration;               
+        private ViendAudioConfiguration _viendAudioConfiguration;
         private WungusVisualConfiguration _wungusVisualConfiguration;
         private WungusAudioConfiguration _wungusAudioConfiguration;
-        private PlasmaShrimpConfiguration _plasmaShrimpConfiguration;
-        private ViendAudioConfiguration _viendAudioConfiguration;
 
         [MethodImpl(768)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
@@ -42,6 +43,7 @@ namespace com.thejpaproject.avoptions
                 _kjaroVisualConfiguration = new KjaroVisualConfiguration(Config);
 
                 _plasmaShrimpConfiguration = new PlasmaShrimpConfiguration(Config);
+                _roseBucklerConfiguration = new RoseBucklerConfiguration(Config);
                 _runaldsVisualConfiguration = new RunaldsVisualConfiguration(Config);
 
                 _wungusVisualConfiguration = new WungusVisualConfiguration(Config);
