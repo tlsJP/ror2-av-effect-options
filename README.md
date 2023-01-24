@@ -29,64 +29,6 @@ Intended for headed client-side installations. [Should] have no effect on headle
 - Will-o'-the-Wisp explosion
 - Plasma Shrimp AV effects
 
-## Configuring
-
-"Enabling" an effect (default) plays the effect as it does normally. "Disabling" makes it silent and invisible.
-
-- Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options) (recommended)!
-  ![Risk of Options](https://github.com/tlsJP/ror2-av-effect-options/blob/main/screenshot.png)
-- OR: modify the .cfg file manually...
-
-  - You aren't required to run the game before doing this!
-  - In BepInEx's config directory, create or modify the file named `com.thejpaproject.AVFX_Options.cfg`
-  - Here's the default configuration to get you started...
-
-  ```
-  [Character Effects]
-  # Enables Stone Titan's on-death explosion.
-  Enable Titan Death Effect = true
-  # Enables Wandering Vagrant's on-death explosion.
-  Enable Vagrant Death Explosion = true
-
-  [Item Effects]
-  # Enables Blast Shower's effects.
-  Enable Blast Shower = true
-  # Enables the temporary FOV change that Frost Relic's on-kill proc gives.
-  Enable Frost Relic FOV = false
-  # Enables the chunk and ring effects of Frost Relic.
-  Enable Frost Relic Particles = false
-  # Enables the sound effects of Frost Relic's on-kill proc.
-  Enable Frost Relic Sound = true
-  # Enables the spore, plus sign, and mushroom visual effects from Interstellar Desk Plant's healing ward indicator.
-  Enable Desk Plant Ward Particles = false
-  # Enables Brainstalks' screen effect.
-  Enable Brainstalks = true
-  # Enables Gasoline's explosion
-  Enable Gasoline = true
-  # Enables Kjaro's Band's tornado
-  Enable Kjaros Band = true
-  # Enables the Molten Perforator visuals
-  Enable Molten Perforator = true
-  # Enables Runald's Band's explosion
-  Enable Runalds Band = true
-  # Enables Shatterspleen's explosion
-  Enable Shatterspleen = true
-  # Enables Spinel Tonic's screen effect
-  Enable Spinel Tonic = true
-  # Enables Sticky Bomb's drops
-  Enable Sticky Bomb Drops = true
-  # Enables Sticky Bomb's explosion
-  Enable Sticky Bomb Explosion = true
-  # Enables Will o' the Wisp's explosion
-  Enable Will-o-the-Wisp = true
-
-  [SOTV Item Effects]
-  # Enables Weeping Fungus' sound effect.
-  Enable Weeping Fungus Sound = true
-  # Enables Weeping Fungus' visual particle effects.
-  Enable Weeping Fungus Visuals = true
-  ```
-
 ## Installing
 
 ### Thunderstore
@@ -105,6 +47,13 @@ Intended for headed client-side installations. [Should] have no effect on headle
   1. Ensure you have a current version of [BepInExPack](https://thunderstore.io/package/bbepis/BepInExPack) installed and configured.
   2. Build this project
   3. Copy the `AVOptions.dll` file from this mod to BepInEx's `plugins` folder.
+
+## Configuring
+
+Once this mod is installed, just press ESC in your game client and go to SETTINGS. Risk Of Options will have a tab there where all items have toggles.
+
+Use [Rune580's Risk of Options](https://thunderstore.io/package/Rune580/Risk_Of_Options)
+![Risk of Options](https://github.com/tlsJP/ror2-av-effect-options/blob/main/screenshot.png)
 
 ## Compiling
 
