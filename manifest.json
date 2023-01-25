@@ -1,21 +1,17 @@
 {
-	"author": "Lexxy Fox & Ninjadsm",
-	"authorName": "Lexxy Fox & Ninjadsm",
-	"dependencies": [
-		"bbepis-BepInExPack-5.3.1"
-	],
-	"description": "Enable or disable various items' AV effects. Works best with RiskOfOptions.",
-	"displayName": "JP's AV Effect Options",
-	"DisplayName": "JP's AV Effect Options",
-	"enabled": true,
-	"manifestVersion": 3,
-	"name": "JPs_AV_Effect_Options",
-	"networkMode": "client",
-	"OptionalDependencies": [
-		"Rune580-Risk_Of_Options-2.4.2"
-	],
-	"packageType": "mod",
-	"version_number": "1.13.8",
-	"websiteUrl": "https://github.com/tlsJP/ror2-av-effect-options",
-	"website_url": "https://github.com/tlsJP/ror2-av-effect-options"
+  "author": "Lexxy Fox & Ninjadsm",
+  "authorName": "Lexxy Fox & Ninjadsm",
+  "dependencies": ["bbepis-BepInExPack-5.3.1"],
+  "description": "Enable or disable various items' AV effects. Works best with RiskOfOptions.",
+  "displayName": "JP's AV Effect Options",
+  "DisplayName": "JP's AV Effect Options",
+  "enabled": true,
+  "manifestVersion": 3,
+  "name": "JPs_AV_Effect_Options",
+  "networkMode": "client",
+  "OptionalDependencies": ["Rune580-Risk_Of_Options-2.4.2"],
+  "packageType": "mod",
+  "version_number": "2.0.0",
+  "websiteUrl": "https://github.com/tlsJP/ror2-av-effect-options",
+  "website_url": "https://github.com/tlsJP/ror2-av-effect-options"
 }

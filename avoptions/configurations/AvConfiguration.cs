@@ -8,7 +8,12 @@ namespace com.thejpaproject.avoptions.configurations
 
     static class Category
     {
-        public static readonly String ITEM_EFFECTS = "Item Effects";
+
+        public static readonly String BASE_VFX = "VFX";
+        public static readonly String BASE_SFX = "SFX";
+        public static readonly String VOID_VFX = "SOTV VFX";
+        public static readonly String VOID_SFX = "SOTV SFX";
+        public static readonly String UNIT_EFFECTS = "Unit FX";
 
     }
 
@@ -38,7 +43,6 @@ namespace com.thejpaproject.avoptions.configurations
                 throw new ConfigurationException(_name, ex);
             }
         }
-
 
         private protected abstract void HandleEvent(object x, EventArgs args);
 

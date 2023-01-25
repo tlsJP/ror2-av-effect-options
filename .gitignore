@@ -4,3 +4,4 @@ out
 *.zip
 .vs
 .vscode
+.fake
