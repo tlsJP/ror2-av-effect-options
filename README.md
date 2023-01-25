@@ -106,6 +106,11 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2023-01-24 : 2.0.0
+
+- **Breaking Change** : Configuration organization restructure. User will need to re-configure all their options
+- Added toggle for blue portal VFX
+
 ## 2022-10-22 : 1.13.8
 
 - Added toggle for rose buckler sfx

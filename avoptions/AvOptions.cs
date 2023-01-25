@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace com.thejpaproject.avoptions
 {
-  [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "1.13.8")]
+  [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "2.0.0")]
   [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
   public sealed class AvOptions : BaseUnityPlugin
   {
