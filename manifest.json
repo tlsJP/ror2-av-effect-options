@@ -11,7 +11,7 @@
   "networkMode": "client",
   "OptionalDependencies": ["Rune580-Risk_Of_Options-2.4.2"],
   "packageType": "mod",
-  "version_number": "2.0.0",
+  "version_number": "2.1.0",
   "websiteUrl": "https://github.com/tlsJP/ror2-av-effect-options",
   "website_url": "https://github.com/tlsJP/ror2-av-effect-options"
 }

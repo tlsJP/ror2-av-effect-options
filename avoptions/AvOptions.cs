@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace com.thejpaproject.avoptions
 {
-  [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "2.0.0")]
+  [BepInPlugin("com.thejpaproject.AVFX_Options", "JP's AV Effect Options", "2.1.0")]
   [BepInDependency("com.rune580.riskofoptions", (BepInDependency.DependencyFlags)2)]
   public sealed class AvOptions : BaseUnityPlugin
   {
@@ -23,6 +23,7 @@ namespace com.thejpaproject.avoptions
     private WungusVisualConfiguration _wungusVisualConfiguration;
     private WungusAudioConfiguration _wungusAudioConfiguration;
     private BortalConfiguration _bortalConfiguration;
+    private GortalConfiguration _gortalConfiguration;
 
     [MethodImpl(768)]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "RoR2 Mod Lifecycle Method")]
@@ -42,6 +43,8 @@ namespace com.thejpaproject.avoptions
         _frelicAvConfiguration = new FrelicAvConfiguration(Config);
 
         _prefabConfigurer.BindVfx("IgniteOnKill/IgniteExplosionVFX", "Gasoline", "Enables Gasoline's explosion");
+
+        _gortalConfiguration = new GortalConfiguration(Config);
 
         _idpVisualConfiguration = new IdpVisualConfiguration(Config);
 

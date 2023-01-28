@@ -106,6 +106,10 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2023-01-27 : 2.1.0
+
+- Add toggle for golden shores VFX
+
 ## 2023-01-24 : 2.0.0
 
 - **Breaking Change** : Configuration organization restructure. User will need to re-configure all their options
