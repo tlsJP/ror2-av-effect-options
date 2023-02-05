@@ -1,5 +1,7 @@
 # Risk Of Rain 2 - AV Effects Options
 
+[![.NET](https://github.com/tlsJP/ror2-av-effect-options/actions/workflows/dotnet.yml/badge.svg)](https://github.com/tlsJP/ror2-av-effect-options/actions/workflows/dotnet.yml)
+
 This is a pseudo-fork of https://gitlab.com/lexxyfox/ror2-av-effect-options
 
 ## About
