@@ -22,7 +22,8 @@ namespace com.thejpaproject.avoptions
         private ViendAudioConfiguration _viendAudioConfiguration;
         private WungusVisualConfiguration _wungusVisualConfiguration;
         private WungusAudioConfiguration _wungusAudioConfiguration;
-        private BortalVfxConfiguration _bortalConfiguration;
+        private BortalGlowConfiguration _bortalConfiguration;
+        private BortalCenterConfiguration _bortalCenterConfiguration;
         private GortalConfiguration _gortalConfiguration;
 
         [MethodImpl(768)]
@@ -36,7 +37,8 @@ namespace com.thejpaproject.avoptions
             {
 
                 _blastShowerConfiguration = new BlastShowerConfiguration(Config);
-                _bortalConfiguration = new BortalVfxConfiguration(Config);
+                _bortalCenterConfiguration = new BortalCenterConfiguration(Config);
+                _bortalConfiguration = new BortalGlowConfiguration(Config);
                 _prefabConfigurer.BindVfx("KillEliteFrenzy/NoCooldownEffect", "Brainstalks", "Enables Brainstalks' screen effect. Note: re-enabling may not take effect until next stage.");
 
                 _fireworkTailConfiguration = new FireworkTailConfiguration(Config);

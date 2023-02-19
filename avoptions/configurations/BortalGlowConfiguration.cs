@@ -7,13 +7,13 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace com.thejpaproject.avoptions.configurations
 {
-    internal class BortalVfxConfiguration : AvConfiguration
+    internal class BortalGlowConfiguration : AvConfiguration
     {
 
         private Light _light;
         private PostProcessVolume _postProcessVolume;
 
-        public BortalVfxConfiguration(ConfigFile configFile) :
+        public BortalGlowConfiguration(ConfigFile configFile) :
             base(configFile, Category.BASE_VFX, "Blue Portal Glow", "Bortal is too bright.\n\nRequires next stage to take effect")
         { }
 
