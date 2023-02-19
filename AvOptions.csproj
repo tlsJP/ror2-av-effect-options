@@ -9,7 +9,6 @@
         <AssemblySearchPaths>
 		$(AssemblySearchPaths);
         </AssemblySearchPaths>
-        <ApplicationIcon>icon.ico</ApplicationIcon>
         <BuildInParallel>True</BuildInParallel>
         <Configuration>Release</Configuration>
         <CopyDocumentationFileToOutputDirectory>False</CopyDocumentationFileToOutputDirectory>
@@ -28,16 +27,10 @@
         <NoWarn>612</NoWarn>
         <NoWin32Manifest>True</NoWin32Manifest>
         <Optimize>True</Optimize>
-        <OutDir>out</OutDir>
         <TargetFramework>netstandard2.1</TargetFramework>
         <RootNamespace>com.thejpaproject</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Include="icon.png" LogicalName="." />
-        <None CopyToOutputDirectory="PreserveNewest" Include="manifest.json;README.md;icon.png" />
-        <Reference Include="RiskOfOptions" Private="False" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
@@ -64,12 +57,22 @@
     </ItemGroup>
 
 
-    <Target Name="ZipOutputPath" AfterTargets="Build">
-        <ZipDirectory Overwrite="True" SourceDirectory="$(OutDir)" DestinationFile="$(ProjectName).zip" />
+    <Target Name="Package" AfterTargets="Build">
+
+        <ItemGroup>
+            <Resources Include="res\*.*" />
+            <Assembly Include="dist\assembly" />
+            <DeployFiles Include="dist\assembly\*.*"/>
+        </ItemGroup>
+
+        <Copy SourceFiles="README.md" DestinationFolder="@(Assembly)" />
+        <Copy SourceFiles="@(Resources)" DestinationFolder="@(Assembly)" />
+        <Copy SourceFiles="$(OutputPath)$(ProjectName).dll" DestinationFolder="@(Assembly)" />
+
+        <ZipDirectory Overwrite="True" SourceDirectory="@(Assembly)" DestinationFile="dist\$(ProjectName).zip" />
+
+        <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(BepInExPath)\plugins\TeamNinjaDSM-JPs_AV_Effect_Options"/>
     </Target>
 
-    <Target Name="DeployLocal" AfterTargets="Build">
-        <Copy SourceFiles="out\AvOptions.dll;out\manifest.json;out\README.md;out\icon.png" DestinationFolder="$(BepInExPath)\plugins\TeamNinjaDSM-JPs_AV_Effect_Options"/>
-    </Target>
 
 </Project>
