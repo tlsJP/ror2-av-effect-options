@@ -108,6 +108,11 @@ These good people/beings did me a help one way or another, but don't necessarily
 
 # Change Log
 
+## 2023-02-19 : 2.1.1
+
+- Remove compile time dependency on R2API
+- Explicitly specify risk of options requirement in manifest
+
 ## 2023-01-27 : 2.1.0
 
 - Add toggle for golden shores VFX

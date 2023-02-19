@@ -58,7 +58,7 @@
         <Reference Include="Unity.Postprocessing.Runtime">
             <HintPath>libs\Unity.Postprocessing.Runtime.dll</HintPath>
         </Reference>
-        <Reference Include="Rune580.Risk_Of_Options">
+        <Reference Include="Rune580.Risk_Of_Options" Version="2.5.3">
             <HintPath>libs\RiskOfOptions.dll</HintPath>
         </Reference>
     </ItemGroup>
